@@ -8,7 +8,7 @@
 | Depends on | T-10 (card data types, fixtures), T-06 (MCP Apps pattern) |
 | Owns | `cards/` |
 | Approval needed | No |
-| Status | TODO |
+| Status | DONE (60 fps not measurable headless; S4-in-simulator check runs with T-31) |
 
 ## Goal
 Build 8 animated cards at 768×480. Each one works as an MCP Apps card and as a native React component. Also build the host module the simulator uses to show MCP Apps cards.
@@ -66,4 +66,32 @@ Cards are what the judges see in every scene. They cover the judges' examples "m
 - **MCP Apps rendering fails in the simulator:** set `CARDS_MODE=native` (same components). The server still declares the `ui://` resources for Alexa+ compatibility.
 
 ## Result
-_The agent fills this in._
+Agent run 2026-10-22.
+
+**Built (all in `cards/`):**
+- `src/cards/*.tsx`: 8 React components, each `({ data: <contract type>, callTool?, openLink? })`. Tokens and motion in `src/styles.css` (scoped `.df-card`), shared pieces in `src/ui.tsx` (count-up, SVG ring, bar, tool button, confetti). Hand-drawn SVG for rings, rest ring and the progress chart; QR via `qrcode-generator` (only extra dependency).
+- `src/index.ts`: native export for T-31: the 8 components, `CARD_COMPONENTS` (by name) and `CardByUri` (`ui://cards/<name>` -> component).
+- `src/mcp/mount.tsx` + `build.ts`: esbuild single-file builds -> `dist/<name>.html` (ext-apps `App`, `ontoolresult` renders the component; the card zooms to fill any frame size). Buttons show only if the host declares `serverTools`; "Open Amazon cart" only if it declares `openLinks` (otherwise QR only).
+- `host/index.ts`: `mountCardFrame({ container, html, toolResult, toolInput?, scale?, onCallTool?, onOpenLink? })` -> `{ iframe, ready, update(result), destroy() }`. Sandboxed `allow-scripts` iframe, 768x480 x scale, ext-apps `AppBridge` + `PostMessageTransport` (the T-06 pattern). `update()` re-sends a result to the same card (S2 correct_meal) without reloading.
+- `preview/` (Vite): every card state from `mock/fixtures`, MCP Apps and native side by side; `?scale=1.5`, `?only=<id>`. Buttons answer with the matching fixture and log the call.
+- `scripts/screens.ts`: headless Chrome over CDP (approach from smoke/mcp-apps/verify-browser.ts): screenshots per entry and mode into `screens/`, overflow/ellipsis check inside each card (both modes; iframe checked through an isolated world), entrance length from `document.getAnimations()`, console errors (iframes included), and MCP-mode button clicks.
+- `test/cards.test.tsx`: 14 Vitest tests (fixtures parse against the contracts and render with the key facts; buttons hidden without `callTool`; PR merge; `CardByUri`; dist files have no external refs).
+
+**Verification (2026-10-22):**
+- `npm run cards:build`: 8 files, 735-758 KB each (rings 737, meal-logged 735, workout 737, pr 736, progress 736, meal-prep 738, cart 758, brief 735), external refs 0. About 600 KB of each is the ext-apps App runtime (T-06 measured 603 KB with no React).
+- `npm test -w @dayform/cards`: 14 passed (14).
+- `npm run cards:screens` with the preview running: 13 entries x 2 modes PASS at 768x480 and again at `--scale 1.5` (1152x720): one card per frame in each mode, no element outside its frame, no ellipsis truncation, 0 console errors, longest entrance 1190 ms (progress) and below 1200 ms for all. The batch-cook slide passes too. MCP-mode buttons: rings -> `log_water {"glasses":1}`, meal-prep -> `add_to_cart {"from_plan":true}`, cart -> `checkout_cart {}` all reach the host's `onCallTool`. After the checkout click the cart card shows the QR code.
+- The full preview page (`/`) renders all 13 iframe cards and 13 native cards (`screens/preview-side-by-side.png`, top of the page).
+- Frame rate: headless Chrome measured 50-60 fps for most entrances, but some runs dropped to 10-40 fps. This happened when a sandboxed iframe was parsing its 740 KB bundle on the same thread while the native card animated. It was not measured on a real GPU display, so 60 fps is NOT proven.
+
+**Decisions within the ticket:**
+- Rest countdown starts from `rest_seconds` when the result arrives. It never compares `rest_ends_at` with the wall clock, because that value is on the demo clock (T-24 note).
+- `workout` shows a small "New PR" chip and confetti when `pr` is set. `pr` gives one celebration per lift: the e1RM entry leads and a same-lift `rep_best` becomes the line "Also your best for N reps" (T-23 note). `prs: []` shows a calm "Logged / No PR this time" state.
+- `meal-logged` shows at most 3 item rows plus "+ N more". `cart` shows 14 lines in two columns (13 + "+ N more" beyond that). `brief` shows yesterday's weight only on rest days, because the weight chip in the header always shows it.
+- `meal-prep` shows `preparing` with a spinner and `failed` with the message.
+
+**Not verified / open:**
+- Test scenario step 3 (S4 in the simulator with the mock) needs T-31.
+- 60 fps on real hardware has not been measured (see above).
+
+**Orchestrator close-out (2026-10-22):** verified build (8 single files, 0 external refs), 14 tests, screenshots reviewed (rings, meal-logged, PR, meal-prep). Follow-ups done by the orchestrator: cards/dist committed (un-ignored), mock serves cards/dist when present, mock checkout fixtures use the working cart link. DONE.

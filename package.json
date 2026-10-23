@@ -34,7 +34,10 @@
     "db:reset": "npm run db:reset -w @dayform/db --",
     "db:hash": "npm run db:hash -w @dayform/db --",
     "db:report": "npm run db:report -w @dayform/db --",
-    "data:load-foods": "npm run load -w @dayform/food-search"
+    "data:load-foods": "npm run load -w @dayform/food-search",
+    "cards:build": "npm run cards:build -w @dayform/cards",
+    "cards:preview": "npm run cards:preview -w @dayform/cards",
+    "cards:screens": "npm run cards:screens -w @dayform/cards"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

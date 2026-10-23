@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dayform cards preview</title>
+<style>
+  body { margin: 0; padding: 24px 32px 48px; background: #05070c; color: #cfd8e6; font: 15px/1.4 system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; color: #fff; }
+  .hint { color: #8796ad; margin: 0 0 24px; }
+  .entry { margin: 0 0 36px; }
+  .entry h2 { font-size: 16px; margin: 0 0 10px; color: #fff; font-weight: 600; }
+  .entry h2 code { color: #19d3ff; font-weight: 500; }
+  .pair { display: flex; gap: 28px; align-items: flex-start; }
+  .slot { display: flex; flex-direction: column; gap: 6px; }
+  .slot > span { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #8796ad; }
+  .frame { border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px #1d2738, 0 12px 40px #0008; width: fit-content; }
+  #log { position: fixed; right: 16px; bottom: 16px; max-width: 440px; font: 12px ui-monospace, monospace; background: #0d1320; border: 1px solid #1d2738; border-radius: 10px; padding: 10px 12px; white-space: pre-wrap; max-height: 40vh; overflow: auto; }
+  #log:empty { display: none; }
+</style>
+</head>
+<body>
+<h1>Dayform cards · 768×480</h1>
+<p class="hint">Left: MCP Apps build (<code>dist/&lt;name&gt;.html</code> in a sandboxed iframe through the ext-apps AppBridge). Right: the native React component. Data: <code>mock/fixtures</code>. Add <code>?scale=1.5</code> for 1152×720, <code>?only=&lt;id&gt;</code> for one entry.</p>
+<div id="entries"></div>
+<div id="log"></div>
+<script type="module" src="./main.tsx"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 // Mock MCP server: the 18 Dayform tools from fixtures, stateful Streamable HTTP, protocol 2025-11-25.
 // Hybrid mode forwards REAL_TOOLS to a real server (one upstream session per mock session),
 // relaying elicitation and progress.
@@ -138,8 +139,12 @@ function buildSession(opts: MockOptions) {
     server.registerResource(
       `${name} card`,
       CARD_URIS[name],
-      { mimeType: CARD_MIME_TYPE, description: `Placeholder ${name} card (T-32 replaces it).` },
-      async (uri) => ({ contents: [{ uri: uri.href, mimeType: CARD_MIME_TYPE, text: placeholderCard(name) }] }),
+      { mimeType: CARD_MIME_TYPE, description: `The ${name} card (768×480).` },
+      // Serve the real T-32 build when it exists, else the placeholder (orchestrator, 2026-10-22).
+      async (uri) => {
+        const text = await readFile(new URL(`../../cards/dist/${name}.html`, import.meta.url), "utf8").catch(() => placeholderCard(name));
+        return { contents: [{ uri: uri.href, mimeType: CARD_MIME_TYPE, text }] };
+      },
     );
   }
 

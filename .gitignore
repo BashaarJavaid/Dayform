@@ -6,3 +6,5 @@ cdk.out/
 *.raw.csv
 video/raw/
 .DS_Store
+# T-32 built cards are committed so the server image and AgentCore serve real cards
+!cards/dist/
