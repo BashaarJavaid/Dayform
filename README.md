@@ -6,7 +6,7 @@ Dayform is an Alexa+ add-on: a self-hosted MCP server with 18 tools and 8 MCP Ap
 
 Demo video: _link added after recording_
 
-Repository: https://github.com/BashaarJavaid/Dayform
+Repository: https://github.com/BashaarJavaid/Dayform · Standalone simulator for any Alexa+ MCP server: https://github.com/BashaarJavaid/alexa-plus-mcp-simulator
 
 > Built for Build, Ship, Shape: Amazon Developer Hackathon (Alexa+ track, AWS Builder mini challenge).
 

@@ -8,7 +8,7 @@
 | Depends on | T-30, T-31 |
 | Owns | A separate repo folder, outside `dayform/` |
 | Approval needed | Yes: creating a folder outside this repo, creating the GitHub repo, pushing |
-| Status | CUT (cut order #1, orchestrator 2026-10-22: time goes to the video and submission) |
+| Status | DONE (un-cut by the orchestrator 2026-10-23) |
 
 ## Goal
 Publish the Alexa+ simulator as a standalone, MIT-licensed repo that any MCP developer can point at their own server. Enter it in the Open Source mini challenge.
@@ -36,13 +36,27 @@ It isn't in the video. It's one more prize category, using work that already exi
 7. **Draft the Devpost fields** in `SUBMISSION.md` (with T-52): the contribution URL, the repo URL, the GitHub username, and what it does, how it works and why it matters.
 
 ## Acceptance criteria
-- [ ] The repo is public, with an MIT license detected by GitHub.
-- [ ] It works with any MCP server (tested with two servers).
-- [ ] The Devpost Open Source fields are drafted.
+- [x] The repo is public, with an MIT license detected by GitHub.
+- [x] It works with any MCP server (tested with two servers).
+- [x] The Devpost Open Source fields are drafted.
 
 ## Test scenario
 1. Clone the new repo. Set `MCP_URL` to the T-03 `ping` server. Start it.
 2. Type "ping". Expect the tool call in the "Under the hood" panel, and a spoken or typed reply.
 
 ## Result
-_The agent fills this in._
+Repo: https://github.com/BashaarJavaid/alexa-plus-mcp-simulator (public; local copy `/Users/bashaarjavaid/Projects/alexa-plus-mcp-simulator`, outside this repo, so no `oss/` or `.gitignore` change here). 2026-10-23.
+
+**Built.** A copy (not a symlink) of `simulator/backend`, `simulator/frontend`, `cards/host` and the `WebSocket` event schema, made generic: one package, `npm install` then `npm run dev` (backend + Vite via `concurrently`), settings from `.env` (`MCP_URL`, `MCP_AUTH=none|sigv4`, `VOICE_ENGINE`, model IDs, ports). Removed: admin proxy, demo panel, night transition, native `CardByUri` cards and `CARDS_MODE`, cart auto-open, card dwell, macro rings, Dayform tool icons and prompt. Added: plain idle screen (clock, date, "Ask me anything"), settings panel (gear or Ctrl+Shift+S: target, auth, server name/version, tools, engine, last-turn timings), server name in the panel header via `/health`, generic Sonic system prompt, `examples/ping-server.ts` (the T-03 server with `PORT`), MIT `LICENSE` (Malik Bashaar Javaid), README with 3 screenshots (`docs/idle.png`, `docs/card.png`, `docs/confirm.png`). `npx tsc` clean.
+
+**Verification** (VOICE_ENGINE=text, AWS_PROFILE from `.env.local`, own ports so the Dayform simulator on 8300/5173 kept running):
+- Ping server (`PORT=18003 npm run example`), `npm run probe -- "ping"`: `tool_call_finished ping latency_ms 26 ok server_time=2026-10-23T06:24:49.190Z`, reply "The server time is 2026-10-23 at 06:24:49 UTC.", spoken 5.9 s. `confirm_demo`: `elicitation_request "Proceed?"`, click accept → `action=accept, confirmed=true`; typed "yes" (`--say-yes`) → same.
+- Headless Chrome (CDP): connected, panel header `ping-example 0.0.1`, rows `ping 11 ms`, `confirm_demo 1318 ms`, Yes/No overlay shown and clicked, no console errors.
+- Dayform server `http://localhost:8001/mcp`: S1 line → `log_meal 914 ms | entry, day, assumptions`, card `ui://cards/meal-logged` (904 kcal, 3 items, 970 kcal / 96 g left), header `dayform 0.1.0`, no console errors. Note: this logged a lunch on the 8001 server's database; run `npm run db:reset` before the next take.
+- Sonic engine (VOICE_ENGINE=sonic) with the ping server: `ping 21 ms`, spoken reply, first audio 1120 ms.
+- Ticket test scenario from a fresh `git clone` of the public repo: `npm install`, `npx tsc` OK, `.env` with `MCP_URL`, `npm run dev`, probe "ping" → tool call and reply.
+- `gh repo view --json licenseInfo` → `{"key":"mit","name":"MIT License"}`, visibility PUBLIC.
+
+**Devpost.** `SUBMISSION.md` → "Open Source contribution" (URL, username, what/how/why); the checklist line and the Tracks bullet updated.
+
+**Deviations.** None from the ticket. Card buttons that call tools stay hidden (no `onCallTool`), as in the Dayform simulator.

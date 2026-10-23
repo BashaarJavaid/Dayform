@@ -6,7 +6,7 @@ Draft for the Build, Ship, Shape: Amazon Developer Hackathon. **Deadline: 2026-1
 
 - [ ] Replace `https://github.com/BashaarJavaid/Dayform` (T-50) and `<VIDEO_URL>` (T-51) everywhere in this file. Open both signed out; both must load.
 - [ ] T-40 status: the full server is deployed to AgentCore Runtime and the overnight job to Lambda + EventBridge Scheduler? If T-40 is not DONE, change the two sentences marked `[T-40]` to say the smoke deployment ran on AgentCore and the demo ran on the local container.
-- [ ] Open Source mini challenge: tick it only if T-53 is DONE (it is CUT-FIRST). Otherwise delete that section.
+- [ ] Open Source mini challenge: T-53 is DONE (repo public, MIT detected); tick it on Devpost and paste the "Open Source contribution" fields.
 - [ ] Add teammates on Devpost, if any.
 - [ ] Every number below comes from `SMOKE-RESULTS.md`, ticket Result sections, `db/seed/README.md` or `DEMO-SCRIPT.md`. If the seed or catalog changes before recording, re-check the S1–S6 numbers in `DEMO-SCRIPT.md`.
 
@@ -138,7 +138,19 @@ amazon-alexa, alexa-plus, model-context-protocol, mcp-apps, amazon-bedrock, amaz
 
 - **Track: Alexa+.** Dayform is an Alexa+ add-on: a self-hosted MCP server (protocol 2025-11-25, Streamable HTTP) with 18 intent-shaped tools, MCP Apps cards at 768×480, elicitation for purchase confirmation, and an agentic workflow that orchestrates meal planning, a grocery catalog and the Amazon cart.
 - **Mini challenge: AWS Builder.** See "AWS usage" below.
-- **Mini challenge: Open Source (optional, only if T-53 is done).** *Note: delete this bullet if T-53 is CUT.* We published the Alexa+ simulator as a standalone MIT-licensed repo that any MCP developer can point at their own server to try it as an Alexa+ add-on, with Nova Sonic voice and MCP Apps cards. Repo: `<OSS_REPO_URL>`. GitHub username: `<GITHUB_USERNAME>`.
+- **Mini challenge: Open Source.** See "Open Source contribution" below.
+
+### Open Source contribution (for the Open Source mini challenge)
+
+- Contribution URL: https://github.com/BashaarJavaid/alexa-plus-mcp-simulator
+- Repository URL: https://github.com/BashaarJavaid/alexa-plus-mcp-simulator (new project, MIT License, detected by GitHub)
+- GitHub username: BashaarJavaid
+
+**What it is.** Alexa+ MCP Simulator is a web stand-in for an Echo Show, for developers building Alexa+ add-ons. Point it at any MCP server with `MCP_URL`, talk or type to "Alexa", and watch your tools get called, your MCP Apps cards render on a 768×480 screen, and your confirmation prompts appear as a Yes/No overlay.
+
+**How it works.** A Node backend connects to your server with the official MCP TypeScript SDK (protocol 2025-11-25, Streamable HTTP, optional SigV4 for Amazon Bedrock AgentCore Runtime) and hands its tools to Amazon Nova 2.5 Sonic, which hears the mic, picks the tools and speaks the answer (a Transcribe + Nova 2 Lite + Polly pipeline and a typed-only mode are fallbacks). A React page shows the screen, renders cards in sandboxed iframes through the `@modelcontextprotocol/ext-apps` AppBridge, answers elicitation by click, voice or typed "yes", and lists every tool call with its arguments, progress, result and latency. `npm install && npm run dev`; a bundled example server is included.
+
+**Why it matters.** The real Alexa+ device tools for trying an add-on are not public, so every Alexa+ MCP builder has to guess how their server will behave in a voice-and-screen conversation. This gives them a loop they can run today: change the server, say the line, see the tool call, the card and the spoken reply. We built it as the simulator for Dayform during the hackathon, then made it generic and tested it against two unrelated servers (a two-tool example server and Dayform's 18-tool server).
 
 ### AWS usage (for the AWS Builder mini challenge)
 
