@@ -1,0 +1,21 @@
+# S7 evidence: overnight Lambda + EventBridge Scheduler, captured 2026-10-23T01:56:18Z
+{
+    "FunctionName": "dayform-overnight",
+    "Runtime": "nodejs24.x",
+    "Architectures": [
+        "arm64"
+    ],
+    "MemorySize": 1024,
+    "Timeout": 120,
+    "State": "Active",
+    "LastModified": "2026-10-23T01:52:57.000+0000"
+}
+{
+    "Name": "dayform-overnight",
+    "State": "DISABLED",
+    "ScheduleExpression": "cron(0 3 * * ? *)",
+    "ScheduleExpressionTimezone": "Asia/Karachi",
+    "Target": "arn:aws:lambda:us-east-1:661550216013:function:dayform-overnight"
+}
+# manual invoke 2026-10-23 (date 2026-10-24):
+{"ok":true,"date":"2026-10-24","ms":4811,"steps":["step 1/6 yesterday 2026-10-23: 1271/2360 kcal, protein 66/165 g, workout Push, PRs 1","step 2/6 check-in: 2360 -> 2170 kcal (LOSS_SLOWER_THAN_PLANNED): You lost 0.3 kg this week instead of 0.4 kg, so I cut 190 calories daily.","step 3/6 next-session targets (legs): barbell-back-squat 102.5x5, romanian-deadlift 87.5x6, leg-press 155x10, lying-leg-curl 47.5x10, standing-calf-raise 75x12","step 4/6 meal plan: ready (id 1)","step 5/6 brief written: You average 151 g of protein on training days but only 103 g on rest days.","step 6/6 brief saved"],"brief":{"date":"2026-10-24","yesterday":{"eaten":{"kcal":1271,"protein_g":66,"carbs_g":123,"fat_g":

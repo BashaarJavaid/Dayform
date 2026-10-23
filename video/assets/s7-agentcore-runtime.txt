@@ -1,0 +1,25 @@
+# S7 evidence: AgentCore runtime (aws bedrock-agentcore-control get-agent-runtime, env values omitted), captured 2026-10-23T01:56:13Z
+{
+    "agentRuntimeName": "dayform_server",
+    "agentRuntimeArn": "arn:aws:bedrock-agentcore:us-east-1:661550216013:runtime/dayform_server-itlffCFT4p",
+    "status": "READY",
+    "version": "1",
+    "protocol": {
+        "serverProtocol": "MCP"
+    },
+    "network": {
+        "networkMode": "PUBLIC"
+    },
+    "artifact": {
+        "containerConfiguration": {
+            "containerUri": "661550216013.dkr.ecr.us-east-1.amazonaws.com/dayform-server:20261023-014950"
+        }
+    },
+    "lifecycle": {
+        "idleRuntimeSessionTimeout": 900,
+        "maxLifetime": 28800
+    },
+    "roleArn": "arn:aws:iam::661550216013:role/dayform-server-ExecRole-NzlUJkiTrzoK",
+    "createdAt": "2026-10-23T01:51:22.155347+00:00",
+    "lastUpdatedAt": "2026-10-23T01:51:23.556336+00:00"
+}

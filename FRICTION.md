@@ -172,3 +172,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: major
 - Workaround: the backend runs Sonic's tool calls one after another in the order given, reuses the first result for an identical call in the same turn, holds all results until the batch finishes, and sends mic audio to Amazon Transcribe (not Sonic) while an elicitation waits for a yes or no.
 - Suggestion to the tool's team: document Sonic's parallel tool-call behaviour and offer a sequential tool-calling option; don't re-issue a tool call whose result is pending.
+
+### F-016 · AgentCore Runtime exposes only the MCP path, so a server's other HTTP routes are unreachable once deployed
+- Tool / service: Amazon Bedrock AgentCore Runtime (MCP protocol, SigV4 inbound), us-east-1
+- Ticket: T-40
+- Task attempted: Run the demo scene runner against the deployed server, including S5's `POST /admin/advance-day` (an Express route next to `POST /mcp` in the same container).
+- Steps taken: Deployed with `AWS::BedrockAgentCore::Runtime` (`ProtocolConfiguration: MCP`); the only client URL is `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<encoded ARN>/invocations?qualifier=DEFAULT`, which the platform forwards to the container's `/mcp`.
+- Expected: Some way to reach a non-MCP route (health, admin) on the same runtime, or a documented note that there is none.
+- Actual: No URL maps to any container path other than `/mcp`; the admin routes (and `/health`) cannot be called on the deployed runtime.
+- Severity: minor
+- Workaround: State lives in Aurora (the demo clock is a table), so a local server on the same cluster (`DB_DRIVER=data-api`, port 8019) serves the admin routes while tools go to AgentCore. All 7 scenes PASS that way.
+- Suggestion to the tool's team: Say in the MCP-protocol runtime contract that only `/mcp` is proxied, and suggest a pattern for operator-only routes.

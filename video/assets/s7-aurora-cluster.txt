@@ -1,0 +1,24 @@
+# S7 evidence: Aurora cluster (aws rds describe-db-clusters), captured 2026-10-23T01:56:14Z
+{
+    "DBClusterIdentifier": "dayform-db",
+    "Status": "available",
+    "Engine": "aurora-postgresql",
+    "EngineVersion": "17.11",
+    "EngineMode": "provisioned",
+    "HttpEndpointEnabled": true,
+    "ServerlessV2ScalingConfiguration": {
+        "MinCapacity": 0.5,
+        "MaxCapacity": 4.0
+    },
+    "DatabaseName": "dayform",
+    "Members": [
+        "dayform-db-1"
+    ],
+    "AvailabilityZones": [
+        "us-east-1d",
+        "us-east-1b",
+        "us-east-1c"
+    ],
+    "ClusterCreateTime": "2026-10-23T00:39:12.860000+00:00",
+    "DBClusterArn": "arn:aws:rds:us-east-1:661550216013:cluster:dayform-db"
+}

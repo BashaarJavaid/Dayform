@@ -2,5 +2,11 @@
   "name": "@dayform/infra",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"infra: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "deploy": "bash deploy.sh",
+    "destroy": "bash deploy.sh destroy",
+    "aws:status": "bash status.sh",
+    "demo:agentcore": "tsx src/demo-agentcore.ts"
+  }
 }

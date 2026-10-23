@@ -42,7 +42,10 @@
     "overnight": "npm run overnight -w @dayform/jobs-overnight --",
     "overnight:cache": "npm run overnight:cache -w @dayform/jobs-overnight",
     "sim:backend": "npm run sim:backend -w @dayform/simulator-backend",
-    "sim:probe": "npm run sim:probe -w @dayform/simulator-backend --"
+    "sim:probe": "npm run sim:probe -w @dayform/simulator-backend --",
+    "deploy": "npm run deploy -w @dayform/infra",
+    "destroy": "npm run destroy -w @dayform/infra",
+    "aws:status": "npm run aws:status -w @dayform/infra"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

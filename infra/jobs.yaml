@@ -1,0 +1,84 @@
+# T-40 stack dayform-jobs: the overnight Lambda (jobs/overnight, T-27) + an EventBridge Scheduler schedule at 03:00
+# Asia/Karachi. Same pattern as T-07 (smoke/scheduler-lambda/template.yaml). The schedule is DISABLED by default so it
+# never runs during a demo take; enable it with ScheduleState=ENABLED.
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Dayform overnight job (T-40)
+Parameters:
+  ClusterArn: { Type: String }
+  SecretArn: { Type: String }
+  Database: { Type: String, Default: dayform }
+  ReasoningModelId: { Type: String }
+  ReasoningModelFallbackId: { Type: String }
+  DemoTz: { Type: String, Default: Asia/Karachi }
+  ScheduleState: { Type: String, Default: DISABLED, AllowedValues: [ENABLED, DISABLED] }
+Resources:
+  FnRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{ Effect: Allow, Principal: { Service: lambda.amazonaws.com }, Action: sts:AssumeRole }]
+      ManagedPolicyArns: [arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+      Policies:
+        - PolicyName: overnight
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: bedrock:InvokeModel
+                Resource:
+                  - !Sub "arn:aws:bedrock:*:${AWS::AccountId}:inference-profile/us.amazon.nova-*"
+                  - "arn:aws:bedrock:*::foundation-model/amazon.nova-*"
+              - Effect: Allow
+                Action: [rds-data:ExecuteStatement, rds-data:BatchExecuteStatement, rds-data:BeginTransaction, rds-data:CommitTransaction, rds-data:RollbackTransaction]
+                Resource: !Ref ClusterArn
+              - { Effect: Allow, Action: secretsmanager:GetSecretValue, Resource: !Ref SecretArn }
+  Fn:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: dayform-overnight
+      Runtime: nodejs24.x
+      Architectures: [arm64]
+      # The bundle sits 4 folders deep so its import.meta.url-relative reads (../../../../data/...) land on /var/task/data.
+      Handler: jobs/overnight/dist/lambda/index.handler
+      Role: !GetAtt FnRole.Arn
+      Timeout: 120
+      MemorySize: 1024
+      Code: { ZipFile: "exports.handler = async () => ({ placeholder: true });" }
+      Environment:
+        Variables:
+          DB_DRIVER: data-api
+          AURORA_CLUSTER_ARN: !Ref ClusterArn
+          AURORA_SECRET_ARN: !Ref SecretArn
+          AURORA_DATABASE: !Ref Database
+          REASONING_MODEL_ID: !Ref ReasoningModelId
+          REASONING_MODEL_FALLBACK_ID: !Ref ReasoningModelFallbackId
+          DEMO_MODE: "true"
+          DEMO_TZ: !Ref DemoTz
+          OVERNIGHT_MODE: live
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{ Effect: Allow, Principal: { Service: scheduler.amazonaws.com }, Action: sts:AssumeRole }]
+      Policies:
+        - PolicyName: invoke
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement: [{ Effect: Allow, Action: lambda:InvokeFunction, Resource: !GetAtt Fn.Arn }]
+  Schedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: dayform-overnight
+      ScheduleExpression: cron(0 3 * * ? *)
+      ScheduleExpressionTimezone: Asia/Karachi
+      FlexibleTimeWindow: { Mode: "OFF" }
+      State: !Ref ScheduleState
+      Target:
+        Arn: !GetAtt Fn.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+        Input: '{"source":"schedule"}'
+Outputs:
+  FunctionName: { Value: !Ref Fn }
+  ScheduleName: { Value: !Ref Schedule }

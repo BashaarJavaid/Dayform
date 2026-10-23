@@ -1,0 +1,110 @@
+# T-40 stack dayform-server: ECR repo + execution role + AgentCore MCP runtime (SigV4 inbound = no AuthorizerConfiguration).
+# Same L1 pattern as T-03 (smoke/agentcore-mcp/template.yaml). Two passes on first deploy: CreateRuntime=false makes the
+# repo and role so the image can be pushed, then true adds the runtime. A new ImageTag rolls a new image.
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Dayform MCP server on AgentCore Runtime (T-40)
+Parameters:
+  ImageTag: { Type: String, Default: none }
+  CreateRuntime: { Type: String, Default: "false", AllowedValues: ["true", "false"] }
+  ClusterArn: { Type: String }
+  SecretArn: { Type: String }
+  Database: { Type: String, Default: dayform }
+  ReasoningModelId: { Type: String }
+  ReasoningModelFallbackId: { Type: String }
+  AdminToken: { Type: String, NoEcho: true }
+  DemoTz: { Type: String, Default: Asia/Karachi }
+  CheckoutConfirm: { Type: String, Default: elicitation, AllowedValues: [elicitation, tool] }
+  Understanding: { Type: String, Default: alexa, AllowedValues: [alexa, server] }
+Conditions:
+  WithRuntime: !Equals [!Ref CreateRuntime, "true"]
+Resources:
+  Repo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: dayform-server
+      EmptyOnDelete: true
+  ExecRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: bedrock-agentcore.amazonaws.com }
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals: { aws:SourceAccount: !Ref AWS::AccountId }
+              ArnLike: { aws:SourceArn: !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:*" }
+      Policies:
+        - PolicyName: runtime
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [ecr:BatchGetImage, ecr:GetDownloadUrlForLayer]
+                Resource: !GetAtt Repo.Arn
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: "*"
+              - Effect: Allow
+                Action: [logs:DescribeLogStreams, logs:CreateLogGroup]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/bedrock-agentcore/runtimes/*"
+              - Effect: Allow
+                Action: logs:DescribeLogGroups
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/bedrock-agentcore/runtimes/*:log-stream:*"
+              - Effect: Allow
+                Action: [xray:PutTraceSegments, xray:PutTelemetryRecords, xray:GetSamplingRules, xray:GetSamplingTargets]
+                Resource: "*"
+              - Effect: Allow
+                Action: cloudwatch:PutMetricData
+                Resource: "*"
+                Condition: { StringEquals: { cloudwatch:namespace: bedrock-agentcore } }
+        - PolicyName: app
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              # Nova through the us.* cross-region inference profiles (REASONING_MODEL_ID and its fallback)
+              - Effect: Allow
+                Action: [bedrock:InvokeModel, bedrock:InvokeModelWithResponseStream]
+                Resource:
+                  - !Sub "arn:aws:bedrock:*:${AWS::AccountId}:inference-profile/us.amazon.nova-*"
+                  - "arn:aws:bedrock:*::foundation-model/amazon.nova-*"
+              - Effect: Allow
+                Action: [rds-data:ExecuteStatement, rds-data:BatchExecuteStatement, rds-data:BeginTransaction, rds-data:CommitTransaction, rds-data:RollbackTransaction]
+                Resource: !Ref ClusterArn
+              - Effect: Allow
+                Action: secretsmanager:GetSecretValue
+                Resource: !Ref SecretArn
+  Runtime:
+    Type: AWS::BedrockAgentCore::Runtime
+    Condition: WithRuntime
+    Properties:
+      AgentRuntimeName: dayform_server
+      Description: Dayform MCP server (18 tools, MCP Apps cards, Aurora Data API, Nova)
+      AgentRuntimeArtifact:
+        ContainerConfiguration:
+          ContainerUri: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/dayform-server:${ImageTag}"
+      NetworkConfiguration: { NetworkMode: PUBLIC }
+      ProtocolConfiguration: MCP
+      RoleArn: !GetAtt ExecRole.Arn
+      LifecycleConfiguration: { IdleRuntimeSessionTimeout: 900, MaxLifetime: 28800 }
+      EnvironmentVariables:
+        AWS_REGION: !Ref AWS::Region
+        DB_DRIVER: data-api
+        AURORA_CLUSTER_ARN: !Ref ClusterArn
+        AURORA_SECRET_ARN: !Ref SecretArn
+        AURORA_DATABASE: !Ref Database
+        REASONING_MODEL_ID: !Ref ReasoningModelId
+        REASONING_MODEL_FALLBACK_ID: !Ref ReasoningModelFallbackId
+        DEMO_MODE: "true"
+        DEMO_TZ: !Ref DemoTz
+        ADMIN_TOKEN: !Ref AdminToken
+        OVERNIGHT_MODE: cached
+        CHECKOUT_CONFIRM: !Ref CheckoutConfirm
+        UNDERSTANDING: !Ref Understanding
+Outputs:
+  RepoUri: { Value: !GetAtt Repo.RepositoryUri }
+  RuntimeArn: { Condition: WithRuntime, Value: !GetAtt Runtime.AgentRuntimeArn }
