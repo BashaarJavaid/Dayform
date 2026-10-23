@@ -8,7 +8,7 @@
 | Depends on | — |
 | Owns | `smoke/mcp-apps/` |
 | Approval needed | Only for optional step 5 (exposing a local server publicly) |
-| Status | TODO |
+| Status | DONE |
 
 ## Goal
 Prove that a card built with MCP Apps shows live tool data inside a 768×480 frame in our own host page. The card must come from a real `resources/read` on an MCP server.
@@ -57,4 +57,10 @@ Cards are the visual "wow" of every scene. Alexa+ shows MCP Apps screens on Echo
   - T-32 uses one set of React components for both paths, so switching is one env var (`CARDS_MODE=native`).
 
 ## Result
-_The agent fills this in._
+- **Outcome:** PASS, all 4 acceptance criteria verified in headless Google Chrome via CDP (claude-in-chrome extension was not connected). Details and numbers: [SMOKE-RESULTS.md §T-06](../SMOKE-RESULTS.md#t-06--mcp-apps-card).
+- **Files:** `smoke/mcp-apps/server.ts` (stateful Streamable HTTP server on :8106, `/mcp`, also serves the host page), `card/rings.{ts,html}` (View, ext-apps `App`), `host/host.{ts,html}` (sdk `Client` + ext-apps `AppBridge` + `PostMessageTransport`), `build.ts` (esbuild single-file card), `verify-browser.ts` (headless screenshot + click), `shots/`.
+- **Run:** `cd smoke/mcp-apps && npm install && npm run smoke:apps`, open http://localhost:8106/. Headless check in a second shell: `npm run smoke:apps:check`.
+- **Callback:** supported. `App.callServerTool` → `AppBridge.oncalltool` → MCP `tools/call`.
+- **Deviations:** no T-03 server existed, so `server.ts` is a fresh minimal server (orchestrator instruction). `show_rings` returns a fixed sample day (no DB yet). Optional task 5 (tunnel) skipped per orchestrator. Single sandboxed iframe instead of the double-iframe proxy.
+- **Fallbacks used:** none.
+- **For T-32 / orchestrator:** decide SDK line (sdk 1.32.1 v1 vs split v2 packages that ext-apps 2.x peers on, FRICTION F-001). Card bundle is ~600 KB (F-002).

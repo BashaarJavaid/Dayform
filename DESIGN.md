@@ -222,7 +222,7 @@ The orchestrator updates the **Chosen** column at Gate G0.
 
 **Known versions on 2026-10-23:**
 - `@modelcontextprotocol/sdk` 1.32.1: latest protocol is 2025-11-25.
-- `@modelcontextprotocol/ext-apps` 2.0.3.
+- `@modelcontextprotocol/ext-apps` 2.0.3. It peers on the split SDK v2 packages (`@modelcontextprotocol/client|core|server` 2.3.1), see FRICTION F-001. **Decision (orchestrator, 2026-10-22, from T-06):** the server (T-03, T-20) stays on `@modelcontextprotocol/sdk` 1.32.1; cards (T-32) use ext-apps 2.0.3 with the `as any` cast on `registerAppTool`/`registerAppResource` that T-06 proved; the wire protocol is identical. Card resource MIME type: `text/html;profile=mcp-app`.
 
 ---
 
