@@ -8,7 +8,7 @@
 | Depends on | T-50, T-51, [FRICTION.md](../FRICTION.md) |
 | Owns | `SUBMISSION.md` |
 | Approval needed | Human step: the user pastes the fields and submits on Devpost |
-| Status | REVIEW (all fields drafted with links; the user pastes and submits) |
+| Status | DONE (submitted on Devpost by the user, 2026-10-23, before the 12:00 PT deadline) |
 
 ## Goal
 Draft every Devpost field, ready to paste.
@@ -76,3 +76,5 @@ Draft every Devpost field, ready to paste.
 - **Placeholders:** `<REPO_URL>`, `<VIDEO_URL>`, and `<OSS_REPO_URL>`/`<GITHUB_USERNAME>` (Open Source section, optional, T-53). Sentences marked `[T-40]` claim the full AgentCore + Lambda deploy; reword them if T-40 is not DONE.
 - **Deviations:** Bedrock feedback covers Nova 2 Lite, not Claude Opus (D21). The "AWS CDK" entry covers CDK bootstrap plus CloudFormation, since every stack is a plain template. Amazon Transcribe is listed under AWS usage from T-30's in-progress code.
 - **Not done (human):** acceptance criteria 4 and 5 (user review and submission) and test-scenario step 2 (links open signed out).
+
+**Orchestrator close-out (2026-10-23):** the user pasted every field (description, built-with, links, AWS Builder write-up, Open Source fields, product feedback Q1–Q5, feature requests, friction log link, testing instructions) and submitted. DONE.
