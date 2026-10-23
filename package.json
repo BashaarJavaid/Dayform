@@ -21,9 +21,9 @@
   ],
   "scripts": {
     "mock": "npm run start -w @dayform/mock",
-    "dev": "echo 'npm run dev: the real MCP server arrives with T-20; use npm run mock' && exit 1",
+    "dev": "npm run dev -w @dayform/server",
     "test": "npm test --workspaces --if-present",
-    "typecheck": "tsc -p packages/contracts && tsc -p mock && tsc -p demo",
+    "typecheck": "tsc -p packages/contracts && tsc -p mock && tsc -p demo && tsc -p server",
     "demo": "npm run demo -w @dayform/demo",
     "format": "prettier --write packages mock",
     "demo:scene": "npm run demo:scene -w @dayform/demo --",

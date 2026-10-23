@@ -2,5 +2,25 @@
   "name": "@dayform/server",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"server: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "dev": "PORT=${PORT:-8001} tsx src/main.ts",
+    "start": "tsx src/main.ts",
+    "test": "vitest run",
+    "llm:probe": "tsx scripts/llm-probe.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1156.0",
+    "@dayform/contracts": "*",
+    "@dayform/db": "*",
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "drizzle-orm": "^0.45.4",
+    "express": "^5.3.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/pg": "^8.23.1"
+  }
 }

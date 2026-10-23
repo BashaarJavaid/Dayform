@@ -171,7 +171,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 ## 8. Demo controls
 
 - **Seed state:** the database state after `db:reset`. It holds the demo user with 6 weeks of history (T-11). Every take starts from the seed state.
-- **Demo clock:** when `DEMO_MODE=true`, all code reads time from `clock.now()`, which reads the `demo_clock` table. The seed sets the clock to 13:00 on demo day.
+- **Demo clock:** when `DEMO_MODE=true`, all code reads time from `clock.now()`, which reads the `demo_clock` table (T-11 shape: `demo_now`, `set_at`, `rest_seconds`; the clock keeps running from `demo_now`). The seed sets the clock to 13:00 on demo day, `DEMO_TZ=Asia/Karachi`.
 - **Admin routes** (server, `DEMO_MODE=true` only, protected by `ADMIN_TOKEN`):
   - `POST /admin/reset`: reset to the seed state.
   - `POST /admin/advance-day`: run the overnight job, then set the clock to 07:00 the next day.
@@ -201,6 +201,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 | `DATABASE_URL` | local Postgres URL | `pg` driver |
 | `AURORA_CLUSTER_ARN`, `AURORA_SECRET_ARN`, `AURORA_DATABASE` | from T-04 or T-40 | `data-api` driver |
 | `DEMO_MODE` | `true`, `false` | server |
+| `DEMO_TZ` | `Asia/Karachi` (orchestrator decision 2026-10-22: every demo-clock calculation, "07:00 the next day", meal-type-by-time and the check-in weekday use this zone) | server, jobs, db |
 | `ADMIN_TOKEN` | random string | server, simulator backend |
 | `OVERNIGHT_MODE` | `live`, `cached` | server, jobs |
 | `CHECKOUT_CONFIRM` | `elicitation` (default), `tool` | server |

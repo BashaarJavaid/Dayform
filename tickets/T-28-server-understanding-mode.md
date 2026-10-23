@@ -20,7 +20,7 @@ It isn't shown in the main scenes. It keeps the user's requirement that one env 
 - [DESIGN.md D3, D10](../DESIGN.md#1-agreed-decisions), [§7 LLM and code](../DESIGN.md#7-llm-and-code)
 
 ## Tasks
-1. **Adapter.** For each tool, build a server-mode input schema, `{request: string}`. Its description tells clients to "pass the user's words for this request".
+1. **Adapter.** For each tool, build a server-mode input schema, `{text: string}` (the contracts' `ServerModeInput`; the orchestrator aligned this on 2026-10-22, it was `{request}` before). Its description tells clients to "pass the user's words for this request". T-20 already calls `server/src/understanding/index.ts` `parseRequest()` when `UNDERSTANDING=server`.
 2. **Parse.** Call the LLM client with the tool's alexa-mode input schema as the required output. Add context: today's date on the demo clock, the last meal entry, the open workout session.
 3. **Validate** the parsed input, then call the same handler as alexa mode.
 4. **Register.** T-20's registry calls this adapter when `UNDERSTANDING=server`.
@@ -33,8 +33,8 @@ It isn't shown in the main scenes. It keeps the user's requirement that one env 
 - [ ] The 5 tool tests pass.
 
 ## Test scenario
-1. Start the server with `UNDERSTANDING=server`. In MCP Inspector, check that `log_meal` has one `request` field.
-2. Call `log_meal {request:"I had two rotis, chicken karahi and a mango lassi for lunch"}`. Expect the same items and totals as S1 in alexa mode.
+1. Start the server with `UNDERSTANDING=server`. In MCP Inspector, check that `log_meal` has one `text` field.
+2. Call `log_meal {text:"I had two rotis, chicken karahi and a mango lassi for lunch"}`. Expect the same items and totals as S1 in alexa mode.
 
 ## Result
 _The agent fills this in._

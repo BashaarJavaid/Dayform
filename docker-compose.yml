@@ -32,11 +32,22 @@ services:
       REAL_TOOLS: ${REAL_TOOLS:-}
 
   server:
-    profiles: [later]
-    image: node:23-slim
-    # Placeholder until T-20. Host port 8000 is taken by another container, so the server maps to 8001.
-    command: ["node", "-e", "console.log('server placeholder: T-20 replaces this'); setInterval(() => {}, 1 << 30)"]
+    build: { context: ., dockerfile: server/Dockerfile }
+    platform: linux/arm64
+    # Listens on 8000 in the container (AgentCore contract); host port 8000 is taken, so it maps to 8001.
     ports: ["127.0.0.1:8001:8000"]
+    env_file: [{ path: .env.local, required: true }]
+    environment:
+      DB_DRIVER: pg
+    # Bedrock credentials: the host's AWS profile (AWS_PROFILE from .env.local), read-only.
+    volumes: ["${HOME}/.aws:/root/.aws:ro"]
+    # DATABASE_URL in .env.local points at the host port; inside compose the database is postgres:5432.
+    entrypoint:
+      - sh
+      - -c
+      - export DATABASE_URL="$$(echo "$$DATABASE_URL" | sed -E 's|@[^/@]+/|@postgres:5432/|')"; exec npx tsx server/src/main.ts
+    depends_on:
+      postgres: { condition: service_healthy }
 
   simulator:
     profiles: [later]

@@ -1,0 +1,10 @@
+**/node_modules
+.env*
+.git
+smoke
+video
+tickets
+demo
+simulator
+**/*.md
+**/test
