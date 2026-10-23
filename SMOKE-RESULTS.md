@@ -47,6 +47,7 @@
   - `npx tsx test-text.ts` output: `tool log_meal_stub with eggs: yes {"items":[{"food":"eggs","quantity":2}]}`, `audio bytes total: 944640`.
   - The relay sends 32 ms silence frames when the mic is idle, so typed-only sessions keep the audio stream alive.
   - Next input inside the reply's play time counts as barge-in (FRICTION F-008).
+- User voice run (2026-10-22): voice round trip with tool call PASS; **end of speech → first audio p50 1202 ms** on tool turns (5 turns), 153–945 ms on short non-tool turns; reconnect keeps context PASS; voice tiffany; details in `smoke/nova-sonic/voice-run-1.md`. Page bugs: reconnect button not debounced, text box unusable in the page (typed path proven by test-text.ts). food-words.md 12-phrase list still pending. **Status: PASS** (voice loop proven; food words feed T-12 aliases, not the gate).
 
 ## T-03 · MCP on AgentCore
 - Status: BLOCKED (AgentCore deployed; protocol, session and ping PASS; elicitation failed on the first image, fix proven locally, waits for a user redeploy)

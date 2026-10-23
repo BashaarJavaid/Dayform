@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/nova-sonic/` |
 | Approval needed | No |
-| Status | BLOCKED (typed path PASS; waiting for the user's voice session: mic round trip, voice choice, food words) |
+| Status | DONE (food-words.md pending from the user; feeds T-12) |
 
 ## Goal
 Prove a full browser voice round trip through Nova Sonic that includes one tool call. Measure the latency. Find out how well Sonic hears desi food words.
@@ -92,3 +92,5 @@ Use them in this order:
 - **Deviations:** event shapes from the AWS docs and the websocket-nodejs sample; no rxjs/express/socket.io. Summary passed in the system prompt rather than as USER/ASSISTANT history (simpler; the docs allow history once, before audio).
 - **Fallbacks used:** none.
 - **Friction:** F-008 (typed input inside the reply's play time counts as barge-in).
+
+**Orchestrator close-out (2026-10-22):** user voice run passed (tool call by voice, p50 1202 ms on tool turns, reconnect keeps context, voice tiffany). See smoke/nova-sonic/voice-run-1.md. Open: the 12 food-word phrases.
