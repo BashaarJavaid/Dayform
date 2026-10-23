@@ -4,6 +4,7 @@ import { CARD_MIME_TYPE, CARD_NAMES } from "@dayform/contracts";
 import { createApp } from "../src/app.ts";
 import { loadTools } from "../src/core/registry.ts";
 import { connect, listen } from "./helpers.ts";
+process.env.LOAD_SAMPLE_TOOLS = "1"; // the sample ping tool is test-only
 
 let base: string;
 let url: string;

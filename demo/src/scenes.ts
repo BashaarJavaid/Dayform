@@ -56,7 +56,7 @@ export const SCENES: Scene[] = [
         check: ({ correct_meal: r }, ctx) => [
           ...fail(r?.entry?.totals?.kcal < ctx.lunchKcal, `meal kcal drops (${ctx.lunchKcal} → ${r?.entry?.totals?.kcal})`),
           ...fail(r?.day?.eaten?.kcal < ctx.dayKcal, `day kcal drops (${ctx.dayKcal} → ${r?.day?.eaten?.kcal})`),
-          ...fail(r?.entry?.items?.find((i: any) => i.food === "roti")?.quantity === 1, "roti quantity is 1"),
+          ...fail(r?.entry?.items?.find((i: any) => /roti/i.test(i.food))?.quantity === 1, "roti quantity is 1"),
         ],
       },
     ],
@@ -80,14 +80,15 @@ export const SCENES: Scene[] = [
           ...fail(r?.is_pr === true && r?.pr, "PR flagged"),
           ...fail(r?.logged?.reps === 8, "8 reps logged"),
           ...fail(r?.rest_ends_at, "rest timer running"),
+          ...fail(r?.rest_seconds === 10, `10 s demo rest timer, got ${r?.rest_seconds} s (run demo:warm)`),
         ],
       },
       {
         line: "My shoulder feels off. Swap the overhead press.",
         calls: [call("swap_exercise", { exercise: "overhead press", reason: "shoulder feels off" })],
         check: ({ swap_exercise: r }) => [
-          ...fail(r?.replaced === "overhead press", `replaced overhead press, got ${r?.replaced}`),
-          ...fail(r?.exercise && r.exercise !== "overhead press" && r?.target?.reps > 0, "new exercise with a target"),
+          ...fail(/^overhead press$/i.test(r?.replaced), `replaced overhead press, got ${r?.replaced}`),
+          ...fail(r?.exercise && !/^overhead press$/i.test(r.exercise) && r?.target?.reps > 0, "new exercise with a target"),
         ],
       },
       {

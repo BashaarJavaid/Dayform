@@ -55,7 +55,11 @@ export const TOOLS_DIR = fileURLToPath(new URL("../tools/", import.meta.url));
 
 export async function loadTools(dir = TOOLS_DIR): Promise<ToolDef[]> {
   const defs: ToolDef[] = [];
-  const dirs = readdirSync(dir, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name).sort();
+  // Folders starting with "_" (the T-20 sample) load only in tests, so tools/list shows exactly the 18 contract tools.
+  const dirs = readdirSync(dir, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && (!d.name.startsWith("_") || process.env.LOAD_SAMPLE_TOOLS === "1"))
+    .map((d) => d.name)
+    .sort();
   for (const name of dirs) {
     const file = join(dir, name, "index.ts");
     if (!existsSync(file)) continue;

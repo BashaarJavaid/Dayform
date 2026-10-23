@@ -23,11 +23,13 @@ const steps: Step[] = [
     },
   },
   {
-    name: "Reset to seed state",
+    name: "Reset to seed state + 10 s rest timers",
     run: async () => {
       if (!ADMIN_TOKEN) return `${SKIP} (no ADMIN_TOKEN; admin routes arrive with T-20 on ${ADMIN_URL})`;
       const r = await admin("/admin/reset");
-      return `clock ${r.clock}, ${r.ms} ms on the server`;
+      // Reset clears the rest-timer override (seen 2026-10-23), so set the demo's 10 s again.
+      const t = await admin("/admin/timer-speed", "POST", { rest_seconds: 10 });
+      return `clock ${r.clock}, ${r.ms} ms on the server; rest timers ${t.rest_seconds} s`;
     },
   },
   {
