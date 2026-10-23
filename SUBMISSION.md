@@ -268,6 +268,8 @@ amazon-alexa, alexa-plus, model-context-protocol, mcp-apps, amazon-bedrock, amaz
 
 ## Friction log
 
+Devpost link field: https://github.com/BashaarJavaid/Dayform/blob/main/FRICTION-LOG.md
+
 *Note: built from `FRICTION.md`; entry IDs match that file. Fourteen entries, strongest first.*
 
 ### F-009 · MCP elicitation silently dropped on AgentCore Runtime
