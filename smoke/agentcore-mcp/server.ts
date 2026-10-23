@@ -23,12 +23,14 @@ function buildServer() {
     description: "Ask the user to confirm (elicitation) and return their answer.",
     inputSchema: {},
     outputSchema: { action: z.enum(["accept", "decline", "cancel"]), confirmed: z.boolean() },
-  }, async () => {
+  }, async (_args, extra) => {
+    // relatedRequestId puts the elicitation on this POST's SSE response stream.
+    // Without it the SDK uses the standalone GET stream, which AgentCore answers with 405.
     const r = await server.server.elicitInput({
       mode: "form",
       message: "Proceed?",
       requestedSchema: { type: "object", properties: { confirm: { type: "boolean", title: "Confirm" } }, required: ["confirm"] },
-    });
+    }, { relatedRequestId: extra.requestId });
     const data = { action: r.action, confirmed: r.action === "accept" && r.content?.confirm === true };
     return { content: [{ type: "text", text: JSON.stringify(data) }], structuredContent: data };
   });

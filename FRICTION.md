@@ -106,3 +106,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: the test client waits out the reply's play time (bytes / 48 per ms) before the next turn; the browser stops playback on `interrupted`.
 - Suggestion to the tool's team: document that the speaking window follows play time, which `END_TURN` event marks the true end, and that typed input inside that window counts as barge-in.
+
+### F-009 · Elicitation silently dropped on AgentCore: SDK sends it on the standalone GET stream, which AgentCore answers with 405
+- Tool / service: `@modelcontextprotocol/sdk` 1.32.1 (`McpServer`, `StreamableHTTPServerTransport`) on Amazon Bedrock AgentCore Runtime (MCP, us-east-1)
+- Ticket: T-03
+- Task attempted: elicitation round trip (`confirm_demo`) through a stateful MCP server on AgentCore.
+- Steps taken: tool handler called `server.server.elicitInput({mode: "form", ...})`; `npx tsx client.ts --target agentcore` with `DEBUG=1` tracing each HTTP exchange.
+- Expected: the `elicitation/create` request reaches the client, as it did against the same container locally.
+- Actual: `McpError: MCP error -32001: Request timed out`. Trace shows `GET /invocations -> 405` (the client's standalone SSE stream), while every POST returned `text/event-stream` with matching `mcp-session-id` and `x-amzn-bedrock-agentcore-runtime-session-id`. In sdk 1.32.1 `webStandardStreamableHttp.js` `send()`, a server request with no `relatedRequestId` goes to the standalone GET stream and, when none is open, is dropped with no error ("Stream is disconnected ... nothing more to do"). Locally it worked only because the client's GET stream was open. Reproduced locally by answering GET with 405 on the client side (`NO_GET=1`).
+- Severity: major
+- Workaround: `server.server.elicitInput(params, { relatedRequestId: extra.requestId })` so the request rides the tool call's POST SSE response. Local PASS with GET disabled; AgentCore rerun pending redeploy.
+- Suggestion to the tool's team: SDK: default `elicitInput` inside a tool handler to the current request's stream, or warn when a request is dropped. AgentCore docs: state that the standalone GET stream is not supported (405) and that server-to-client requests must be on the POST response stream.

@@ -41,7 +41,7 @@ function sigv4Fetch(): typeof fetch {
 let url: URL;
 let fetchFn: typeof fetch | undefined;
 if (target === "agentcore") {
-  const arn = process.env.AGENT_RUNTIME_ARN;
+  const arn = process.env.AGENT_RUNTIME_ARN ?? env.AGENTCORE_RUNTIME_ARN;
   if (!arn) { console.error("FAIL set AGENT_RUNTIME_ARN"); process.exit(1); }
   url = new URL(`https://bedrock-agentcore.${region}.amazonaws.com/runtimes/${encodeURIComponent(arn)}/invocations?qualifier=DEFAULT`);
   fetchFn = sigv4Fetch();
@@ -58,7 +58,20 @@ client.setRequestHandler(ElicitRequestSchema, async (req) => {
   elicited = req.params.message;
   return { action: "accept", content: { confirm: true } };
 });
-const transport = new StreamableHTTPClientTransport(url, { fetch: fetchFn });
+// DEBUG=1 traces each HTTP exchange; NO_GET=1 answers the standalone GET stream with 405 (simulates a proxy without it).
+const baseFetch = fetchFn ?? fetch;
+const traced: typeof fetch = async (input, init = {}) => {
+  const method = init.method ?? "GET";
+  if (process.env.NO_GET && method === "GET") return new Response(null, { status: 405 });
+  const res = await baseFetch(input, init);
+  if (process.env.DEBUG) {
+    const h: string[] = [];
+    res.headers.forEach((v, k) => { if (/session|content-type|amzn/i.test(k)) h.push(`${k}=${v}`); });
+    console.log(`  [http] ${method} ${String(init.body ?? "").slice(0, 60)} -> ${res.status} ${h.join(" ")}`);
+  }
+  return res;
+};
+const transport = new StreamableHTTPClientTransport(url, { fetch: traced });
 
 console.log(`target=${target} url=${url.href}`);
 let t0 = performance.now();
@@ -84,7 +97,7 @@ const p50 = warm[Math.floor(warm.length / 2)];
 console.log(`3 ping ms=${times.join(",")} first=${times[0]} warm_p50=${p50}`);
 
 t0 = performance.now();
-const r = await client.callTool({ name: "confirm_demo", arguments: {} });
+const r = await client.callTool({ name: "confirm_demo", arguments: {} }, undefined, { timeout: Number(process.env.ELICIT_TIMEOUT_MS ?? 60000) });
 const sc = r.structuredContent as { action?: string; confirmed?: boolean };
 console.log(`4 confirm_demo ${ms(t0)}ms elicit_message="${elicited}" result=${JSON.stringify(sc)}`);
 if (elicited !== "Proceed?" || sc?.action !== "accept" || sc.confirmed !== true) fail("elicitation round trip");

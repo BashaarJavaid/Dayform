@@ -73,6 +73,7 @@ These come from Amazon's Alexa+ add-on docs, which the research step read on 202
   - Without a card, Alexa renders `structuredContent` itself, or replies by voice.
   - The canvas is 768×480.
 - **Elicitation:** supported. Alexa first tries to fill missing details itself.
+- **Server-to-client requests on AgentCore (T-03, 2026-10-22):** AgentCore answers the client's standalone GET stream with 405, so every `elicitInput()` (and any other server-to-client request) MUST pass `{ relatedRequestId: extra.requestId }` so it rides the tool call's own POST response stream. SDK 1.32.1 silently drops it otherwise (FRICTION F-009). T-20 and T-26 follow this.
 
 Sources:
 - https://developer.amazon.com/docs/alexaplus/add-ons/mcp-toolkit-quickstart.html

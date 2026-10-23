@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/agentcore-mcp/` |
 | Approval needed | Yes: creates an AgentCore runtime, an ECR repository and an IAM role |
-| Status | BLOCKED: local PASS; AgentCore deploy waits for AWS permissions (F-004) and deploy approval |
+| Status | BLOCKED: AgentCore deployed, elicitation fix proven locally, waits for user redeploy (TAG=t03b) and rerun |
 
 ## Goal
 Prove three things about an MCP server on AgentCore Runtime:
@@ -82,8 +82,11 @@ Use them in this order:
 **ARM64 builds:** if local builds are slow or fail, build in AWS CodeBuild. The starter toolkit does this by default.
 
 ## Result
-- **Local target: PASS.** `npx tsx client.ts --target local` against the ARM64 container: `PASS protocol=2025-11-25 tools=2 ping_p50=4ms elicitation=accepted init=99ms first_ping=9ms`. MCP Inspector CLI lists both tools.
-- **AgentCore target: not run.** Prepared `template.yaml` (ECR repo, execution role per runtime-permissions.html, `AWS::BedrockAgentCore::Runtime` with `ProtocolConfiguration: MCP`, `NetworkMode: PUBLIC`, no authorizer = SigV4, idle 900 s / max 28800 s) and `deploy.sh` (two-pass stack, push image in between; `./deploy.sh destroy` tears down). Template not validated against AWS (no CloudFormation permission).
-- SigV4 wrapper (`@smithy/signature-v4`, service `bedrock-agentcore`) is accepted by AWS: a call with a dummy ARN returned 403 `not authorized to perform: bedrock-agentcore:InvokeAgentRuntime`, not a signature error.
-- Deviations: local run maps host port 18003 (port 8000 held by unrelated container `hirz-hirz-1`; client honours `MCP_URL_LOCAL`). Server adopts an `Mcp-Session-Id` sent on `initialize`, otherwise mints one (F-005). No console screenshot yet.
-- Run: `cd smoke/agentcore-mcp && npm install && docker buildx build --platform linux/arm64 --load -t dayform-smoke-mcp:local . && docker run -d -p 18003:8000 dayform-smoke-mcp:local && MCP_URL_LOCAL=http://localhost:18003/mcp npx tsx client.ts --target local`.
+- **Local target: PASS** (ARM64 container, fixed server, client GET stream disabled to mimic AgentCore): `PASS protocol=2025-11-25 tools=2 ping_p50=3ms elicitation=accepted init=113ms first_ping=10ms`. MCP Inspector CLI lists both tools.
+- **AgentCore target: partial.** Runtime `arn:aws:bedrock-agentcore:us-east-1:661550216013:runtime/dayform_smoke_mcp-mfaMgSF843` READY (user ran `deploy.sh`). initialize 741–748 ms, protocol 2025-11-25, tools=2, ping warm p50 123–125 ms, first ping 137–142 ms. `confirm_demo` timed out (-32001).
+- **Cause (F-009):** sdk 1.32.1 sends `elicitInput()` without `relatedRequestId` on the standalone GET SSE stream; AgentCore answers that GET with 405, so the request is dropped silently. Fix in server.ts: `elicitInput(params, { relatedRequestId: extra.requestId })`. T-20/T-26 must do the same for every server-to-client request.
+- Session: `mcp-session-id` == `x-amzn-bedrock-agentcore-runtime-session-id`; server-minted ID round-trips.
+- Deploy method: CloudFormation L1 `AWS::BedrockAgentCore::Runtime` via `deploy.sh` + `template.yaml`. `deploy.sh` now skips pass 1 on an existing stack (pass 1 would delete the runtime). Roll a new image with a new `TAG`.
+- Invoke URL format: `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<URL-encoded ARN>/invocations?qualifier=DEFAULT` (SigV4, service `bedrock-agentcore`). Stored in .env.local as AGENTCORE_RUNTIME_ARN and MCP_URL_AGENTCORE; client.ts reads AGENTCORE_RUNTIME_ARN by default.
+- Client debug switches: `DEBUG=1` (trace HTTP), `NO_GET=1` (405 the GET stream), `ELICIT_TIMEOUT_MS`.
+- **S7 screenshot (human step):** AgentCore console, Runtime list, then `dayform_smoke_mcp`: `https://us-east-1.console.aws.amazon.com/bedrock-agentcore/home?region=us-east-1#/agents` (deep link not verified; open the runtime from the list). Save to `smoke/agentcore-mcp/screens/`.

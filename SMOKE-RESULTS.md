@@ -48,18 +48,18 @@
   - Next input inside the reply's play time counts as barge-in (FRICTION F-008).
 
 ## T-03 · MCP on AgentCore
-- Status: BLOCKED (local target PASS; AgentCore deploy waits for IAM permissions on the AWS profile and deploy approval)
-- Negotiated protocol version: 2025-11-25 (local container)
-- Elicitation round trip (local / AgentCore): accepted / not run
-- Ping latency, warm p50 / cold: local Docker 4 ms (first ping 9 ms, initialize 59–167 ms) / AgentCore not run
-- Invoke URL format: `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<URL-encoded runtime ARN>/invocations?qualifier=DEFAULT` (from the AgentCore docs; AWS accepted our SigV4 signature on this URL and answered 403 `not authorized to perform: bedrock-agentcore:InvokeAgentRuntime`, so not yet proven end to end)
-- Deploy method (starter toolkit, CDK or CloudFormation): CloudFormation (`smoke/agentcore-mcp/template.yaml` + `deploy.sh`), prepared, not run
+- Status: BLOCKED (AgentCore deployed; protocol, session and ping PASS; elicitation failed on the first image, fix proven locally, waits for a user redeploy)
+- Negotiated protocol version: 2025-11-25 (local and AgentCore)
+- Elicitation round trip (local / AgentCore): accepted / timed out on image `t03` (`McpError -32001 Request timed out`, FRICTION F-009). Cause: server sent the elicitation on the standalone GET stream; AgentCore answers GET with 405. Fixed in server.ts (`relatedRequestId`), PASS locally with GET disabled; AgentCore rerun pending.
+- Ping latency, warm p50 / cold: AgentCore from the laptop: warm p50 123 ms (second run 125 ms), first ping 137–142 ms, initialize 741–748 ms (new session, new microVM). Local Docker: 3–4 ms.
+- Invoke URL format: `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<URL-encoded runtime ARN>/invocations?qualifier=DEFAULT`, SigV4 service `bedrock-agentcore`. Runtime ARN `arn:aws:bedrock-agentcore:us-east-1:661550216013:runtime/dayform_smoke_mcp-mfaMgSF843` (in .env.local as AGENTCORE_RUNTIME_ARN / MCP_URL_AGENTCORE).
+- Deploy method (starter toolkit, CDK or CloudFormation): CloudFormation L1 `AWS::BedrockAgentCore::Runtime` via `smoke/agentcore-mcp/deploy.sh` + `template.yaml` (stack `dayform-smoke-agentcore-mcp`; two passes on first deploy: ECR repo + role, push linux/arm64 image, then runtime). Run by the user with profile `hirz-login`; runtime READY, protocol MCP, network PUBLIC.
 - Notes:
-  - Local run: `docker run -p 18003:8000 dayform-smoke-mcp:local` (host port 8000 is taken by an unrelated container `hirz-hirz-1`); image linux/arm64, 89.6 MB, built natively in 38 s.
-  - Client output: `PASS protocol=2025-11-25 tools=2 ping_p50=4ms elicitation=accepted init=99ms first_ping=9ms`.
-  - MCP Inspector CLI (`npx @modelcontextprotocol/inspector --cli http://localhost:18003/mcp --method tools/list`) lists `ping` and `confirm_demo` with output schemas; `tools/call ping` returns `structuredContent.server_time`.
-  - SigV4 needs `bedrock-agentcore:InvokeAgentRuntime` on the caller. Deploy needs CloudFormation, ECR, IAM (create role, PassRole) and bedrock-agentcore create permissions.
-  - Stateful mode is a server choice (session ID generator), not a runtime property (FRICTION F-005).
+  - Session: `mcp-session-id` equals `x-amzn-bedrock-agentcore-runtime-session-id` on every response; the server-minted ID round-trips and keeps the same microVM (tools/list and 10 pings in one session).
+  - AgentCore returns `405` to the client's standalone `GET` SSE stream. Every server-to-client request must ride a POST response stream (applies to T-20/T-26 checkout elicitation).
+  - CloudWatch `/aws/bedrock-agentcore/runtimes/dayform_smoke_mcp-mfaMgSF843-DEFAULT` holds only the startup line `MCP server: http://0.0.0.0:8000/mcp` (12 starts over the runs, one per session plus platform starts); the server logs no request lines, so the dropped elicitation left no trace there.
+  - Fallback `CHECKOUT_CONFIRM=tool` not recorded: root cause found and fixed; decide after the redeploy rerun.
+  - Local run: host port 18003 (8000 is taken by unrelated container `hirz-hirz-1`).
 
 ## T-04 · Aurora + Data API
 - Status: BLOCKED (local PASS; cluster approved 2026-10-22, but the create call was refused by the agent permission classifier; not created)
