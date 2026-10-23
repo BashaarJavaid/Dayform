@@ -19,14 +19,19 @@
 - ARM64 build path (local buildx or CodeBuild): local, using native linux/arm64 (Apple Silicon, buildx v0.32.2). Building smoke/env/Dockerfile.arm64 with `docker buildx build --platform linux/arm64` took 5.4 s, and the container printed `aarch64`.
 - Budget: `dayform-50` created 2026-10-22: USD 50 per month, alert by email at 80% of actual spend. Checked with describe-budget and describe-notifications-for-budget.
 
-## T-01 · Claude on Bedrock
-- Status:
-- Model ID used:
-- Tool-choice mode that works (`tool` or `auto` + validate):
-- Latency p50 / max, test A (text):
-- Latency p50 / max, test B (tool use):
-- Stream time to first token / total (meal-plan JSON):
+## T-01 · Reasoning model on Bedrock (Nova, D21)
+- Status: PASS (2026-10-22, `npx tsx smoke/bedrock-claude/run.ts`)
+- Model ID used: `us.amazon.nova-2-lite-v1:0` (primary; every test passed, so the full suite did not need the fallback). A probe confirmed the fallback `us.amazon.nova-pro-v1:0` also accepts forced tool and streaming.
+- Tool-choice mode that works: `tool` (`toolChoice: {tool: {name}}`). `any` and `auto` also work. The Nova 2 guide lists all three: "Tool: The specified tool will be called once, ideal for structured output use cases" (https://docs.aws.amazon.com/nova/latest/nova2-userguide/using-tools.html). T-20 copies a forced tool plus zod as its structured-output path.
+- Latency p50 / max, test A (text): 638 / 814 ms
+- Latency p50 / max, test B (tool use, `auto`, 5/5 zod-valid): 704 / 725 ms
+- Stream time to first token / total (meal-plan JSON, forced tool, 2,416 output tokens): 10,783 / 10,786 ms
 - Notes:
+  - Nova sends a forced tool's input as **one** stream delta at the end, so TTFT is about the same as the total (F-007). For comparison, plain text streams with a TTFT of 450 ms. Plan generation of about 11 s must run in the background or the overnight job.
+  - JSON without tools (schema in the system prompt) parsed and validated, but the model wrapped it in ```` ``` ```` fences despite being told not to. Use a forced tool instead.
+  - Even the plain-text path is about 600–700 ms, over the 500 ms tool budget, which confirms that confident paths must make no LLM call (§7).
+  - Test D used maxTokens=10000 and the model stopped on its own (`stopReason=tool_use`).
+- Orchestrator re-run (2026-10-22): A, B, C PASS twice; D PASS once and FAIL once on BOTH Nova 2 Lite and Nova Pro (plan returned fewer than 4 days). Treat the forced-tool JSON for long plans as unreliable in shape: T-25 must validate and retry (its 3-round loop), and the overnight job must not assume one-shot success.
 
 ## T-02 · Nova Sonic voice
 - Status:

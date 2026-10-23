@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/bedrock-claude/` |
 | Approval needed | No. The model calls cost a few cents. |
-| Status | TODO |
+| Status | DONE |
 
 ## Goal
 Prove the server can call the Nova reasoning model (DESIGN.md D21: `REASONING_MODEL_ID` from T-00, Nova 2 Pro or Nova 2 Lite) on Bedrock, use tools, and get valid structured JSON back. Measure the latency. Wherever this ticket says Opus, read the Nova model.
@@ -50,4 +50,21 @@ Opus does every judgment call: meal plans (S4), the morning brief (S5), the reas
 3. Never Claude (D21).
 
 ## Result
-_The agent fills this in._
+2026-10-22. `npx tsx smoke/bedrock-claude/run.ts` printed `PASS primary=nova-2-lite-v1:0 fallback=nova-pro-v1:0` and exited 0:
+
+| test | model | result | p50 ms | max ms | notes |
+|---|---|---|---|---|---|
+| A text x5 | nova-2-lite-v1:0 | PASS | 638 | 814 | 5/5 runs 742/590/638/627/814 ms |
+| B tool use x5 | nova-2-lite-v1:0 | PASS | 704 | 725 | toolChoice auto; 5/5 zod-valid; [{"food":"roti","quantity":2},{"food":"daal","quantity":1,"unit":"bowl"}] |
+| C toolChoice tool | nova-2-lite-v1:0 | PASS | 595 | 595 | {tool:{name}} accepted, zod-valid, stopReason=tool_use |
+| C toolChoice any | nova-2-lite-v1:0 | PASS | 648 | 648 | {any:{}} accepted, zod-valid |
+| C toolChoice auto | nova-2-lite-v1:0 | PASS | 674 | 674 | {auto:{}} accepted, zod-valid |
+| C JSON, no tools | nova-2-lite-v1:0 | PASS | 634 | 634 | prompt-only JSON parsed + zod-valid (had code fences, stripped) |
+| D stream plan | nova-2-lite-v1:0 | PASS | 10783 (TTFT) | 10786 (total) | forced tool, streamed; 2416 output tokens, maxTokens=10000, stopReason=tool_use; 16 meals zod-valid |
+
+- Tool-choice mode for T-20: forced `{tool: {name}}` plus a zod parse. The Nova 2 guide documents tool, any and auto, and all three worked.
+- Deviations: these tests use Nova (D21), not Opus. Test C also covers `any`, `auto` and JSON without tools, as the orchestrator asked. The fallback did not run as a suite because nothing failed; a probe showed Nova Pro behaves the same on forced-tool streaming. `.env.local` was already set by T-00, so it is unchanged.
+- Finding (F-007): ConverseStream sends a forced tool's input as one delta at the end (TTFT about equal to total). Plain text streams normally (TTFT 450 ms). Treat structured output as non-streaming and run it in the background or overnight.
+- Full numbers: [SMOKE-RESULTS.md §T-01](../SMOKE-RESULTS.md).
+
+**Orchestrator verification (2026-10-22):** ran the suite twice. A–C PASS both times; D PASS once, FAIL once on both models (fewer than 4 days). Marked DONE; the D flakiness is recorded in SMOKE-RESULTS §T-01 as a T-25 risk.

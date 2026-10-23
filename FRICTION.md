@@ -84,3 +84,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: server.ts adopts an `Mcp-Session-Id` that arrives on `initialize` and otherwise mints its own, so it works either way. Unverified on AgentCore until deploy is approved.
 - Suggestion to the tool's team: state the session-ID owner for stateful MCP explicitly and add a TypeScript SDK sample.
+
+### F-007 · ConverseStream sends a forced tool's input as one delta at the end, so streaming gives no early tokens
+- Tool / service: Amazon Bedrock ConverseStream, Nova 2 Lite (`us.amazon.nova-2-lite-v1:0`) and Nova Pro (`us.amazon.nova-pro-v1:0`)
+- Ticket: T-01
+- Task attempted: Stream a ~2,400-token 4-day meal-plan JSON through a forced tool (`toolChoice: {tool: {name}}`) and measure time to first token.
+- Steps taken: `ConverseStreamCommand` with one tool and `toolChoice.tool`; counted `contentBlockDelta.delta.toolUse.input` events. Compared with the same prompt and no tools (text deltas).
+- Expected: `toolUse.input` arrives as many partial-JSON deltas while the model generates, as the Converse docs' `ToolUseBlockDelta` shape implies (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ToolUseBlockDelta.html).
+- Actual: no error, but exactly one `toolUse.input` delta carrying the whole JSON. Nova 2 Lite: forced tool TTFT 6,436 ms, total 6,438 ms, 1 delta (4,043 chars); plain text TTFT 450 ms, total 9,004 ms, 583 deltas. Nova Pro: forced tool 1 delta at 6,912 ms; text TTFT 746 ms, 356 deltas. In the T-01 meal-plan run, TTFT 10,783 ms against a total of 10,786 ms.
+- Severity: minor
+- Workaround: Treat forced-tool structured output as non-streaming: run it in the background or the overnight job with `{status: "preparing"}`. Use text streaming only where early tokens matter.
+- Suggestion to the tool's team: Document whether Nova streams tool input incrementally, or stream partial JSON as other Bedrock models do.
