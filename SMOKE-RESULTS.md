@@ -85,7 +85,7 @@
 - User clicks needed: not yet run
 - Flow screenshots: `smoke/amazon-cart/screens/`
 - Notes: 13 ASINs read 2026-10-22 from amazon.com product pages, all In Stock, shipped and sold by Amazon (table in `smoke/amazon-cart/README.md`). Link builder: `npx tsx smoke/amazon-cart/build-link.ts ASIN:QTY ...`. A signed-out curl of the add.html link returned HTTP 503 "Sorry! Something went wrong!" (bot response, not conclusive; browser test needed). No fallback used yet.
-- User check (2026-10-22, signed in): the legacy `/gp/aws/cart/add.html` link lands on an EMPTY cart (F-011). `/associates/addtocart?AssociateTag=dayform-20&ASIN.n=&Quantity.n=` (the endpoint Amazon redirects to) FILLS the cart: 3-item link worked. Signed out, the link asks for sign-in first. `build-link.ts` now emits the working format; link-3.txt and link-10.txt regenerated. **Status: PASS.** User confirmed (2026-10-22): the 10-item link in the new format added all 10 with correct quantities; the 3-item link gave quantities 1/2/1.
+- User check (2026-10-22, signed in): the legacy `/gp/aws/cart/add.html` link lands on an EMPTY cart (F-013). `/associates/addtocart?AssociateTag=dayform-20&ASIN.n=&Quantity.n=` (the endpoint Amazon redirects to) FILLS the cart: 3-item link worked. Signed out, the link asks for sign-in first. `build-link.ts` now emits the working format; link-3.txt and link-10.txt regenerated. **Status: PASS.** User confirmed (2026-10-22): the 10-item link in the new format added all 10 with correct quantities; the 3-item link gave quantities 1/2/1.
 
 ## T-06 · MCP Apps card
 - Status: PASS

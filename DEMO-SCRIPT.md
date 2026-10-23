@@ -44,7 +44,7 @@ Scene runner: `npm run demo:scene -- S1..S7|all` (`demo/`) runs each line as typ
 | Purchasing capabilities | S4 checkout |
 | Media support: cards, carousels | Every scene; S4 carousel |
 | MCP Apps | Every card |
-| AWS Builder: a multi-service pipeline | S7: Nova Sonic + AgentCore + Opus on Bedrock + Aurora + EventBridge |
+| AWS Builder: a multi-service pipeline | S7: Nova Sonic + AgentCore + Nova 2 Lite on Bedrock + Aurora + EventBridge |
 
 | Judging criterion | Scenes that carry it |
 |---|---|
