@@ -8,7 +8,7 @@
 | Depends on | T-50, T-51, [FRICTION.md](../FRICTION.md) |
 | Owns | `SUBMISSION.md` |
 | Approval needed | Human step: the user pastes the fields and submits on Devpost |
-| Status | REVIEW (waiting for the user to review, fill <REPO_URL>/<VIDEO_URL>, and submit) |
+| Status | REVIEW (all fields drafted with links; the user pastes and submits) |
 
 ## Goal
 Draft every Devpost field, ready to paste.

@@ -4,7 +4,7 @@
 
 Dayform is an Alexa+ add-on: a self-hosted MCP server with 18 tools and 8 MCP Apps cards. A web simulator plays the part of an Echo Show, with Amazon Nova 2.5 Sonic as Alexa's voice. Amazon Nova 2 Lite on Bedrock makes the judgment calls; code does the arithmetic, storage and checks.
 
-Demo video: _link added after recording_
+Demo video: https://youtu.be/7m9LHl6IT5I (2:32)
 
 Repository: https://github.com/BashaarJavaid/Dayform · Standalone simulator for any Alexa+ MCP server: https://github.com/BashaarJavaid/alexa-plus-mcp-simulator
 

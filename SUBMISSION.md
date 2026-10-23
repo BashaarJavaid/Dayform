@@ -4,7 +4,7 @@ Draft for the Build, Ship, Shape: Amazon Developer Hackathon. **Deadline: 2026-1
 
 ## Before you paste (checklist)
 
-- [ ] Replace `https://github.com/BashaarJavaid/Dayform` (T-50) and `<VIDEO_URL>` (T-51) everywhere in this file. Open both signed out; both must load.
+- [ ] Replace `https://github.com/BashaarJavaid/Dayform` (T-50) and `https://youtu.be/7m9LHl6IT5I` (T-51) everywhere in this file. Open both signed out; both must load.
 - [ ] T-40 status: the full server is deployed to AgentCore Runtime and the overnight job to Lambda + EventBridge Scheduler? If T-40 is not DONE, change the two sentences marked `[T-40]` to say the smoke deployment ran on AgentCore and the demo ran on the local container.
 - [ ] Open Source mini challenge: T-53 is DONE (repo public, MIT detected); tick it on Devpost and paste the "Open Source contribution" fields.
 - [ ] Add teammates on Devpost, if any.
@@ -30,7 +30,7 @@ Every fitness app makes you type. Logging lunch means searching a food database 
 
 Dayform is an Alexa+ add-on. You talk to Alexa, and Alexa:
 
-- **Logs meals in plain words**, desi food included. "I had two rotis, chicken karahi and a mango lassi for lunch" logs three items (904 kcal, 48.7 g protein), says what it assumed ("1 plate of chicken karahi = 250 g"), and tells you what's left today. "Actually, make that one roti" fixes it (904 → 785 kcal).
+- **Logs meals in plain words**, desi food included. "I had two rotis, chicken karahi and a mango lassi for lunch" logs three items (904 kcal, 48.7 g protein), says what it assumed ("1 plate of chicken karahi = 250 g"), and tells you what's left today. "Actually, make that one roti" fixes it (904 → 785 kcal). In the demo video Nova Sonic heard "chicken curry" instead of "karahi", so that take shows 721 → 602 kcal; both are real runs on the same seed.
 - **Runs your gym session.** "Start push day" gives today's first set (bench press 80 kg × 8); "done, eight reps" logs it, spots a new estimated-1RM PR (101.3 kg, +2.6 kg) and starts the rest timer; "my shoulder feels off, swap the overhead press" picks a shoulder-friendly alternative (landmine press 32.5 kg × 6).
 - **Plans meal prep and fills your Amazon cart.** "Plan my meal prep for the next four days and add what I need to my cart" builds a 4-day plan from a real grocery catalog, checks every day against your targets, turns it into packs to buy, asks you to confirm ("Add 12 items, about $112, to your Amazon cart?"), then hands off a real Amazon Add-to-Cart link. Alexa never places the order; you check out on Amazon.
 - **Adapts overnight.** A nightly job reviews the week. "Good morning" gives a brief: "You lost 0.3 kg this week instead of 0.4 kg, so I reduced 110 calories daily" (2,360 → 2,250 kcal), today's lead lift (squat 102.5 kg × 5), and one insight from your data (protein is 162 g on training days but 104 g on rest days).
@@ -128,11 +128,11 @@ amazon-alexa, alexa-plus, model-context-protocol, mcp-apps, amazon-bedrock, amaz
 ## "Try it out" links
 
 - Code: `https://github.com/BashaarJavaid/Dayform`
-- Demo video: `<VIDEO_URL>`
+- Demo video: `https://youtu.be/7m9LHl6IT5I`
 
 ## Video demo link
 
-`<VIDEO_URL>`
+`https://youtu.be/7m9LHl6IT5I`
 
 ## Tracks and mini challenges
 

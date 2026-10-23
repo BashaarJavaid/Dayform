@@ -76,7 +76,7 @@ Verified so far (2026-10-22): `npm install && npm test`, `npm run typecheck`, `n
 
 ## Current phase
 
-All tickets DONE on 2026-10-23 except T-51 (user records the video) and T-52 (user submits). T-53 open-source simulator shipped at github.com/BashaarJavaid/alexa-plus-mcp-simulator. Entries: Alexa+ track, AWS Builder and Open Source mini challenges. Agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
+Video published 2026-10-23 (https://youtu.be/7m9LHl6IT5I, 2:32). Repo public at github.com/BashaarJavaid/Dayform; simulator at github.com/BashaarJavaid/alexa-plus-mcp-simulator. Only T-52 (Devpost submission by the user) remains. AWS stacks stay up through judging (2026-11-09 to 11-20), then `npm run destroy` + Aurora teardown. Reasoning model is Nova only (D21).
 
 ---
 

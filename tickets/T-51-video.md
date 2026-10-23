@@ -8,7 +8,7 @@
 | Depends on | T-41 (script v1) |
 | Owns | `video/` (shot list, captions, assets; raw footage stays out of git) |
 | Approval needed | Human steps: the user records, and uploads to YouTube |
-| Status | IN PROGRESS (assets by agent; recording, edit and upload are the user's) |
+| Status | DONE (2:32, public: https://youtu.be/7m9LHl6IT5I) |
 
 ## Goal
 Produce a video under 3 minutes that shows every hero scene, and proves the technology.
@@ -61,4 +61,5 @@ The rules let judges stop watching at 3:00, and judge only from the video and th
 - `video/scripts/render.ts`: re-renders all stills (`npx tsx video/scripts/render.ts`, headless Chrome over CDP).
 - Deviations: the lower third and slide say "Nova 2 Lite on Bedrock", not "Claude Opus 5.5 on Bedrock" (the ticket list), because README and the deployed stack use Nova 2 Lite. Added an EventBridge Scheduler + Lambda lower third for S5. Do not use `smoke/agentcore-mcp/screens/agentcore-runtime-console.png` in S7: it shows the smoke runtime, the account ID and personal tabs.
 - Friction: F-018 (Homebrew ffmpeg has no `subtitles` filter; burn captions in the editor).
+- Redesign (user rejected v1 as generic, 2026-10-23): `title-card-A/B.png` and `architecture-slide-A/B.png` (A light, New York + SF Pro Text; B flat dark, Helvetica Neue; 12-column grid, square 1 px boxes, orthogonal 2 px connectors, one cyan #31C3F0 accent, no glow, gradient, pill or Inter). Lower thirds re-done as flat square rectangles in Helvetica Neue. v1 `title-card.png` and `architecture-slide.png` kept for reference; `render.ts` now renders only the new set.
 - Recording, edit, YouTube upload and links: the user (open).
