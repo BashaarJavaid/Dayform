@@ -2,5 +2,13 @@
   "name": "@dayform/demo",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"demo: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "demo": "tsx src/scene.ts all",
+    "demo:scene": "tsx src/scene.ts",
+    "demo:warm": "tsx src/warm.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1"
+  }
 }

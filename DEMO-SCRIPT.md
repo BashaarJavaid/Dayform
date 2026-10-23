@@ -4,7 +4,7 @@
 - **Status:** DRAFT v0. Ticket T-41 produces v1, which the user approves.
 - **Length:** at most 2:59. Judges may stop watching at 3:00.
 
-The numbers in the lines below are placeholders. Replace them with real system output after T-41.
+The numbers in the lines below are placeholders (S4 "$63" is the T-10 fixture total; T-13 reports the real cart total). Replace them with real system output after T-41.
 
 ---
 
@@ -21,6 +21,17 @@ The numbers in the lines below are placeholders. Replace them with real system o
 | S7 | 2:35–2:59 | Proof and close. | The tool-call trace, the AgentCore console, and MCP Inspector showing protocol 2025-11-25 over Streamable HTTP with 18 tools. Then the architecture slide and the tagline. | T-40, T-50 |
 
 **Safe lines.** Every spoken line has a typed version. If voice recognition fails during a take, type the line.
+
+Known mishearings (Nova 2.5 Sonic food-word test, 2026-10-22, `smoke/nova-sonic/food-words.md`; run-on speech, harsher than the takes):
+
+| Line | Heard as | Plan |
+|---|---|---|
+| "start push day" (S3) | "start pushte" | T-30 prompt names the program days; type the line if misheard |
+| "Done, eight reps." (S3) | "done eight trips" | T-30 prompt says "reps" may be heard as "trips"; type the line if misheard |
+| "Dayform" (any) | "day form" | No script line says "Dayform" aloud; keep it that way |
+| "chicken karahi" (S1) | "chicken karai" | T-12 alias `karai`; no action |
+
+Scene runner: `npm run demo:scene -- S1..S7|all` (`demo/`) runs each line as typed text and asserts the tools and key fields; `npm run demo:warm` is the warm-up.
 
 ---
 
@@ -56,13 +67,13 @@ States:
 
 | Scene | Text mode | Voice mode | Real tools used | Last run | Notes |
 |---|---|---|---|---|---|
-| S1 | NOT STARTED | NOT STARTED | — | — | — |
-| S2 | NOT STARTED | NOT STARTED | — | — | — |
-| S3 | NOT STARTED | NOT STARTED | — | — | — |
-| S4 | NOT STARTED | NOT STARTED | — | — | — |
-| S5 | NOT STARTED | NOT STARTED | — | — | — |
-| S6 | NOT STARTED | NOT STARTED | — | — | — |
-| S7 | NOT STARTED | NOT STARTED | — | — | — |
+| S1 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | log_meal: 3 items, 1 assumed (karahi plate), totals + protein left. 4–14 ms. |
+| S2 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | correct_meal: meal 928 → 808 kcal, day 1438 → 1318 kcal (fixture numbers). |
+| S3 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | start_workout → log_set (is_pr) → swap_exercise → finish_workout (off-script turn). Max 13 ms. |
+| S4 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | 4 tools in one turn; elicitation auto-accepted ("Add 14 items, about $63…"); link returned. $63.41 is the T-10 placeholder; T-13 gives the real total. Max 83 ms. |
+| S5 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | get_morning_brief with targets_change −150 kcal. advance-day not exercised (mock has no admin routes). |
+| S6 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | get_progress: 7 points, 88.7 → 101.3 kg. |
+| S7 | MOCK | NOT STARTED | none (mock, mcp driver) | 2026-10-22 | tools/list: 18 tools, protocol 2025-11-25 (19 with CHECKOUT_CONFIRM=tool, also passes). |
 
 ---
 
