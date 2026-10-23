@@ -49,7 +49,7 @@ describe("mock MCP server", () => {
     expect((yes.elicitations[0] as { message: string }).message).toBe("Add 14 items, about $63, to your Amazon cart?");
     expect((r.structuredContent as any).checkout.status).toBe("confirmed");
     expect((r.structuredContent as any).add_to_cart_url).toMatch(
-      /^https:\/\/www\.amazon\.com\/gp\/aws\/cart\/add\.html\?/,
+      /^https:\/\/www\.amazon\.com\/associates\/addtocart\?AssociateTag=/,
     );
 
     const no = await connect(url, { action: "decline" });
