@@ -45,19 +45,21 @@ export function adminRouter() {
     res.json({ ok: true, clock: (await clock.now()).toISOString(), ms: Math.round(performance.now() - t0) });
   });
 
-  r.post(ADMIN_ROUTES.advanceDay.path, async (_req, res) => {
-    const t0 = performance.now();
-    // TODO(T-27): run runOvernight() here before moving the clock.
-    const next = await clock.now();
-    next.setDate(next.getDate() + 1);
-    next.setHours(7, 0, 0, 0);
-    await clock.set(next);
-    res.json({
-      ok: true,
-      clock: next.toISOString(),
-      overnight: { mode: env.overnightMode(), ms: Math.round(performance.now() - t0) },
-      note: "overnight job not wired yet (T-27); clock moved only",
-    });
+  r.post(ADMIN_ROUTES.advanceDay.path, async (_req, res, next) => {
+    try {
+      // T-27: prepare the next day (OVERNIGHT_MODE live or cached), then move the clock to 07:00 of it in DEMO_TZ.
+      const { prepareDay, zonedTime } = await import("../tools/brief/overnight.ts");
+      const { addDays, localDate } = await import("../domain/targets/index.ts");
+      const t0 = performance.now();
+      const date = addDays(localDate(await clock.now()), 1);
+      const steps: string[] = [];
+      const r = await prepareDay(date, env.overnightMode(), (m) => steps.push(m));
+      const at = zonedTime(date, "07:00");
+      await clock.set(at);
+      res.json({ ok: true, clock: at.toISOString(), overnight: { mode: r.mode, ms: Math.round(performance.now() - t0) }, date, steps });
+    } catch (e) {
+      next(e);
+    }
   });
 
   r.post(ADMIN_ROUTES.timerSpeed.path, async (req, res) => {

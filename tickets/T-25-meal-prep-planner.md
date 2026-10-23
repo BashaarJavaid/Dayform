@@ -8,7 +8,7 @@
 | Depends on | T-20 (LLM client), T-12 (nutrients), T-13 (catalog), T-21 (targets) |
 | Owns | `server/src/tools/meal-prep/`, `server/src/domain/meal-prep/` |
 | Approval needed | No |
-| Status | TODO |
+| Status | DONE (cost-tightening pass in progress) |
 
 ## Goal
 Generate meal-prep plans with Opus that hit the user's targets, use only catalog items, and pass code checks. The tool `plan_meal_prep` returns the plan.
@@ -72,4 +72,25 @@ S4 is the main hero scene. The carousel of recipes and the grocery list that flo
 - **Plans keep missing tolerance:** lower the number of recipes (3 recipes for 4 days), and let code scale the servings to hit calories before checking.
 
 ## Result
-_The agent fills this in._
+2026-10-23 (PKT). Model: Nova 2 Lite (`REASONING_MODEL_ID`) via `server/src/core/llm.ts`, forced tool + ConverseStream.
+
+**Built**
+- `server/src/domain/meal-prep/plan.ts`: `generatePlan`. The model gets the targets, preferences, constraints, a per-meal calorie split and the catalog as a compact table (id, name, kcal/P/C/F per 100 g, pack). It returns 3–5 recipes (grams per serving), 1–2 day menus (days alternate A/B, so a wrong day count can't happen) and one batch-cook session. Zod rejects any unknown catalog id (an enum). **Code then fits the grams** (ticket fallback 2, on by default): coordinate descent on a weighted least-squares error, each ingredient at 0.5–2× the model's grams (cooking fats 0.25–4×, spices fixed), plus a soft term that keeps each meal near its share of calories. Grams are rounded, then every day is checked (kcal ±5%, protein ≥ −5%, carbs/fat ±10%). Misses go back to the model as `day N: nutrient value, target T (rule)`, up to 3 rounds, keeping the best plan. `groceryList`: grams over servings → `ceil(grams / grams_per_pack)` packs → price.
+- Availability: T-13's per-item `available` flag if it exists; otherwise only `shelf_stable` items plus `chicken-breast-frozen`. "no X" / "without X" constraints also remove matching catalog items in code.
+- `store.ts`: `meal_plans` rows (`preparing` → `ready`/`failed`, start/end date, plan JSON). `totals` holds `{constraints, avg, grocery (packs, prices), grocery_total_usd, rounds, seconds}`. Also `startPlan` (fire-and-forget), `ensureFreshPlan(start, days=4)` and `planInputs(start)` for T-27.
+- `server/src/tools/meal-prep/index.ts`: `plan_meal_prep`. A fresh ready plan (start today or tomorrow, enough days) is returned with no LLM call. With constraints, or with no plan, it inserts `preparing`, generates in the background and returns `preparing`; repeat calls say "still making", and the next call after that returns the plan. A `preparing` row older than 240 s counts as dead.
+- `server/test/meal-prep.test.ts` (6 tests), `npm run mealprep:bench -w @dayform/server -- --runs N [--constraints "…"]`, log in `server/src/domain/meal-prep/bench-log.md`.
+
+**Verification**
+- Bench (seed targets 2360 / 165 / 277 / 66): 10/10 within tolerance, all in round 1, 3.0–4.2 s each (second 10-run table in bench-log.md); "no chicken" 5/5. One live run *before* the fat-range change missed fat on all days (56 g vs 66) after 3 rounds; that is why cooking fats got the wider 0.25–4× range.
+- `npm test -w @dayform/server -- meal-prep`: 6 passed (grocery maths; unknown id rejected; catalog-only; recomputed day totals within 1%; misses sent back, best kept after 3 rounds; MCP fast path and constraints path).
+- Live, after `npm run db:reset`: `ensureFreshPlan("2026-10-24")` stored plan 1 (1 round, 4.4 s, all days 2352 kcal / 166 P / 280 C / 66 F). MCP `plan_meal_prep {}` took 107 ms cold, then 6–17 ms (server log). `{constraints:"no chicken"}` returned `preparing` in 44 ms with progress "Planning recipes…". The plan was ready 4.8 s later, and the next call (42 ms) returned 4 chicken-free recipes, 2369 / 163 / 294 / 64 a day.
+
+**Deviations**
+- `MealPrepCard` has no `eta_seconds`, storage-notes, packs or price fields. The ETA goes in `message` and the text, storage goes in the last batch-cook steps, and packs and price go in `meal_plans.totals.grocery` and in the spoken text.
+- Progress messages sent after the `preparing` response ("Checking macros…") have no open stream and are dropped. Only "Planning recipes…" reaches the client.
+- Bench rows report rounds = 3 when the plan stays out of tolerance.
+
+**Demo risk: grocery cost.** Real totals run $132–219 with 15–19 items, because whole packs are bought: whey is $48, olive oil $21, oats $17, milk $15, honey $14 and ginger-garlic paste $14. The model ignores the prompt's "at most 11 items". Options for the orchestrator: a code-enforced item cap as a revision miss, or marking the pricey packs unavailable.
+
+**Orchestrator close-out (2026-10-22):** verified 6 tests and a 3-run bench (3/3 within tolerance, 3–6 s, round 1–2). Grocery total $190–200 for 17–19 items is too high for S4; follow-up: cap distinct items at 12 and avoid whey/honey/olive oil unless needed, target ≤ $120. DONE.

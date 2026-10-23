@@ -2,7 +2,7 @@
 // tool's fast path uses, background generation for the constraints path, and ensureFreshPlan for T-27.
 import { sql } from "drizzle-orm";
 import type { Macros, MealPlan } from "@dayform/contracts";
-import { getDb, query, schema } from "../../core/db.ts";
+import { query } from "../../core/db.ts";
 import { clock } from "../../core/clock.ts";
 import { addDays, localDate, targetsOn } from "../targets/index.ts";
 import { generatePlan, type Generated, type GroceryLine, type Preferences } from "./plan.ts";
@@ -31,7 +31,7 @@ export interface PlanRow {
 
 /** Seconds after which a `preparing` row counts as dead (server restarted mid-generation). */
 export const STALE_S = 240;
-export const ETA_S = 30;
+export const ETA_S = 15;
 export const normConstraints = (c?: string) => (c ?? "").trim().toLowerCase().replace(/\s+/g, " ");
 
 /** Plan inputs for a start date: the targets in force then, and the profile's preferences. */
@@ -66,12 +66,10 @@ export const coversDays = (r: PlanRow, days: number) =>
   (Date.parse(`${r.end_date}T00:00:00Z`) - Date.parse(`${r.start_date}T00:00:00Z`)) / 864e5 + 1 >= days;
 
 async function insertRow(status: PlanRow["status"], start: string, days: number, meta: PlanMeta) {
-  const db = await getDb();
-  const [row] = await db
-    .insert(schema.meal_plans)
-    .values({ status, start_date: start, end_date: addDays(start, days - 1), plan: null, totals: meta, within_tolerance: null, created_at: (await clock.now()).toISOString() })
-    .returning({ id: schema.meal_plans.id });
-  return row.id;
+  const at = (await clock.now()).toISOString();
+  const [row] = await query<{ id: number }>(sql`INSERT INTO meal_plans (status, start_date, end_date, totals, created_at)
+    VALUES (${status}, ${start}::date, ${addDays(start, days - 1)}::date, ${JSON.stringify(meta)}::jsonb, ${at}::timestamptz) RETURNING id`);
+  return Number(row.id);
 }
 
 function metaOf(g: Generated, constraints: string): PlanMeta {

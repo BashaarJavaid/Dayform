@@ -11,6 +11,8 @@ type M = (typeof MACROS)[number];
 export const MAX_ROUNDS = 3;
 /** Code may scale each ingredient between these multiples of the model's grams (ticket fallback 2, used by default). */
 const SCALE = [0.5, 2] as const;
+/** Cooking fat is the knob for the fat target, so it gets a wider range. */
+const FAT_SCALE = [0.25, 4] as const;
 /** Share of the day's calories per meal (prompt and soft fitting term). */
 const SHARE = { breakfast: 0.25, lunch: 0.3, dinner: 0.3, snack: 0.15 } as const;
 
@@ -246,7 +248,7 @@ function prompt(input: GenerateInput, cat: PlanItem[], prev?: { draft: Draft; mi
         ? `Your last plan was rejected: ${prev.error}`
         : `Your last plan, after scaling each ingredient between ${SCALE[0]}x and ${SCALE[1]}x, still misses:\n` +
             prev.misses.map((m) => `- day ${m.day}: ${m.nutrient} ${m.value}, target ${m.target} (${m.rule})`).join("\n") +
-            `\nIts recipes per serving were:\n${prev.recipeLines}\nChange the ingredients or recipes to fix every miss (more protein: chicken, tuna, whey, lentils; less fat: less oil, ghee, nuts; more carbs: rice, atta, oats).`,
+            `\nIts recipes per serving were:\n${prev.recipeLines}\nChange the ingredients or recipes to fix every miss (more protein: chicken, tuna, whey, lentils; fat: ghee, oil, almonds, peanut butter up or down; more carbs: rice, atta, oats).`,
       `Last plan for reference: ${JSON.stringify(prev.draft)}`,
     );
   }
@@ -260,7 +262,11 @@ function build(draft: Draft, input: GenerateInput, cat: PlanItem[]) {
   const recs = new Map<string, Rec>();
   for (const r of draft.recipes) {
     if (recs.has(r.id)) throw new Error(`recipe id ${r.id} is used twice`);
-    const ings = r.ingredients.map((i) => ({ item: byId.get(i.item)!, grams: i.grams, lo: i.grams * SCALE[0], hi: i.grams * SCALE[1] }));
+    const ings = r.ingredients.map((i) => {
+      const item = byId.get(i.item)!;
+      const [lo, hi] = item.category === "fats" ? FAT_SCALE : SCALE;
+      return { item, grams: i.grams, lo: i.grams * lo, hi: i.grams * hi };
+    });
     recs.set(r.id, { id: r.id, name: r.name, steps: r.steps, ings });
   }
   const menus = draft.day_menus.map((d) => MEALS.map((m) => d[m]));
