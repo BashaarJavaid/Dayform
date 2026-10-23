@@ -1,0 +1,16 @@
+{
+  "metric": "e1rm",
+  "exercise": "bench press",
+  "unit": "kg",
+  "range_weeks": 6,
+  "series": [
+    { "date": "2026-09-11", "value": 88.7 },
+    { "date": "2026-09-18", "value": 91.8 },
+    { "date": "2026-09-25", "value": 92.5 },
+    { "date": "2026-10-02", "value": 95.0 },
+    { "date": "2026-10-09", "value": 95.6 },
+    { "date": "2026-10-16", "value": 98.2 },
+    { "date": "2026-10-23", "value": 101.3 }
+  ],
+  "summary": { "start": 88.7, "end": 101.3, "change": 12.7, "change_pct": 14.3 }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@dayform/jobs-overnight",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": { "test": "echo \"jobs-overnight: no tests yet\"" }
+}

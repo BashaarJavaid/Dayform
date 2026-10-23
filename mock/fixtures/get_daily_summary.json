@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-23",
+  "eaten": {
+    "kcal": 1318,
+    "protein_g": 79,
+    "carbs_g": 131,
+    "fat_g": 53,
+    "fiber_g": 11,
+    "sodium_mg": 2010,
+    "water_ml": 1250
+  },
+  "targets": {
+    "kcal": 2300,
+    "protein_g": 160,
+    "carbs_g": 258,
+    "fat_g": 70,
+    "fiber_g": 30,
+    "sodium_mg": 2300,
+    "water_ml": 3000
+  },
+  "meals": [
+    {
+      "id": "meal-0422",
+      "meal": "breakfast",
+      "logged_at": "2026-10-23T08:15:00+05:00",
+      "item_count": 3,
+      "totals": { "kcal": 510, "protein_g": 32, "carbs_g": 55, "fat_g": 18 }
+    },
+    {
+      "id": "meal-0423",
+      "meal": "lunch",
+      "logged_at": "2026-10-23T13:02:00+05:00",
+      "item_count": 3,
+      "totals": { "kcal": 808, "protein_g": 47, "carbs_g": 76, "fat_g": 35 }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+# Local services. `docker compose up -d postgres mock`.
+# The server and simulator are placeholders until T-20 / T-30; start them with `--profile later`.
+name: dayform
+services:
+  postgres:
+    image: postgres:17
+    container_name: dayform-pg
+    # Same host port, database and password as DATABASE_URL in .env.local (the password is read from it).
+    ports: ["127.0.0.1:5433:5432"]
+    env_file: [{ path: .env.local, required: true }]
+    environment:
+      POSTGRES_DB: dayform
+    entrypoint:
+      - sh
+      - -c
+      - export POSTGRES_PASSWORD="$$(echo "$$DATABASE_URL" | sed -E 's|^[^:]+://[^:]+:([^@]+)@.*|\1|')"; exec docker-entrypoint.sh postgres
+    configs:
+      - source: pg_trgm
+        target: /docker-entrypoint-initdb.d/01-pg_trgm.sql
+    volumes: [dayform-pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "dayform"]
+      interval: 2s
+      retries: 15
+
+  mock:
+    build: { context: ., dockerfile: mock/Dockerfile }
+    ports: ["127.0.0.1:8100:8100"]
+    environment:
+      CHECKOUT_CONFIRM: ${CHECKOUT_CONFIRM:-elicitation}
+      MOCK_PASSTHROUGH_URL: ${MOCK_PASSTHROUGH_URL:-}
+      REAL_TOOLS: ${REAL_TOOLS:-}
+
+  server:
+    profiles: [later]
+    image: node:23-slim
+    # Placeholder until T-20. Host port 8000 is taken by another container, so the server maps to 8001.
+    command: ["node", "-e", "console.log('server placeholder: T-20 replaces this'); setInterval(() => {}, 1 << 30)"]
+    ports: ["127.0.0.1:8001:8000"]
+
+  simulator:
+    profiles: [later]
+    image: node:23-slim
+    command: ["node", "-e", "console.log('simulator placeholder: T-30 replaces this'); setInterval(() => {}, 1 << 30)"]
+
+configs:
+  pg_trgm:
+    content: "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+
+volumes:
+  dayform-pgdata:

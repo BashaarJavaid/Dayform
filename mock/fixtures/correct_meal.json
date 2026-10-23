@@ -1,0 +1,73 @@
+{
+  "entry": {
+    "id": "meal-0423",
+    "meal": "lunch",
+    "logged_at": "2026-10-23T13:02:00+05:00",
+    "items": [
+      {
+        "food": "roti",
+        "said": "one roti",
+        "quantity": 1,
+        "unit": "roti",
+        "grams": 40,
+        "macros": { "kcal": 120, "protein_g": 3, "carbs_g": 20, "fat_g": 3 },
+        "assumed": false,
+        "estimated": false,
+        "assumption": null
+      },
+      {
+        "food": "chicken karahi",
+        "said": "chicken karahi",
+        "quantity": 1,
+        "unit": "plate",
+        "grams": 250,
+        "macros": { "kcal": 418, "protein_g": 36, "carbs_g": 10, "fat_g": 26 },
+        "assumed": true,
+        "estimated": false,
+        "assumption": "1 plate (250 g) of chicken karahi"
+      },
+      {
+        "food": "mango lassi",
+        "said": "a mango lassi",
+        "quantity": 1,
+        "unit": "glass",
+        "grams": 300,
+        "macros": { "kcal": 270, "protein_g": 8, "carbs_g": 46, "fat_g": 6 },
+        "assumed": false,
+        "estimated": false,
+        "assumption": null
+      }
+    ],
+    "totals": { "kcal": 808, "protein_g": 47, "carbs_g": 76, "fat_g": 35 }
+  },
+  "day": {
+    "eaten": {
+      "kcal": 1318,
+      "protein_g": 79,
+      "carbs_g": 131,
+      "fat_g": 53,
+      "fiber_g": 11,
+      "sodium_mg": 2010,
+      "water_ml": 1250
+    },
+    "targets": {
+      "kcal": 2300,
+      "protein_g": 160,
+      "carbs_g": 258,
+      "fat_g": 70,
+      "fiber_g": 30,
+      "sodium_mg": 2300,
+      "water_ml": 3000
+    },
+    "remaining": {
+      "kcal": 982,
+      "protein_g": 81,
+      "carbs_g": 127,
+      "fat_g": 17,
+      "fiber_g": 19,
+      "sodium_mg": 290,
+      "water_ml": 1750
+    }
+  },
+  "changes_applied": ["roti: 2 → 1"]
+}

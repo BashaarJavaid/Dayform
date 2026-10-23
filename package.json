@@ -1,0 +1,36 @@
+{
+  "name": "dayform",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "workspaces": [
+    "packages/contracts",
+    "packages/food-search",
+    "server",
+    "simulator/backend",
+    "simulator/frontend",
+    "cards",
+    "jobs/overnight",
+    "db",
+    "data",
+    "infra",
+    "mock",
+    "demo"
+  ],
+  "scripts": {
+    "mock": "npm run start -w @dayform/mock",
+    "dev": "echo 'npm run dev: the real MCP server arrives with T-20; use npm run mock' && exit 1",
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "tsc -p packages/contracts && tsc -p mock",
+    "demo": "echo 'npm run demo: the Demo Monitor fills this in (T-41)' && exit 1",
+    "format": "prettier --write packages mock"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "zod": "^4.6.7"
+  }
+}

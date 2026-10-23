@@ -195,7 +195,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 | `ALEXA_VOICE` | Sonic voice ID, for example `tiffany` | simulator backend |
 | `UNDERSTANDING` | `alexa` (default), `server` | server |
 | `VOICE_ENGINE` | `sonic` (default), `pipeline`, `text` | simulator backend |
-| `MCP_URL` | `http://localhost:8000/mcp` (real server), `http://localhost:8100/mcp` (mock), or the AgentCore invoke URL | simulator backend, mock |
+| `MCP_URL` | `http://localhost:8001/mcp` (real server on this laptop: host port 8000 is taken by another project's container, so local dev and compose map the server to 8001; inside the container it still listens on 8000 per the AgentCore contract), `http://localhost:8100/mcp` (mock), or the AgentCore invoke URL | simulator backend, mock |
 | `MCP_AUTH` | `none`, `sigv4` | simulator backend |
 | `DB_DRIVER` | `pg`, `data-api` | server, jobs, db |
 | `DATABASE_URL` | local Postgres URL | `pg` driver |
@@ -219,7 +219,7 @@ The orchestrator updates the **Chosen** column at Gate G0.
 | Alexa voice | Nova 2.5 Sonic | T-02 | Nova 2 Sonic → Sonic in us-west-2 → Transcribe + Nova + Polly → Web Speech + Polly → text + Polly | **Nova 2.5 Sonic** `amazon.nova-2-5-sonic`, voice tiffany (PASS; tool turns ~1.2 s to first audio; renew session before 8 min) |
 | MCP hosting | AgentCore Runtime (stateful, SigV4) | T-03 | ECS Fargate + ALB sticky sessions → Lambda + two-step confirm → local server | **AgentCore** (PASS; ping p50 118 ms, elicitation 230 ms with relatedRequestId; CloudFormation L1 deploy via smoke/agentcore-mcp/deploy.sh) |
 | Database | Aurora PG Serverless v2 + Data API | T-04 | Aurora direct connection in a VPC → RDS PostgreSQL → local Postgres → DynamoDB + in-memory search | **Aurora 17.11 + Data API** (PASS; p50 81 ms from laptop), Drizzle ORM 0.45 with node-postgres locally; cluster `dayform-db` |
-| Cart hand-off | Amazon Add-to-Cart link | T-05 | Search links → Amazon Fresh search links → QR code + product pages | — |
+| Cart hand-off | Amazon Add-to-Cart link | T-05 | Search links → Amazon Fresh search links → QR code + product pages | Add-to-Cart link prepared (13 real ASINs, builder in smoke/amazon-cart/build-link.ts); user's signed-in check pending; fallback 1 (search links) is always available |
 | Cards | MCP Apps (`@modelcontextprotocol/ext-apps`) | T-06 | Native React cards from `structuredContent` | **MCP Apps** (PASS; callback works; ~600 KB bundle) |
 | Scheduler | EventBridge Scheduler + Lambda | T-07 | In-process job through the admin route | **EventBridge Scheduler + Lambda nodejs24.x** (PASS; stack `dayform-smoke-scheduler-lambda`) |
 | Food data | USDA FoodData Central bulk CSV | T-12 | FDC API (key) → Opus estimate | — |

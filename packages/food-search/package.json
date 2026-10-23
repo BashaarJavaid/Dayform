@@ -1,0 +1,8 @@
+{
+  "name": "@dayform/food-search",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo \"food-search: no tests yet\""
+  }
+}

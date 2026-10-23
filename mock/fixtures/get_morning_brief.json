@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-24",
+  "yesterday": {
+    "eaten": { "kcal": 2240, "protein_g": 152, "carbs_g": 236, "fat_g": 72 },
+    "targets": { "kcal": 2300, "protein_g": 160, "carbs_g": 258, "fat_g": 70 },
+    "workout": "Push"
+  },
+  "weight": { "change_kg_week": -0.2, "planned_kg_week": -0.5 },
+  "insight": "Bench press estimated 1RM is up 12.7 kg in 6 weeks, and you hit your protein target on 6 of the last 7 days.",
+  "today": {
+    "workout": { "day_name": "Legs", "lead": { "exercise": "back squat", "weight_kg": 102.5, "reps": 5 } },
+    "targets": {
+      "kcal": 2150,
+      "protein_g": 160,
+      "carbs_g": 220,
+      "fat_g": 70,
+      "fiber_g": 30,
+      "sodium_mg": 2300,
+      "water_ml": 3000
+    }
+  },
+  "targets_change": {
+    "kcal_delta": -150,
+    "previous_kcal": 2300,
+    "reason": "You lost 0.2 kg this week, slower than the 0.5 kg planned, so daily calories drop by 150 (from carbs)."
+  }
+}

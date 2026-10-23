@@ -1,0 +1,6 @@
+{
+  "name": "@dayform/cards",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": { "test": "echo \"cards: no tests yet\"" }
+}

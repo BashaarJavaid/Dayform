@@ -1,0 +1,51 @@
+{
+  "prs": [
+    {
+      "exercise": "bench press",
+      "kind": "e1rm",
+      "weight_kg": 80,
+      "reps": 8,
+      "e1rm_kg": 101.3,
+      "previous_e1rm_kg": 98.2,
+      "change_kg": 3.2
+    }
+  ],
+  "session_id": "ws-2026-10-23",
+  "day_name": "Push",
+  "duration_min": 52,
+  "exercises": [
+    {
+      "exercise": "bench press",
+      "sets": [
+        { "set": 1, "weight_kg": 80, "reps": 8, "rpe": null },
+        { "set": 2, "weight_kg": 80, "reps": 8, "rpe": null },
+        { "set": 3, "weight_kg": 80, "reps": 7, "rpe": 9 }
+      ]
+    },
+    {
+      "exercise": "landmine press",
+      "sets": [
+        { "set": 1, "weight_kg": 25, "reps": 10, "rpe": null },
+        { "set": 2, "weight_kg": 25, "reps": 10, "rpe": null },
+        { "set": 3, "weight_kg": 25, "reps": 10, "rpe": null }
+      ]
+    },
+    {
+      "exercise": "incline dumbbell press",
+      "sets": [
+        { "set": 1, "weight_kg": 28, "reps": 10, "rpe": null },
+        { "set": 2, "weight_kg": 28, "reps": 10, "rpe": null },
+        { "set": 3, "weight_kg": 28, "reps": 10, "rpe": null }
+      ]
+    },
+    {
+      "exercise": "triceps pushdown",
+      "sets": [
+        { "set": 1, "weight_kg": 30, "reps": 12, "rpe": null },
+        { "set": 2, "weight_kg": 30, "reps": 12, "rpe": null },
+        { "set": 3, "weight_kg": 30, "reps": 12, "rpe": null }
+      ]
+    }
+  ],
+  "total_volume_kg": 4510
+}

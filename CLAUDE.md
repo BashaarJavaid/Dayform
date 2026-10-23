@@ -59,12 +59,12 @@ Each kind of record has one home. Write it there once and link to it; never past
 
 ## Commands
 
-No code exists yet; these are the target commands named in the tickets. Mark them verified here as they land.
+Verified so far (2026-10-22): `npm install && npm test`, `npm run typecheck`, `npm run mock`, `docker compose up -d postgres mock`, the Wave 0 smoke runners under `smoke/*`. The rest are targets named in the tickets.
 
 - `npm install && npm test` — install workspaces and run all tests; `npm test -w <workspace> [-- <filter>]` for one workspace.
 - `npx tsx smoke/<service>/run.ts [--target local|aurora|agentcore]` — Wave 0 smoke tests (T-01–T-07); `npm run smoke:sonic`, `npm run smoke:apps`.
 - `npm run mock` — mock MCP server on 8100 with fixtures and hybrid mode (T-10).
-- `npm run dev` — real MCP server on `http://localhost:8000/mcp`; `docker-compose.yml` for local Postgres.
+- `npm run dev` — real MCP server on `http://localhost:8001/mcp` locally (8000 is taken on this laptop; the container still listens on 8000); `docker-compose.yml` for local Postgres (`dayform-pg`, port 5433).
 - `npm run db:reset` — reset to the seed state in seconds; `npm run db:report` — summarize the seed.
 - `npm run catalog:link` — check grocery ASINs and the Add-to-Cart link (T-13).
 - `npm run sim:backend`, `npm run sim:frontend` — the simulator; `npm run sim:probe -- "<utterance>"` sends one typed request through it.
@@ -76,7 +76,7 @@ No code exists yet; these are the target commands named in the tickets. Mark the
 
 ## Current phase
 
-Planning is done (`PLAN.md`, `DESIGN.md`, 30 tickets). Wave 0 started 2026-10-22: T-00 AWS access, then smoke tests T-01–T-07; Gate G0 is OPEN and Wave 1 waits for it. Git repo exists; agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
+Wave 0 done 2026-10-22 (T-00–T-04, T-06, T-07 PASS; T-05 link prepared, user's cart check pending). Gate G0 PASSED. T-10 scaffold, contracts and mock DONE. Wave 1 (T-11, T-12, T-13), T-20 and the Demo Monitor started 2026-10-22. Agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
 
 ---
 

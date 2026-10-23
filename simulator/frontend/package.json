@@ -1,0 +1,6 @@
+{
+  "name": "@dayform/simulator-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": { "test": "echo \"simulator-frontend: no tests yet\"" }
+}

@@ -1,6 +1,6 @@
 # Smoke Test Results
 
-- **Gate G0 status:** OPEN
+- **Gate G0 status:** PASSED 2026-10-22 (T-05 user check pending; fallback available)
 - **Rule:** each Wave 0 agent fills in its own section.
 - **Status values:**
   - **PASS**
@@ -111,7 +111,7 @@
 
 The orchestrator fills this in.
 
-- Date:
-- User approval:
-- Chosen services: copied into [DESIGN.md §10](DESIGN.md#10-services-and-fallbacks)
-- Open risks:
+- Date: 2026-10-22
+- User approval: the user asked to start Wave 1 as soon as nothing blocks it; T-05's human cart check is the only open Wave 0 item and its fallback (search links) is always available.
+- Chosen services: copied into [DESIGN.md §10](DESIGN.md#10-services-and-fallbacks): Nova 2 Lite, Nova 2.5 Sonic (tiffany), AgentCore Runtime (CloudFormation L1), Aurora 17.11 + Data API with Drizzle, MCP Apps cards, EventBridge Scheduler + Lambda, Add-to-Cart link (pending user check).
+- Open risks: Nova long forced-tool JSON is flaky (validate and retry); every Nova call ~650 ms so tools must avoid LLM calls on the confident path; Sonic tool turns ~1.2 s to first audio; Sonic mishears "push day", "reps", "Dayform" (safe lines, prompt hints); AgentCore elicitation only works with relatedRequestId; the T-10 cart fixture total ($63) is a placeholder, real catalog prices will differ.

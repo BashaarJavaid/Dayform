@@ -117,3 +117,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: major
 - Workaround: `server.server.elicitInput(params, { relatedRequestId: extra.requestId })` so the request rides the tool call's POST SSE response. Local PASS with GET disabled; AgentCore rerun pending redeploy.
 - Suggestion to the tool's team: SDK: default `elicitInput` inside a tool handler to the current request's stream, or warn when a request is dropped. AgentCore docs: state that the standalone GET stream is not supported (405) and that server-to-client requests must be on the POST response stream.
+
+### F-010 · npm 10.9.2 crashes resolving vitest 4.x/5.x peer dependencies ("Cannot read properties of null (reading 'edgesOut')")
+- Tool / service: npm 10.9.2 (bundled with Node 23.11.0, Homebrew), vitest 5.0.5 and 4.1.12
+- Ticket: T-10
+- Task attempted: `npm install` for the new workspace root with `vitest` as a devDependency.
+- Steps taken: `npm install` with vitest ^5.0.5; clean retry (`rm -rf node_modules package-lock.json`); vitest ^4.1.12; then a scratch folder whose package.json has only `"vitest": "^4.1.12"`.
+- Expected: vitest installs.
+- Actual: every attempt fails with `npm error Cannot read properties of null (reading 'edgesOut')`; the debug log stack is `#loadPeerSet (@npmcli/arborist/lib/arborist/build-ideal-tree.js:1289:38)`, right after fetching the `@vitest/ui` packument (vitest's optional peers). Same failure in a scratch folder with vitest alone. `--legacy-peer-deps` installs fine; vitest ^3.2.4 installs fine.
+- Severity: minor
+- Workaround: pinned vitest ^3.2.4 (installed 3.2.7). `npm audit` then reports advisories for vitest 3.x's `@vitest/mocker` and `tinypool` (dev-only test runner; fixed in vitest ≥ 4.1.12, which this npm cannot install without `--legacy-peer-deps`).
+- Suggestion to the tool's team: npm: fail with a message naming the peer set instead of a null dereference. Vitest: note the minimum npm version for its optional-peer set.

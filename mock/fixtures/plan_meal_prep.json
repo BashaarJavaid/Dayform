@@ -1,0 +1,380 @@
+{
+  "status": "ready",
+  "message": null,
+  "plan": {
+    "plan_id": "plan-2026-10-24",
+    "start_date": "2026-10-24",
+    "targets": {
+      "kcal": 2300,
+      "protein_g": 160,
+      "carbs_g": 258,
+      "fat_g": 70
+    },
+    "days": [
+      {
+        "date": "2026-10-24",
+        "meals": [
+          {
+            "meal": "breakfast",
+            "recipe_id": "r1"
+          },
+          {
+            "meal": "lunch",
+            "recipe_id": "r2"
+          },
+          {
+            "meal": "dinner",
+            "recipe_id": "r3"
+          },
+          {
+            "meal": "snack",
+            "recipe_id": "r4"
+          }
+        ],
+        "totals": {
+          "kcal": 2340,
+          "protein_g": 165,
+          "carbs_g": 247,
+          "fat_g": 72
+        },
+        "within_tolerance": true
+      },
+      {
+        "date": "2026-10-25",
+        "meals": [
+          {
+            "meal": "breakfast",
+            "recipe_id": "r1"
+          },
+          {
+            "meal": "lunch",
+            "recipe_id": "r3"
+          },
+          {
+            "meal": "dinner",
+            "recipe_id": "r2"
+          },
+          {
+            "meal": "snack",
+            "recipe_id": "r4"
+          }
+        ],
+        "totals": {
+          "kcal": 2340,
+          "protein_g": 165,
+          "carbs_g": 247,
+          "fat_g": 72
+        },
+        "within_tolerance": true
+      },
+      {
+        "date": "2026-10-26",
+        "meals": [
+          {
+            "meal": "breakfast",
+            "recipe_id": "r1"
+          },
+          {
+            "meal": "lunch",
+            "recipe_id": "r2"
+          },
+          {
+            "meal": "dinner",
+            "recipe_id": "r3"
+          },
+          {
+            "meal": "snack",
+            "recipe_id": "r4"
+          }
+        ],
+        "totals": {
+          "kcal": 2340,
+          "protein_g": 165,
+          "carbs_g": 247,
+          "fat_g": 72
+        },
+        "within_tolerance": true
+      },
+      {
+        "date": "2026-10-27",
+        "meals": [
+          {
+            "meal": "breakfast",
+            "recipe_id": "r1"
+          },
+          {
+            "meal": "lunch",
+            "recipe_id": "r3"
+          },
+          {
+            "meal": "dinner",
+            "recipe_id": "r2"
+          },
+          {
+            "meal": "snack",
+            "recipe_id": "r4"
+          }
+        ],
+        "totals": {
+          "kcal": 2340,
+          "protein_g": 165,
+          "carbs_g": 247,
+          "fat_g": 72
+        },
+        "within_tolerance": true
+      }
+    ],
+    "recipes": [
+      {
+        "id": "r1",
+        "name": "Berry chia overnight oats",
+        "servings": 4,
+        "per_serving": {
+          "kcal": 520,
+          "protein_g": 40,
+          "carbs_g": 62,
+          "fat_g": 12
+        },
+        "ingredients": [
+          {
+            "catalog_item_id": "c01",
+            "name": "Old fashioned rolled oats",
+            "grams": 80
+          },
+          {
+            "catalog_item_id": "c11",
+            "name": "Plain nonfat Greek yogurt",
+            "grams": 200
+          },
+          {
+            "catalog_item_id": "c03",
+            "name": "Chia seeds",
+            "grams": 15
+          },
+          {
+            "catalog_item_id": "c04",
+            "name": "Frozen mixed berries",
+            "grams": 100
+          }
+        ],
+        "steps": ["Mix oats, chia and yogurt with 100 ml water.", "Split into 4 jars, top with berries, refrigerate."]
+      },
+      {
+        "id": "r2",
+        "name": "Chicken tikka rice bowl",
+        "servings": 4,
+        "per_serving": {
+          "kcal": 720,
+          "protein_g": 55,
+          "carbs_g": 85,
+          "fat_g": 16
+        },
+        "ingredients": [
+          {
+            "catalog_item_id": "c05",
+            "name": "Boneless chicken breast",
+            "grams": 180
+          },
+          {
+            "catalog_item_id": "c06",
+            "name": "Basmati rice",
+            "grams": 90
+          },
+          {
+            "catalog_item_id": "c10",
+            "name": "Yellow onions",
+            "grams": 50
+          },
+          {
+            "catalog_item_id": "c14",
+            "name": "Garam masala",
+            "grams": 3
+          },
+          {
+            "catalog_item_id": "c13",
+            "name": "Olive oil",
+            "grams": 5
+          }
+        ],
+        "steps": [
+          "Rub chicken with garam masala and oil; roast 22 min at 220 °C.",
+          "Cook rice; fry onions.",
+          "Portion into 4 boxes."
+        ]
+      },
+      {
+        "id": "r3",
+        "name": "Chicken chana palak curry with rice",
+        "servings": 4,
+        "per_serving": {
+          "kcal": 680,
+          "protein_g": 48,
+          "carbs_g": 70,
+          "fat_g": 22
+        },
+        "ingredients": [
+          {
+            "catalog_item_id": "c05",
+            "name": "Boneless chicken breast",
+            "grams": 150
+          },
+          {
+            "catalog_item_id": "c09",
+            "name": "Chickpeas",
+            "grams": 120
+          },
+          {
+            "catalog_item_id": "c07",
+            "name": "Frozen chopped spinach",
+            "grams": 100
+          },
+          {
+            "catalog_item_id": "c08",
+            "name": "Diced tomatoes",
+            "grams": 150
+          },
+          {
+            "catalog_item_id": "c10",
+            "name": "Yellow onions",
+            "grams": 60
+          },
+          {
+            "catalog_item_id": "c06",
+            "name": "Basmati rice",
+            "grams": 50
+          },
+          {
+            "catalog_item_id": "c14",
+            "name": "Garam masala",
+            "grams": 3
+          },
+          {
+            "catalog_item_id": "c13",
+            "name": "Olive oil",
+            "grams": 8
+          }
+        ],
+        "steps": [
+          "Brown onions and chicken, add garam masala.",
+          "Add tomatoes, chickpeas and spinach; simmer 20 min.",
+          "Serve over rice in 4 boxes."
+        ]
+      },
+      {
+        "id": "r4",
+        "name": "Yogurt, almond and egg snack box",
+        "servings": 4,
+        "per_serving": {
+          "kcal": 420,
+          "protein_g": 22,
+          "carbs_g": 30,
+          "fat_g": 22
+        },
+        "ingredients": [
+          {
+            "catalog_item_id": "c11",
+            "name": "Plain nonfat Greek yogurt",
+            "grams": 120
+          },
+          {
+            "catalog_item_id": "c12",
+            "name": "Whole almonds",
+            "grams": 30
+          },
+          {
+            "catalog_item_id": "c02",
+            "name": "Large eggs",
+            "grams": 50
+          },
+          {
+            "catalog_item_id": "c04",
+            "name": "Frozen mixed berries",
+            "grams": 50
+          }
+        ],
+        "steps": ["Hard-boil 4 eggs, 10 min.", "Pack yogurt, almonds, berries and an egg per box."]
+      }
+    ],
+    "batch_cook": {
+      "total_minutes": 75,
+      "steps": [
+        "Start rice and roast chicken (22 min).",
+        "Make the curry while the chicken roasts.",
+        "Boil eggs; build oats jars.",
+        "Portion lunches, dinners and snack boxes."
+      ]
+    },
+    "grocery": [
+      {
+        "catalog_item_id": "c01",
+        "name": "Old fashioned rolled oats",
+        "grams_needed": 320
+      },
+      {
+        "catalog_item_id": "c02",
+        "name": "Large eggs",
+        "grams_needed": 200
+      },
+      {
+        "catalog_item_id": "c03",
+        "name": "Chia seeds",
+        "grams_needed": 60
+      },
+      {
+        "catalog_item_id": "c04",
+        "name": "Frozen mixed berries",
+        "grams_needed": 600
+      },
+      {
+        "catalog_item_id": "c05",
+        "name": "Boneless chicken breast",
+        "grams_needed": 1320
+      },
+      {
+        "catalog_item_id": "c06",
+        "name": "Basmati rice",
+        "grams_needed": 560
+      },
+      {
+        "catalog_item_id": "c07",
+        "name": "Frozen chopped spinach",
+        "grams_needed": 400
+      },
+      {
+        "catalog_item_id": "c08",
+        "name": "Diced tomatoes",
+        "grams_needed": 600
+      },
+      {
+        "catalog_item_id": "c09",
+        "name": "Chickpeas",
+        "grams_needed": 480
+      },
+      {
+        "catalog_item_id": "c10",
+        "name": "Yellow onions",
+        "grams_needed": 440
+      },
+      {
+        "catalog_item_id": "c11",
+        "name": "Plain nonfat Greek yogurt",
+        "grams_needed": 1280
+      },
+      {
+        "catalog_item_id": "c12",
+        "name": "Whole almonds",
+        "grams_needed": 120
+      },
+      {
+        "catalog_item_id": "c13",
+        "name": "Olive oil",
+        "grams_needed": 52
+      },
+      {
+        "catalog_item_id": "c14",
+        "name": "Garam masala",
+        "grams_needed": 24
+      }
+    ]
+  }
+}

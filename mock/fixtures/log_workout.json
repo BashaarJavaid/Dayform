@@ -1,0 +1,22 @@
+{
+  "prs": [
+    {
+      "exercise": "back squat",
+      "kind": "e1rm",
+      "weight_kg": 100,
+      "reps": 5,
+      "e1rm_kg": 116.7,
+      "previous_e1rm_kg": 113.8,
+      "change_kg": 2.9
+    }
+  ],
+  "date": "2026-10-23",
+  "exercise": "back squat",
+  "sets": [
+    { "set": 1, "weight_kg": 100, "reps": 5, "rpe": null },
+    { "set": 2, "weight_kg": 100, "reps": 5, "rpe": null },
+    { "set": 3, "weight_kg": 100, "reps": 5, "rpe": null }
+  ],
+  "cardio": null,
+  "volume_kg": 1500
+}

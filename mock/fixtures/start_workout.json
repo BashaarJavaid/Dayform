@@ -1,0 +1,20 @@
+{
+  "session_id": "ws-2026-10-23",
+  "day_name": "Push",
+  "exercise": "bench press",
+  "exercise_index": 1,
+  "exercise_count": 4,
+  "set_number": 1,
+  "set_count": 3,
+  "target": { "weight_kg": 80, "reps": 8 },
+  "rest_seconds": 10,
+  "rest_ends_at": null,
+  "done_sets": [],
+  "pr": null,
+  "plan": [
+    { "exercise": "bench press", "sets": 3, "target_weight_kg": 80, "target_reps": 8 },
+    { "exercise": "overhead press", "sets": 3, "target_weight_kg": 50, "target_reps": 8 },
+    { "exercise": "incline dumbbell press", "sets": 3, "target_weight_kg": 28, "target_reps": 10 },
+    { "exercise": "triceps pushdown", "sets": 3, "target_weight_kg": 30, "target_reps": 12 }
+  ]
+}
