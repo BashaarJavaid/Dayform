@@ -54,7 +54,7 @@
   - Stateful mode is a server choice (session ID generator), not a runtime property (FRICTION F-005).
 
 ## T-04 · Aurora + Data API
-- Status: BLOCKED (local PASS; Aurora not created: needs AWS permissions for RDS/Secrets Manager and cluster approval)
+- Status: BLOCKED (local PASS; cluster approved 2026-10-22, but the create call was refused by the agent permission classifier; not created)
 - Engine version: local `postgres:17` = PostgreSQL 17.11. Aurora planned: aurora-postgresql 17.11 (newest version in the Data API support table; Aurora PG 18.6 exists but the table has no PG 18 column, FRICTION F-006).
 - Data API p50 from the laptop: not measured (no cluster). Local node-postgres p50=4ms (min 3, max 9, n=20).
 - Data API from an AWS role (yes or no): not tested.

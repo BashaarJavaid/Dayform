@@ -5,7 +5,7 @@
 # Aurora PG 18.x exists but the Data API version table has no PG 18 column; see FRICTION).
 # Network: no VPC args -> default VPC + default subnet group. Data API needs no VPC access from callers.
 set -euo pipefail
-: "${AWS_PROFILE:=hirz-operator}" "${AWS_REGION:=us-east-1}"
+: "${AWS_PROFILE:=hirz-login}" "${AWS_REGION:=us-east-1}"
 export AWS_PROFILE AWS_REGION
 CLUSTER=dayform-db
 INSTANCE=dayform-db-1

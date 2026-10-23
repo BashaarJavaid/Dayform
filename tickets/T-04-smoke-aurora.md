@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/aurora/` |
 | Approval needed | Yes: creates an Aurora cluster and a Secrets Manager secret |
-| Status | BLOCKED: local Postgres PASS; Aurora waits for AWS permissions (RDS, Secrets Manager, rds-data) and cluster approval |
+| Status | BLOCKED: local Postgres PASS; cluster approved, but `create-cluster.sh create` was refused by the Claude Code auto-mode permission classifier ("Production Deploy"); needs a permission rule or a manual run |
 
 ## Goal
 Prove that Aurora PostgreSQL Serverless v2 works through the RDS Data API, with pg_trgm fuzzy search, from the laptop and from AWS compute. Choose the database library for the build.
