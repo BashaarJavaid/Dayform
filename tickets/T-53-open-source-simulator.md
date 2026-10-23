@@ -8,7 +8,7 @@
 | Depends on | T-30, T-31 |
 | Owns | A separate repo folder, outside `dayform/` |
 | Approval needed | Yes: creating a folder outside this repo, creating the GitHub repo, pushing |
-| Status | TODO |
+| Status | CUT (cut order #1, orchestrator 2026-10-22: time goes to the video and submission) |
 
 ## Goal
 Publish the Alexa+ simulator as a standalone, MIT-licensed repo that any MCP developer can point at their own server. Enter it in the Open Source mini challenge.

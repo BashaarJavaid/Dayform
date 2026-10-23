@@ -76,7 +76,7 @@ Verified so far (2026-10-22): `npm install && npm test`, `npm run typecheck`, `n
 
 ## Current phase
 
-Wave 0 done 2026-10-22 (T-00–T-04, T-06, T-07 PASS; T-05 link prepared, user's cart check pending). Gate G0 PASSED. T-10 scaffold, contracts and mock DONE. Wave 1 (T-11, T-12, T-13), T-20 and the Demo Monitor started 2026-10-22. Agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
+All build tickets DONE on 2026-10-22 (Wave 0–4 incl. T-40 deploy to AgentCore; all 7 scenes pass on local and AgentCore in text mode). T-41 hardening in progress (script v1 drafted, awaiting the user). Open: T-50 push (needs the user's repo approval), T-51 video (user records), T-52 submit (links pending). T-53 CUT. Agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
 
 ---
 
