@@ -75,6 +75,7 @@
   - Cluster script: `smoke/aurora/create-cluster.sh check|create|wait|env|teardown` (min 0.5 / max 4 ACU, `--enable-http-endpoint`, `--manage-master-user-password`, one `db.serverless` instance, default VPC).
   - The ticket's `ORDER BY similarity(...)` query does not use the GIN index (seq scan); fine at 1,500 rows. Add `WHERE name % :q` if the index is needed.
   - Fallback not yet triggered; local Postgres (fallback 3) already works.
+- Orchestrator (2026-10-22): cluster `dayform-db` (aurora-postgresql 17.11, 0.5–4 ACU, Data API on) created and available; `run.ts --target aurora` from the laptop: "rotee" → roti first, `p50=81ms (min=37 max=98, n=20)`, PASS. ARNs in .env.local. The query-from-an-AWS-role check is covered by T-07's Lambda write through the Data API. **Status: PASS.**
 
 ## T-05 · Amazon cart link
 - Status: BLOCKED (waiting for the user's cart check, steps in `smoke/amazon-cart/README.md`)
