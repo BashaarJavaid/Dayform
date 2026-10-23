@@ -1,0 +1,11 @@
+{
+  "name": "smoke-scheduler-lambda",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "esbuild handler.ts --bundle --platform=node --target=node22 --format=cjs --outfile=dist/index.js && cd dist && rm -f lambda.zip && zip -q lambda.zip index.js" },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1156.0",
+    "@aws-sdk/client-rds-data": "^3.1156.0"
+  },
+  "devDependencies": { "esbuild": "^0.25.0" }
+}

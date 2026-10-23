@@ -99,10 +99,10 @@
   - Fallback (native React cards) not needed.
 
 ## T-07 · Scheduler + Lambda
-- Status:
-- Manual invoke writes a row (yes or no):
-- Scheduled invoke fires (yes or no):
-- Notes:
+- Status: PASS (2026-10-22)
+- Manual invoke writes a row (yes or no): yes. `aws lambda invoke` 2.0 s wall (cold start + Nova 2 Lite Converse + 2 Data API statements); row `2026-10-23 00:47:51 UTC manual: Good morning! Wishing you a strong and focused workout today!`
+- Scheduled invoke fires (yes or no): yes. `at(2026-10-23T05:51:00)` Asia/Karachi; row landed `2026-10-23 00:51:02.97 UTC` (05:51:03 PKT, about 3 s after the slot, flexible window OFF).
+- Notes: stack `dayform-smoke-scheduler-lambda` (Lambda `dayform-smoke-overnight` on `nodejs24.x`, the newest runtime CloudFormation accepted; esbuild CJS bundle; IAM role with `bedrock:InvokeModel`, `rds-data:*` on the cluster, `secretsmanager:GetSecretValue` on the secret; scheduler role with `lambda:InvokeFunction`). Schedule now DISABLED. Rerunning `deploy.sh` makes a new schedule time 5 min ahead and sets it back to ENABLED. Teardown: `smoke/scheduler-lambda/deploy.sh destroy`. Fallback (in-process job) not needed.
 
 ---
 

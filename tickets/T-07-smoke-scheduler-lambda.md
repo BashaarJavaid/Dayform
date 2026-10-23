@@ -8,7 +8,7 @@
 | Depends on | T-00, T-04 |
 | Owns | `smoke/scheduler-lambda/` |
 | Approval needed | Yes: creates a Lambda function, an IAM role and an EventBridge schedule |
-| Status | TODO |
+| Status | DONE |
 
 ## Goal
 Prove that EventBridge Scheduler can run a Lambda function that calls Opus on Bedrock and writes a row to Aurora.
@@ -40,4 +40,7 @@ In the real product, the overnight job runs every night. The demo uses the "skip
 - **In-process job:** run the overnight job inside the MCP server process, triggered only by `POST /admin/advance-day` (T-27). This is enough for the demo.
 
 ## Result
-_The agent fills this in._
+- Manual invoke writes a row: PASS. Scheduled invoke (Asia/Karachi `at(...)`, 5 min ahead) writes a row: PASS. Schedule disabled: PASS. Numbers in [SMOKE-RESULTS.md §T-07](../SMOKE-RESULTS.md).
+- Files: `smoke/scheduler-lambda/{handler.ts,template.yaml,deploy.sh,query.sh,package.json}`. Build with `npm run build` (esbuild, CJS, `dist/lambda.zip`).
+- Deviations: CloudFormation (plain template) instead of CDK, per orchestrator. Model is Nova 2 Lite (D21), not Opus. Runtime `nodejs24.x`. The Lambda creates `smoke_overnight` with `CREATE TABLE IF NOT EXISTS` on each run.
+- Stack left in place with the schedule DISABLED; `deploy.sh destroy` removes it. Fallback not used.

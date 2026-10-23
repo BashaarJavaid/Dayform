@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: T-07 smoke - EventBridge Scheduler runs a Lambda that calls Nova and writes one row to Aurora via the Data API.
+Parameters:
+  Runtime: { Type: String, Default: nodejs24.x }
+  ModelId: { Type: String }
+  ClusterArn: { Type: String }
+  SecretArn: { Type: String }
+  Database: { Type: String }
+  At: { Type: String, Description: "at(yyyy-mm-ddThh:mm:ss) in Asia/Karachi" }
+Resources:
+  FnRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{ Effect: Allow, Principal: { Service: lambda.amazonaws.com }, Action: sts:AssumeRole }]
+      ManagedPolicyArns: [arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]
+      Policies:
+        - PolicyName: smoke
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - { Effect: Allow, Action: [bedrock:InvokeModel], Resource: "*" }
+              - { Effect: Allow, Action: ["rds-data:*"], Resource: !Ref ClusterArn }
+              - { Effect: Allow, Action: [secretsmanager:GetSecretValue], Resource: !Ref SecretArn }
+  Fn:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: dayform-smoke-overnight
+      Runtime: !Ref Runtime
+      Handler: index.handler
+      Role: !GetAtt FnRole.Arn
+      Timeout: 60
+      MemorySize: 512
+      Code: { ZipFile: "exports.handler = async () => ({ placeholder: true });" }
+      Environment:
+        Variables: { REASONING_MODEL_ID: !Ref ModelId, AURORA_CLUSTER_ARN: !Ref ClusterArn, AURORA_SECRET_ARN: !Ref SecretArn, AURORA_DATABASE: !Ref Database }
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement: [{ Effect: Allow, Principal: { Service: scheduler.amazonaws.com }, Action: sts:AssumeRole }]
+      Policies:
+        - PolicyName: invoke
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement: [{ Effect: Allow, Action: lambda:InvokeFunction, Resource: !GetAtt Fn.Arn }]
+  Schedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: dayform-smoke-overnight
+      ScheduleExpression: !Ref At
+      ScheduleExpressionTimezone: Asia/Karachi
+      FlexibleTimeWindow: { Mode: "OFF" }
+      State: ENABLED
+      Target:
+        Arn: !GetAtt Fn.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+        Input: '{"source":"schedule"}'
+Outputs:
+  FunctionName: { Value: !Ref Fn }

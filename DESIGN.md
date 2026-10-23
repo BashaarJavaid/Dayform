@@ -215,13 +215,13 @@ The orchestrator updates the **Chosen** column at Gate G0.
 
 | Need | Primary | Smoke test | Fallbacks, in order | Chosen |
 |---|---|---|---|---|
-| Reasoning LLM | Amazon Nova 2 Pro on Bedrock (D21) | T-01 | Nova 2 Lite → Nova Pro / Nova Premier (whichever is available) | — |
+| Reasoning LLM | Amazon Nova 2 Lite on Bedrock (D21; Nova 2 Pro not offered in us-east-1) | T-01 | Nova Pro | **Nova 2 Lite** `us.amazon.nova-2-lite-v1:0` (PASS 2026-10-22; ~650 ms per call; long forced-tool JSON is flaky, validate and retry) |
 | Alexa voice | Nova 2.5 Sonic | T-02 | Nova 2 Sonic → Sonic in us-west-2 → Transcribe + Claude + Polly → Web Speech + Polly → text + Polly | — |
-| MCP hosting | AgentCore Runtime (stateful, SigV4) | T-03 | ECS Fargate + ALB sticky sessions → Lambda + two-step confirm → local server | — |
-| Database | Aurora PG Serverless v2 + Data API | T-04 | Aurora direct connection in a VPC → RDS PostgreSQL → local Postgres → DynamoDB + in-memory search | — |
+| MCP hosting | AgentCore Runtime (stateful, SigV4) | T-03 | ECS Fargate + ALB sticky sessions → Lambda + two-step confirm → local server | **AgentCore** (PASS; ping p50 118 ms, elicitation 230 ms with relatedRequestId; CloudFormation L1 deploy via smoke/agentcore-mcp/deploy.sh) |
+| Database | Aurora PG Serverless v2 + Data API | T-04 | Aurora direct connection in a VPC → RDS PostgreSQL → local Postgres → DynamoDB + in-memory search | **Aurora 17.11 + Data API** (PASS; p50 81 ms from laptop), Drizzle ORM 0.45 with node-postgres locally; cluster `dayform-db` |
 | Cart hand-off | Amazon Add-to-Cart link | T-05 | Search links → Amazon Fresh search links → QR code + product pages | — |
-| Cards | MCP Apps (`@modelcontextprotocol/ext-apps`) | T-06 | Native React cards from `structuredContent` | — |
-| Scheduler | EventBridge Scheduler + Lambda | T-07 | In-process job through the admin route | — |
+| Cards | MCP Apps (`@modelcontextprotocol/ext-apps`) | T-06 | Native React cards from `structuredContent` | **MCP Apps** (PASS; callback works; ~600 KB bundle) |
+| Scheduler | EventBridge Scheduler + Lambda | T-07 | In-process job through the admin route | **EventBridge Scheduler + Lambda nodejs24.x** (PASS; stack `dayform-smoke-scheduler-lambda`) |
 | Food data | USDA FoodData Central bulk CSV | T-12 | FDC API (key) → Opus estimate | — |
 
 **Known versions on 2026-10-23:**
