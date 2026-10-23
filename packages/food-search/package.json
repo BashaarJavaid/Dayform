@@ -2,7 +2,18 @@
   "name": "@dayform/food-search",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
-    "test": "echo \"food-search: no tests yet\""
+    "test": "vitest run --reporter=verbose",
+    "build:foods": "tsx ../../data/foods/build.ts",
+    "download:foods": "bash ../../data/foods/download.sh",
+    "load": "tsx src/load.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1"
   }
 }

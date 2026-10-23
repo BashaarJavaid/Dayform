@@ -33,7 +33,8 @@
     "db:migrate": "npm run db:migrate -w @dayform/db --",
     "db:reset": "npm run db:reset -w @dayform/db --",
     "db:hash": "npm run db:hash -w @dayform/db --",
-    "db:report": "npm run db:report -w @dayform/db --"
+    "db:report": "npm run db:report -w @dayform/db --",
+    "data:load-foods": "npm run load -w @dayform/food-search"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

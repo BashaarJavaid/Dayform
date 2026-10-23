@@ -1,0 +1,3266 @@
+[
+  {
+    "id": "roti",
+    "name": "Roti (chapati)",
+    "aliases": [
+      "roti",
+      "rotis",
+      "chapati",
+      "chapatti",
+      "chappati",
+      "phulka",
+      "chappatti or roti",
+      "chapati roti"
+    ],
+    "portions": {
+      "roti": 40,
+      "chapati": 40,
+      "phulka": 40,
+      "piece": 40
+    },
+    "default_portion": "roti",
+    "priority": 10,
+    "fndds": {
+      "code": "51300175",
+      "fdc_id": 2707713,
+      "desc": "Bread, chappatti or roti"
+    },
+    "nutrients": {
+      "protein_g": 7.85,
+      "fat_g": 9.2,
+      "carbs_g": 46.13,
+      "kcal": 299,
+      "fiber_g": 9.7,
+      "calcium_mg": 36,
+      "iron_mg": 2.2,
+      "potassium_mg": 196,
+      "sodium_mg": 298,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 2.93
+    },
+    "source": "FNDDS 51300175 (Bread, chappatti or roti)"
+  },
+  {
+    "id": "paratha",
+    "name": "Paratha",
+    "aliases": [
+      "paratha",
+      "parantha",
+      "parotta",
+      "plain paratha"
+    ],
+    "portions": {
+      "paratha": 70,
+      "piece": 70
+    },
+    "default_portion": "paratha",
+    "priority": 10,
+    "fndds": {
+      "code": "51300185",
+      "fdc_id": 2707715,
+      "desc": "Bread, paratha"
+    },
+    "nutrients": {
+      "protein_g": 6.36,
+      "fat_g": 13.2,
+      "carbs_g": 45.35,
+      "kcal": 326,
+      "fiber_g": 9.6,
+      "calcium_mg": 25,
+      "iron_mg": 1.61,
+      "potassium_mg": 139,
+      "sodium_mg": 452,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 4.15
+    },
+    "source": "FNDDS 51300185 (Bread, paratha)"
+  },
+  {
+    "id": "aloo-paratha",
+    "name": "Aloo paratha",
+    "aliases": [
+      "aloo paratha",
+      "alu paratha",
+      "potato paratha",
+      "aloo parantha"
+    ],
+    "portions": {
+      "paratha": 135,
+      "piece": 135
+    },
+    "default_portion": "paratha",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 540,
+      "items": [
+        {
+          "fdc_id": 168893,
+          "item": "whole-wheat flour (atta)",
+          "g": 200
+        },
+        {
+          "fdc_id": 170440,
+          "item": "potato, boiled",
+          "g": 200
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 40
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 20
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 4
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5.61,
+      "fat_g": 8.34,
+      "carbs_g": 34.45,
+      "kcal": 224.36,
+      "fiber_g": 4.72,
+      "calcium_mg": 17.5,
+      "iron_mg": 1.47,
+      "potassium_mg": 266.59,
+      "sodium_mg": 290.41,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.65
+    },
+    "source": "recipe: whole-wheat flour (atta) 200 g, potato, boiled 200 g, ghee (butter oil) 40 g, onion, raw 20 g, coriander leaves 5 g, salt 4 g; cooked yield 540 g"
+  },
+  {
+    "id": "naan",
+    "name": "Naan",
+    "aliases": [
+      "naan",
+      "nan",
+      "naan bread",
+      "tandoori naan"
+    ],
+    "portions": {
+      "naan": 120,
+      "piece": 120
+    },
+    "default_portion": "naan",
+    "priority": 10,
+    "fndds": {
+      "code": "51108100",
+      "fdc_id": 2707613,
+      "desc": "Bread, naan"
+    },
+    "nutrients": {
+      "protein_g": 11.09,
+      "fat_g": 7.28,
+      "carbs_g": 50.23,
+      "kcal": 311,
+      "fiber_g": 5.2,
+      "calcium_mg": 64,
+      "iron_mg": 1.88,
+      "potassium_mg": 201,
+      "sodium_mg": 508,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 3.7
+    },
+    "source": "FNDDS 51108100 (Bread, naan)"
+  },
+  {
+    "id": "puri",
+    "name": "Puri",
+    "aliases": [
+      "puri",
+      "poori"
+    ],
+    "portions": {
+      "puri": 36,
+      "piece": 36
+    },
+    "default_portion": "puri",
+    "priority": 10,
+    "fndds": {
+      "code": "51300180",
+      "fdc_id": 2707714,
+      "desc": "Bread, puri"
+    },
+    "nutrients": {
+      "protein_g": 6.84,
+      "fat_g": 24.94,
+      "carbs_g": 39.23,
+      "kcal": 409,
+      "fiber_g": 3.5,
+      "calcium_mg": 16,
+      "iron_mg": 2.55,
+      "potassium_mg": 134,
+      "sodium_mg": 170,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.18
+    },
+    "source": "FNDDS 51300180 (Bread, puri)"
+  },
+  {
+    "id": "basmati-rice",
+    "name": "Plain basmati rice",
+    "aliases": [
+      "basmati rice",
+      "plain rice",
+      "white rice",
+      "boiled rice",
+      "chawal",
+      "plain chawal",
+      "steamed rice",
+      "rice"
+    ],
+    "portions": {
+      "plate": 250,
+      "bowl": 200,
+      "cup": 158
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "usda": {
+      "fdc_id": 169757,
+      "desc": "Rice, white, long-grain, regular, unenriched, cooked without salt"
+    },
+    "nutrients": {
+      "protein_g": 2.69,
+      "fat_g": 0.28,
+      "carbs_g": 28.17,
+      "kcal": 130,
+      "fiber_g": 0.4,
+      "calcium_mg": 10,
+      "iron_mg": 0.2,
+      "potassium_mg": 35,
+      "sodium_mg": 1,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.05
+    },
+    "source": "USDA SR Legacy 169757 (Rice, white, long-grain, regular, unenriched, cooked without salt)"
+  },
+  {
+    "id": "chicken-biryani",
+    "name": "Chicken biryani",
+    "aliases": [
+      "chicken biryani",
+      "biryani",
+      "chicken biriyani",
+      "biriyani",
+      "chicken biryani rice"
+    ],
+    "portions": {
+      "plate": 350,
+      "bowl": 250,
+      "cup": 196
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "fndds": {
+      "code": "27243100",
+      "fdc_id": 2706538,
+      "desc": "Biryani with chicken"
+    },
+    "nutrients": {
+      "protein_g": 7.15,
+      "fat_g": 2.38,
+      "carbs_g": 13.55,
+      "kcal": 104,
+      "fiber_g": 1.1,
+      "calcium_mg": 34,
+      "iron_mg": 0.84,
+      "potassium_mg": 256,
+      "sodium_mg": 161,
+      "vitamin_d_mcg": 0.1,
+      "sugar_g": 1.88
+    },
+    "source": "FNDDS 27243100 (Biryani with chicken)"
+  },
+  {
+    "id": "mutton-biryani",
+    "name": "Mutton biryani",
+    "aliases": [
+      "mutton biryani",
+      "beef biryani",
+      "meat biryani",
+      "lamb biryani"
+    ],
+    "portions": {
+      "plate": 350,
+      "bowl": 250,
+      "cup": 196
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "fndds": {
+      "code": "27213010",
+      "fdc_id": 2706490,
+      "desc": "Biryani with meat"
+    },
+    "nutrients": {
+      "protein_g": 8.5,
+      "fat_g": 6.79,
+      "carbs_g": 12.19,
+      "kcal": 145,
+      "fiber_g": 1,
+      "calcium_mg": 33,
+      "iron_mg": 1.12,
+      "potassium_mg": 229,
+      "sodium_mg": 98,
+      "vitamin_d_mcg": 0.1,
+      "sugar_g": 1.69
+    },
+    "source": "FNDDS 27213010 (Biryani with meat)"
+  },
+  {
+    "id": "pulao",
+    "name": "Pulao",
+    "aliases": [
+      "pulao",
+      "pilau",
+      "pilaf",
+      "rice pilaf",
+      "veg pulao",
+      "matar pulao"
+    ],
+    "portions": {
+      "plate": 300,
+      "bowl": 200,
+      "cup": 206
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "fndds": {
+      "code": "58162310",
+      "fdc_id": 2709077,
+      "desc": "Rice pilaf"
+    },
+    "nutrients": {
+      "protein_g": 3.29,
+      "fat_g": 3.03,
+      "carbs_g": 24.08,
+      "kcal": 137,
+      "fiber_g": 0.4,
+      "calcium_mg": 29,
+      "iron_mg": 0.74,
+      "potassium_mg": 56,
+      "sodium_mg": 414,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.48
+    },
+    "source": "FNDDS 58162310 (Rice pilaf)"
+  },
+  {
+    "id": "chicken-pulao",
+    "name": "Chicken pulao",
+    "aliases": [
+      "chicken pulao",
+      "yakhni pulao",
+      "chicken pilau"
+    ],
+    "portions": {
+      "plate": 350,
+      "bowl": 250,
+      "cup": 200
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 2100,
+      "items": [
+        {
+          "fdc_id": 168877,
+          "item": "rice, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 600
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 80
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 100
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 14
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 7.64,
+      "fat_g": 5.32,
+      "carbs_g": 20.51,
+      "kcal": 163.5,
+      "fiber_g": 0.5,
+      "calcium_mg": 18.19,
+      "iron_mg": 1.3,
+      "potassium_mg": 123.69,
+      "sodium_mg": 289.51,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.67
+    },
+    "source": "recipe: rice, raw 500 g, chicken thigh, raw 600 g, canola oil 80 g, onion, raw 200 g, garlic 15 g, ginger 15 g, yogurt, whole milk 100 g, salt 14 g; cooked yield 2100 g"
+  },
+  {
+    "id": "daal",
+    "name": "Daal",
+    "aliases": [
+      "daal",
+      "dal",
+      "dhal",
+      "daal curry",
+      "lentils",
+      "lentil curry",
+      "dal fry",
+      "dahl",
+      "daal fry"
+    ],
+    "portions": {
+      "bowl": 240,
+      "cup": 240,
+      "plate": 240
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "fndds": {
+      "code": "41305050",
+      "fdc_id": 2707427,
+      "desc": "Dal"
+    },
+    "nutrients": {
+      "protein_g": 8.6,
+      "fat_g": 4.31,
+      "carbs_g": 19.17,
+      "kcal": 145,
+      "fiber_g": 7.5,
+      "calcium_mg": 19,
+      "iron_mg": 3.17,
+      "potassium_mg": 352,
+      "sodium_mg": 309,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.71
+    },
+    "source": "FNDDS 41305050 (Dal)"
+  },
+  {
+    "id": "masoor-daal",
+    "name": "Masoor daal",
+    "aliases": [
+      "masoor daal",
+      "masoor dal",
+      "red lentil daal",
+      "lal masoor"
+    ],
+    "portions": {
+      "bowl": 240,
+      "cup": 240,
+      "plate": 240
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1000,
+      "items": [
+        {
+          "fdc_id": 174284,
+          "item": "red lentils (masoor), raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 30
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 8
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 8
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5.01,
+      "fat_g": 3.47,
+      "carbs_g": 14.09,
+      "kcal": 104.59,
+      "fiber_g": 2.42,
+      "calcium_mg": 13.96,
+      "iron_mg": 1.54,
+      "potassium_mg": 170.82,
+      "sodium_mg": 234.91,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 0.57
+    },
+    "source": "recipe: red lentils (masoor), raw 200 g, canola oil 30 g, onion, raw 80 g, tomato, raw 80 g, garlic 8 g, ginger 8 g, salt 6 g; cooked yield 1000 g"
+  },
+  {
+    "id": "moong-daal",
+    "name": "Moong daal",
+    "aliases": [
+      "moong daal",
+      "moong dal",
+      "mung dal",
+      "mung daal"
+    ],
+    "portions": {
+      "bowl": 240,
+      "cup": 240,
+      "plate": 240
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1000,
+      "items": [
+        {
+          "fdc_id": 174256,
+          "item": "mung beans (moong), raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 30
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 8
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 8
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5,
+      "fat_g": 3.26,
+      "carbs_g": 13.99,
+      "kcal": 102.39,
+      "fiber_g": 3.52,
+      "calcium_mg": 30.76,
+      "iron_mg": 1.41,
+      "potassium_mg": 286.42,
+      "sodium_mg": 236.51,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.89
+    },
+    "source": "recipe: mung beans (moong), raw 200 g, canola oil 30 g, onion, raw 80 g, tomato, raw 80 g, garlic 8 g, ginger 8 g, salt 6 g; cooked yield 1000 g"
+  },
+  {
+    "id": "chana-daal",
+    "name": "Chana daal",
+    "aliases": [
+      "chana daal",
+      "chana dal",
+      "chane ki daal"
+    ],
+    "portions": {
+      "bowl": 240,
+      "cup": 240,
+      "plate": 240
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 950,
+      "items": [
+        {
+          "fdc_id": 173756,
+          "item": "chickpeas / bengal gram, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 30
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 8
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 8
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 4.55,
+      "fat_g": 4.47,
+      "carbs_g": 14.79,
+      "kcal": 114.31,
+      "fiber_g": 2.85,
+      "calcium_mg": 16.59,
+      "iron_mg": 0.97,
+      "potassium_mg": 190.33,
+      "sodium_mg": 250.85,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 2.85
+    },
+    "source": "recipe: chickpeas / bengal gram, raw 200 g, canola oil 30 g, onion, raw 80 g, tomato, raw 80 g, garlic 8 g, ginger 8 g, salt 6 g; cooked yield 950 g"
+  },
+  {
+    "id": "daal-chawal",
+    "name": "Daal chawal",
+    "aliases": [
+      "daal chawal",
+      "dal chawal",
+      "dal chaawal",
+      "daal chaawal",
+      "dal rice",
+      "daal rice",
+      "lentils and rice",
+      "lentil curry with rice"
+    ],
+    "portions": {
+      "plate": 400,
+      "bowl": 300
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "fndds": {
+      "code": "41311040",
+      "fdc_id": 2707432,
+      "desc": "Lentil curry with rice"
+    },
+    "nutrients": {
+      "protein_g": 3.28,
+      "fat_g": 3.5,
+      "carbs_g": 18.6,
+      "kcal": 118,
+      "fiber_g": 2.2,
+      "calcium_mg": 19,
+      "iron_mg": 1.33,
+      "potassium_mg": 189,
+      "sodium_mg": 328,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.95
+    },
+    "source": "FNDDS 41311040 (Lentil curry with rice)"
+  },
+  {
+    "id": "chana-masala",
+    "name": "Chana masala",
+    "aliases": [
+      "chana masala",
+      "chole",
+      "cholay",
+      "chana curry",
+      "chickpea curry",
+      "chanay"
+    ],
+    "portions": {
+      "bowl": 240,
+      "cup": 240,
+      "plate": 250
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 700,
+      "items": [
+        {
+          "fdc_id": 173757,
+          "item": "chickpeas, boiled",
+          "g": 400
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 30
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 10
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5.53,
+      "fat_g": 5.84,
+      "carbs_g": 18.56,
+      "kcal": 144.44,
+      "fiber_g": 4.9,
+      "calcium_mg": 36.45,
+      "iron_mg": 1.77,
+      "potassium_mg": 249.65,
+      "sodium_mg": 338.28,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 3.95
+    },
+    "source": "recipe: chickpeas, boiled 400 g, onion, raw 100 g, tomato, raw 150 g, canola oil 30 g, garlic 10 g, ginger 10 g, salt 6 g; cooked yield 700 g"
+  },
+  {
+    "id": "chana-chaat",
+    "name": "Chana chaat",
+    "aliases": [
+      "chana chaat",
+      "chana chat",
+      "chickpea chaat",
+      "chole chaat",
+      "chaat"
+    ],
+    "portions": {
+      "plate": 200,
+      "bowl": 200,
+      "cup": 160
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 560,
+      "items": [
+        {
+          "fdc_id": 173757,
+          "item": "chickpeas, boiled",
+          "g": 300
+        },
+        {
+          "fdc_id": 170440,
+          "item": "potato, boiled",
+          "g": 100
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 60
+        },
+        {
+          "fdc_id": 167747,
+          "item": "lemon juice",
+          "g": 15
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 5
+        },
+        {
+          "fdc_id": 170497,
+          "item": "green chili",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 3
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 30
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5.48,
+      "fat_g": 1.62,
+      "carbs_g": 20.06,
+      "kcal": 113.13,
+      "fiber_g": 4.72,
+      "calcium_mg": 38.33,
+      "iron_mg": 1.68,
+      "potassium_mg": 271.69,
+      "sodium_mg": 216.13,
+      "vitamin_d_mcg": 0.01,
+      "sugar_g": 3.76
+    },
+    "source": "recipe: chickpeas, boiled 300 g, potato, boiled 100 g, onion, raw 50 g, tomato, raw 60 g, lemon juice 15 g, coriander leaves 5 g, green chili 5 g, salt 3 g, yogurt, whole milk 30 g; cooked yield 560 g"
+  },
+  {
+    "id": "chicken-karahi",
+    "name": "Chicken karahi",
+    "aliases": [
+      "chicken karahi",
+      "karahi",
+      "chicken karai",
+      "karai",
+      "chicken kadai",
+      "kadai",
+      "kadai chicken",
+      "chicken kadhai",
+      "kadhai",
+      "chicken karahee",
+      "karahi chicken"
+    ],
+    "portions": {
+      "plate": 250,
+      "bowl": 250,
+      "cup": 240,
+      "serving": 250
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1100,
+      "items": [
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 750
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 100
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 20
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 20
+        },
+        {
+          "fdc_id": 170497,
+          "item": "green chili",
+          "g": 20
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 14,
+      "fat_g": 12.02,
+      "carbs_g": 2.88,
+      "kcal": 176.04,
+      "fiber_g": 0.66,
+      "calcium_mg": 13.75,
+      "iron_mg": 0.75,
+      "potassium_mg": 296.19,
+      "sodium_mg": 420.27,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.34
+    },
+    "source": "recipe: chicken thigh, raw 750 g, tomato, raw 500 g, canola oil 100 g, garlic 20 g, ginger 20 g, green chili 20 g, coriander leaves 5 g, salt 10 g; cooked yield 1100 g"
+  },
+  {
+    "id": "mutton-karahi",
+    "name": "Mutton karahi",
+    "aliases": [
+      "mutton karahi",
+      "mutton karai",
+      "mutton kadai",
+      "lamb karahi",
+      "gosht karahi"
+    ],
+    "portions": {
+      "plate": 250,
+      "bowl": 250,
+      "serving": 250
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1100,
+      "items": [
+        {
+          "fdc_id": 175264,
+          "item": "lamb shoulder, lean, raw",
+          "g": 750
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 100
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 20
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 20
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 20
+        },
+        {
+          "fdc_id": 170497,
+          "item": "green chili",
+          "g": 20
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 14.04,
+      "fat_g": 16.68,
+      "carbs_g": 2.86,
+      "kcal": 214.36,
+      "fiber_g": 0.65,
+      "calcium_mg": 16.93,
+      "iron_mg": 0.95,
+      "potassium_mg": 338.23,
+      "sodium_mg": 405.1,
+      "vitamin_d_mcg": 0.14,
+      "sugar_g": 1.34
+    },
+    "source": "recipe: lamb shoulder, lean, raw 750 g, tomato, raw 500 g, canola oil 100 g, ghee (butter oil) 20 g, garlic 20 g, ginger 20 g, green chili 20 g, salt 10 g; cooked yield 1100 g"
+  },
+  {
+    "id": "chicken-handi",
+    "name": "Chicken handi",
+    "aliases": [
+      "chicken handi",
+      "handi",
+      "chicken handee"
+    ],
+    "portions": {
+      "bowl": 250,
+      "plate": 250,
+      "serving": 250
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1300,
+      "items": [
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 750
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 200
+        },
+        {
+          "fdc_id": 170859,
+          "item": "cream, heavy",
+          "g": 100
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 80
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 20
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 20
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 12.53,
+      "fat_g": 11.87,
+      "carbs_g": 3.75,
+      "kcal": 172.19,
+      "fiber_g": 0.51,
+      "calcium_mg": 36.02,
+      "iron_mg": 0.59,
+      "potassium_mg": 242.31,
+      "sodium_mg": 363.95,
+      "vitamin_d_mcg": 0.14,
+      "sugar_g": 2.04
+    },
+    "source": "recipe: chicken thigh, raw 750 g, yogurt, whole milk 200 g, cream, heavy 100 g, onion, raw 200 g, tomato, raw 200 g, canola oil 80 g, garlic 20 g, ginger 20 g, salt 10 g; cooked yield 1300 g"
+  },
+  {
+    "id": "chicken-curry",
+    "name": "Chicken curry (salan)",
+    "aliases": [
+      "chicken curry",
+      "chicken salan",
+      "salan",
+      "murgh salan",
+      "chicken shorba"
+    ],
+    "portions": {
+      "bowl": 240,
+      "plate": 240,
+      "cup": 240
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "fndds": {
+      "code": "27146150",
+      "fdc_id": 2706437,
+      "desc": "Chicken curry"
+    },
+    "nutrients": {
+      "protein_g": 6.48,
+      "fat_g": 6.48,
+      "carbs_g": 6.54,
+      "kcal": 107,
+      "fiber_g": 1.4,
+      "calcium_mg": 20,
+      "iron_mg": 0.71,
+      "potassium_mg": 280,
+      "sodium_mg": 376,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 2.56
+    },
+    "source": "FNDDS 27146150 (Chicken curry)"
+  },
+  {
+    "id": "nihari",
+    "name": "Nihari",
+    "aliases": [
+      "nihari",
+      "nahari",
+      "beef nihari",
+      "nehari"
+    ],
+    "portions": {
+      "bowl": 300,
+      "plate": 300,
+      "serving": 300
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1800,
+      "items": [
+        {
+          "fdc_id": 171206,
+          "item": "beef chuck for stew, raw",
+          "g": 1000
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 80
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 70
+        },
+        {
+          "fdc_id": 168893,
+          "item": "whole-wheat flour (atta)",
+          "g": 40
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 20
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 20
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 12
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 12.48,
+      "fat_g": 10.87,
+      "carbs_g": 2.25,
+      "kcal": 154.52,
+      "fiber_g": 0.28,
+      "calcium_mg": 10.5,
+      "iron_mg": 1.29,
+      "potassium_mg": 221.3,
+      "sodium_mg": 303.3,
+      "vitamin_d_mcg": 0.06,
+      "sugar_g": 0.04
+    },
+    "source": "recipe: beef chuck for stew, raw 1000 g, ghee (butter oil) 80 g, canola oil 70 g, whole-wheat flour (atta) 40 g, garlic 20 g, ginger 20 g, salt 12 g; cooked yield 1800 g"
+  },
+  {
+    "id": "haleem",
+    "name": "Haleem",
+    "aliases": [
+      "haleem",
+      "daleem",
+      "halim"
+    ],
+    "portions": {
+      "bowl": 300,
+      "plate": 300,
+      "serving": 300
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 2000,
+      "items": [
+        {
+          "fdc_id": 171206,
+          "item": "beef chuck for stew, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 170688,
+          "item": "cracked wheat (bulgur)",
+          "g": 150
+        },
+        {
+          "fdc_id": 170284,
+          "item": "barley, pearled",
+          "g": 50
+        },
+        {
+          "fdc_id": 173756,
+          "item": "chickpeas / bengal gram, raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 174284,
+          "item": "red lentils (masoor), raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 174256,
+          "item": "mung beans (moong), raw",
+          "g": 30
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 100
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 8.22,
+      "fat_g": 6.49,
+      "carbs_g": 12.85,
+      "kcal": 138.97,
+      "fiber_g": 2.31,
+      "calcium_mg": 14.53,
+      "iron_mg": 1.21,
+      "potassium_mg": 199.95,
+      "sodium_mg": 216.82,
+      "vitamin_d_mcg": 0.03,
+      "sugar_g": 0.76
+    },
+    "source": "recipe: beef chuck for stew, raw 500 g, cracked wheat (bulgur) 150 g, barley, pearled 50 g, chickpeas / bengal gram, raw 50 g, red lentils (masoor), raw 50 g, mung beans (moong), raw 30 g, canola oil 100 g, onion, raw 150 g, garlic 15 g, ginger 15 g, salt 10 g; cooked yield 2000 g"
+  },
+  {
+    "id": "chicken-korma",
+    "name": "Chicken korma",
+    "aliases": [
+      "chicken korma",
+      "korma",
+      "qorma",
+      "chicken qorma",
+      "mutton korma"
+    ],
+    "portions": {
+      "bowl": 250,
+      "plate": 250,
+      "serving": 250
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1300,
+      "items": [
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 750
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 250
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 300
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 120
+        },
+        {
+          "fdc_id": 170567,
+          "item": "almonds",
+          "g": 30
+        },
+        {
+          "fdc_id": 170859,
+          "item": "cream, heavy",
+          "g": 50
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 12.96,
+      "fat_g": 14.81,
+      "carbs_g": 4.24,
+      "kcal": 201.45,
+      "fiber_g": 0.73,
+      "calcium_mg": 43.82,
+      "iron_mg": 0.64,
+      "potassium_mg": 233.16,
+      "sodium_mg": 364.12,
+      "vitamin_d_mcg": 0.08,
+      "sugar_g": 2.12
+    },
+    "source": "recipe: chicken thigh, raw 750 g, yogurt, whole milk 250 g, onion, raw 300 g, canola oil 120 g, almonds 30 g, cream, heavy 50 g, garlic 15 g, ginger 15 g, salt 10 g; cooked yield 1300 g"
+  },
+  {
+    "id": "qeema",
+    "name": "Qeema",
+    "aliases": [
+      "qeema",
+      "keema",
+      "kima",
+      "keema matar",
+      "qeema matar",
+      "mince",
+      "beef mince curry"
+    ],
+    "portions": {
+      "plate": 200,
+      "bowl": 200,
+      "cup": 200
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 850,
+      "items": [
+        {
+          "fdc_id": 174036,
+          "item": "beef mince 80/20, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 170016,
+          "item": "green peas",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 40
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 8
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 11.26,
+      "fat_g": 16.6,
+      "carbs_g": 5.06,
+      "kcal": 215.41,
+      "fiber_g": 1.18,
+      "calcium_mg": 23.29,
+      "iron_mg": 1.47,
+      "potassium_mg": 272.83,
+      "sodium_mg": 418.72,
+      "vitamin_d_mcg": 0.06,
+      "sugar_g": 2
+    },
+    "source": "recipe: beef mince 80/20, raw 500 g, onion, raw 150 g, tomato, raw 200 g, green peas 100 g, canola oil 40 g, garlic 15 g, ginger 15 g, salt 8 g; cooked yield 850 g"
+  },
+  {
+    "id": "aloo-gosht",
+    "name": "Aloo gosht",
+    "aliases": [
+      "aloo gosht",
+      "alu gosht",
+      "aloo gosht curry",
+      "mutton with potatoes"
+    ],
+    "portions": {
+      "bowl": 300,
+      "plate": 300,
+      "serving": 300
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1500,
+      "items": [
+        {
+          "fdc_id": 175264,
+          "item": "lamb shoulder, lean, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 170440,
+          "item": "potato, boiled",
+          "g": 400
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 200
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 80
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 7.38,
+      "fat_g": 8.18,
+      "carbs_g": 7.61,
+      "kcal": 131.44,
+      "fiber_g": 0.91,
+      "calcium_mg": 12.66,
+      "iron_mg": 0.55,
+      "potassium_mg": 249.08,
+      "sodium_mg": 285.55,
+      "vitamin_d_mcg": 0.07,
+      "sugar_g": 1.18
+    },
+    "source": "recipe: lamb shoulder, lean, raw 500 g, potato, boiled 400 g, onion, raw 200 g, tomato, raw 200 g, canola oil 80 g, garlic 15 g, ginger 15 g, salt 10 g; cooked yield 1500 g"
+  },
+  {
+    "id": "butter-chicken",
+    "name": "Butter chicken",
+    "aliases": [
+      "butter chicken",
+      "murgh makhani",
+      "chicken makhani",
+      "chicken tikka masala",
+      "tikka masala"
+    ],
+    "portions": {
+      "bowl": 250,
+      "plate": 250,
+      "serving": 250
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1300,
+      "items": [
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 700
+        },
+        {
+          "fdc_id": 170460,
+          "item": "tomato puree",
+          "g": 300
+        },
+        {
+          "fdc_id": 173410,
+          "item": "butter, salted",
+          "g": 60
+        },
+        {
+          "fdc_id": 170859,
+          "item": "cream, heavy",
+          "g": 150
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 20
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 15
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 15
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 11.7,
+      "fat_g": 11.98,
+      "carbs_g": 4.12,
+      "kcal": 170.16,
+      "fiber_g": 0.49,
+      "calcium_mg": 28.42,
+      "iron_mg": 0.89,
+      "potassium_mg": 265.1,
+      "sodium_mg": 392.44,
+      "vitamin_d_mcg": 0.19,
+      "sugar_g": 2.61
+    },
+    "source": "recipe: chicken thigh, raw 700 g, tomato puree 300 g, butter, salted 60 g, cream, heavy 150 g, yogurt, whole milk 100 g, canola oil 20 g, garlic 15 g, ginger 15 g, sugar 10 g, salt 10 g; cooked yield 1300 g"
+  },
+  {
+    "id": "palak-paneer",
+    "name": "Palak paneer",
+    "aliases": [
+      "palak paneer",
+      "saag paneer",
+      "spinach paneer",
+      "palak panir"
+    ],
+    "portions": {
+      "bowl": 200,
+      "cup": 200,
+      "plate": 200
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "fndds": {
+      "code": "72125310",
+      "fdc_id": 2709631,
+      "desc": "Palak Paneer"
+    },
+    "nutrients": {
+      "protein_g": 5.42,
+      "fat_g": 7.02,
+      "carbs_g": 4.28,
+      "kcal": 101,
+      "fiber_g": 0.9,
+      "calcium_mg": 60,
+      "iron_mg": 0.55,
+      "potassium_mg": 244,
+      "sodium_mg": 242,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.89
+    },
+    "source": "FNDDS 72125310 (Palak Paneer)"
+  },
+  {
+    "id": "aloo-gobi",
+    "name": "Aloo gobi",
+    "aliases": [
+      "aloo gobi",
+      "alu gobi",
+      "gobi aloo",
+      "aloo gobhi",
+      "potato cauliflower"
+    ],
+    "portions": {
+      "bowl": 200,
+      "plate": 200,
+      "cup": 180
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1000,
+      "items": [
+        {
+          "fdc_id": 170440,
+          "item": "potato, boiled",
+          "g": 400
+        },
+        {
+          "fdc_id": 169986,
+          "item": "cauliflower, raw",
+          "g": 400
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 50
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 8
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 8
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 8
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 1.72,
+      "fat_g": 5.19,
+      "carbs_g": 11.72,
+      "kcal": 96.23,
+      "fiber_g": 1.84,
+      "calcium_mg": 17.07,
+      "iron_mg": 0.36,
+      "potassium_mg": 295.69,
+      "sodium_mg": 325.2,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.83
+    },
+    "source": "recipe: potato, boiled 400 g, cauliflower, raw 400 g, onion, raw 100 g, tomato, raw 100 g, canola oil 50 g, garlic 8 g, ginger 8 g, salt 8 g; cooked yield 1000 g"
+  },
+  {
+    "id": "bhindi",
+    "name": "Bhindi masala",
+    "aliases": [
+      "bhindi",
+      "bhindi masala",
+      "bhindi sabzi",
+      "okra curry",
+      "bhindi ki sabzi"
+    ],
+    "portions": {
+      "bowl": 180,
+      "plate": 180,
+      "cup": 160
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 650,
+      "items": [
+        {
+          "fdc_id": 169260,
+          "item": "okra, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 50
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 1.81,
+      "fat_g": 7.88,
+      "carbs_g": 7.9,
+      "kcal": 102.9,
+      "fiber_g": 2.89,
+      "calcium_mg": 69.46,
+      "iron_mg": 0.56,
+      "potassium_mg": 284.79,
+      "sodium_mg": 364.51,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 2.12
+    },
+    "source": "recipe: okra, raw 500 g, onion, raw 100 g, tomato, raw 80 g, canola oil 50 g, garlic 5 g, salt 6 g; cooked yield 650 g"
+  },
+  {
+    "id": "mix-sabzi",
+    "name": "Mixed sabzi",
+    "aliases": [
+      "mix sabzi",
+      "mixed sabzi",
+      "sabzi",
+      "subzi",
+      "mix vegetable",
+      "vegetable curry",
+      "tarkari"
+    ],
+    "portions": {
+      "bowl": 200,
+      "plate": 200,
+      "cup": 200
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "fndds": {
+      "code": "75440600",
+      "fdc_id": 2710067,
+      "desc": "Vegetable curry"
+    },
+    "nutrients": {
+      "protein_g": 1.6,
+      "fat_g": 5.27,
+      "carbs_g": 8.81,
+      "kcal": 86,
+      "fiber_g": 1.8,
+      "calcium_mg": 21,
+      "iron_mg": 0.68,
+      "potassium_mg": 286,
+      "sodium_mg": 388,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 3.18
+    },
+    "source": "FNDDS 75440600 (Vegetable curry)"
+  },
+  {
+    "id": "samosa",
+    "name": "Samosa",
+    "aliases": [
+      "samosa",
+      "samosas",
+      "samosay",
+      "aloo samosa"
+    ],
+    "portions": {
+      "samosa": 100,
+      "piece": 100
+    },
+    "default_portion": "samosa",
+    "priority": 10,
+    "fndds": {
+      "code": "58124500",
+      "fdc_id": 2708730,
+      "desc": "Samosa"
+    },
+    "nutrients": {
+      "protein_g": 5.14,
+      "fat_g": 17.47,
+      "carbs_g": 33.16,
+      "kcal": 310,
+      "fiber_g": 1.8,
+      "calcium_mg": 33,
+      "iron_mg": 2.16,
+      "potassium_mg": 166,
+      "sodium_mg": 388,
+      "vitamin_d_mcg": 0.1,
+      "sugar_g": 1.28
+    },
+    "source": "FNDDS 58124500 (Samosa)"
+  },
+  {
+    "id": "pakora",
+    "name": "Pakora",
+    "aliases": [
+      "pakora",
+      "pakoras",
+      "pakoray",
+      "pakoda",
+      "bhajia",
+      "bhaji",
+      "onion bhaji"
+    ],
+    "portions": {
+      "pakora": 12,
+      "piece": 12,
+      "serving": 48,
+      "plate": 100
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "fndds": {
+      "code": "75440400",
+      "fdc_id": 2710066,
+      "desc": "Pakora"
+    },
+    "nutrients": {
+      "protein_g": 4.92,
+      "fat_g": 4.77,
+      "carbs_g": 16.24,
+      "kcal": 125,
+      "fiber_g": 3.2,
+      "calcium_mg": 19,
+      "iron_mg": 1.12,
+      "potassium_mg": 214,
+      "sodium_mg": 380,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 2.97
+    },
+    "source": "FNDDS 75440400 (Pakora)"
+  },
+  {
+    "id": "dahi-bhalla",
+    "name": "Dahi bhalla",
+    "aliases": [
+      "dahi bhalla",
+      "dahi baray",
+      "dahi bara",
+      "dahi vada",
+      "dahi bhallay"
+    ],
+    "portions": {
+      "plate": 200,
+      "bowl": 200,
+      "serving": 200
+    },
+    "default_portion": "plate",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 900,
+      "items": [
+        {
+          "fdc_id": 174259,
+          "item": "black gram (urad), raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 40
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 500
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 5
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 6.13,
+      "fat_g": 6.52,
+      "carbs_g": 14.09,
+      "kcal": 136.46,
+      "fiber_g": 3.05,
+      "calcium_mg": 90.37,
+      "iron_mg": 1.29,
+      "potassium_mg": 250.02,
+      "sodium_mg": 247.23,
+      "vitamin_d_mcg": 0.06,
+      "sugar_g": 4.25
+    },
+    "source": "recipe: black gram (urad), raw 150 g, canola oil 40 g, yogurt, whole milk 500 g, sugar 15 g, salt 5 g; cooked yield 900 g"
+  },
+  {
+    "id": "fruit-chaat",
+    "name": "Fruit chaat",
+    "aliases": [
+      "fruit chaat",
+      "fruit chat",
+      "fruit salad chaat"
+    ],
+    "portions": {
+      "bowl": 200,
+      "plate": 200,
+      "cup": 160
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 560,
+      "items": [
+        {
+          "fdc_id": 171688,
+          "item": "apple, raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 173944,
+          "item": "banana, raw",
+          "g": 150
+        },
+        {
+          "fdc_id": 169097,
+          "item": "orange, raw",
+          "g": 120
+        },
+        {
+          "fdc_id": 173044,
+          "item": "guava, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 15
+        },
+        {
+          "fdc_id": 167747,
+          "item": "lemon juice",
+          "g": 15
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 2
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 1.03,
+      "fat_g": 0.34,
+      "carbs_g": 17.75,
+      "kcal": 70.94,
+      "fiber_g": 2.83,
+      "calcium_mg": 15.01,
+      "iron_mg": 0.17,
+      "potassium_mg": 240.64,
+      "sodium_mg": 139.37,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 12.4
+    },
+    "source": "recipe: apple, raw 150 g, banana, raw 150 g, orange, raw 120 g, guava, raw 100 g, sugar 15 g, lemon juice 15 g, salt 2 g; cooked yield 560 g"
+  },
+  {
+    "id": "chicken-tikka",
+    "name": "Chicken tikka",
+    "aliases": [
+      "chicken tikka",
+      "tikka",
+      "chicken tikka boti",
+      "tikka boti"
+    ],
+    "portions": {
+      "piece": 35,
+      "plate": 200,
+      "serving": 200,
+      "skewer": 120
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 450,
+      "items": [
+        {
+          "fdc_id": 173627,
+          "item": "chicken thigh, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 15
+        },
+        {
+          "fdc_id": 167747,
+          "item": "lemon juice",
+          "g": 15
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 10
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 22.81,
+      "fat_g": 8.67,
+      "carbs_g": 2.4,
+      "kcal": 183.29,
+      "fiber_g": 0.1,
+      "calcium_mg": 39.56,
+      "iron_mg": 0.97,
+      "potassium_mg": 325.01,
+      "sodium_mg": 633.25,
+      "vitamin_d_mcg": 0.02,
+      "sugar_g": 1.18
+    },
+    "source": "recipe: chicken thigh, raw 500 g, yogurt, whole milk 100 g, canola oil 15 g, lemon juice 15 g, garlic 10 g, ginger 10 g, salt 6 g; cooked yield 450 g"
+  },
+  {
+    "id": "tandoori-chicken",
+    "name": "Tandoori chicken",
+    "aliases": [
+      "tandoori chicken",
+      "chicken tandoori",
+      "tandoori leg",
+      "chicken leg piece"
+    ],
+    "portions": {
+      "piece": 180,
+      "leg": 180,
+      "serving": 180,
+      "plate": 360
+    },
+    "default_portion": "piece",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 560,
+      "items": [
+        {
+          "fdc_id": 172378,
+          "item": "chicken leg with skin, raw",
+          "g": 600
+        },
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 10
+        },
+        {
+          "fdc_id": 167747,
+          "item": "lemon juice",
+          "g": 15
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 8
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 8
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 18.29,
+      "fat_g": 19.48,
+      "carbs_g": 1.93,
+      "kcal": 259.83,
+      "fiber_g": 0.07,
+      "calcium_mg": 34.48,
+      "iron_mg": 0.79,
+      "potassium_mg": 259.68,
+      "sodium_mg": 513.93,
+      "vitamin_d_mcg": 0.13,
+      "sugar_g": 0.94
+    },
+    "source": "recipe: chicken leg with skin, raw 600 g, yogurt, whole milk 100 g, canola oil 10 g, lemon juice 15 g, garlic 8 g, ginger 8 g, salt 6 g; cooked yield 560 g"
+  },
+  {
+    "id": "seekh-kebab",
+    "name": "Seekh kebab",
+    "aliases": [
+      "seekh kebab",
+      "seekh kabab",
+      "sheekh kebab",
+      "seekh",
+      "seekh kebabs",
+      "sikh kebab"
+    ],
+    "portions": {
+      "kebab": 60,
+      "piece": 60,
+      "skewer": 60,
+      "serving": 120,
+      "plate": 240
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 480,
+      "items": [
+        {
+          "fdc_id": 174036,
+          "item": "beef mince 80/20, raw",
+          "g": 500
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 60
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 10
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 10
+        },
+        {
+          "fdc_id": 170497,
+          "item": "green chili",
+          "g": 10
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 7
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 18.28,
+      "fat_g": 20.89,
+      "carbs_g": 2.5,
+      "kcal": 275.67,
+      "fiber_g": 0.39,
+      "calcium_mg": 27.85,
+      "iron_mg": 2.16,
+      "potassium_mg": 334.55,
+      "sodium_mg": 636.2,
+      "vitamin_d_mcg": 0.1,
+      "sugar_g": 0.71
+    },
+    "source": "recipe: beef mince 80/20, raw 500 g, onion, raw 60 g, garlic 10 g, ginger 10 g, green chili 10 g, coriander leaves 10 g, salt 7 g; cooked yield 480 g"
+  },
+  {
+    "id": "shami-kebab",
+    "name": "Shami kebab",
+    "aliases": [
+      "shami kebab",
+      "shami kabab",
+      "shami",
+      "shami kebabs"
+    ],
+    "portions": {
+      "kebab": 50,
+      "piece": 50,
+      "serving": 100,
+      "plate": 200
+    },
+    "default_portion": "kebab",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 600,
+      "items": [
+        {
+          "fdc_id": 171206,
+          "item": "beef chuck for stew, raw",
+          "g": 400
+        },
+        {
+          "fdc_id": 173756,
+          "item": "chickpeas / bengal gram, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 171287,
+          "item": "egg, raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 40
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 5
+        },
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 6
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 19.12,
+      "fat_g": 11.47,
+      "carbs_g": 11.86,
+      "kcal": 224.43,
+      "fiber_g": 2.21,
+      "calcium_mg": 26.63,
+      "iron_mg": 2.32,
+      "potassium_mg": 394.88,
+      "sodium_mg": 457.33,
+      "vitamin_d_mcg": 0.23,
+      "sugar_g": 2.19
+    },
+    "source": "recipe: beef chuck for stew, raw 400 g, chickpeas / bengal gram, raw 100 g, egg, raw 50 g, onion, raw 50 g, canola oil 40 g, garlic 5 g, ginger 5 g, salt 6 g; cooked yield 600 g"
+  },
+  {
+    "id": "chapli-kebab",
+    "name": "Chapli kebab",
+    "aliases": [
+      "chapli kebab",
+      "chapli kabab",
+      "chappal kebab",
+      "chapli"
+    ],
+    "portions": {
+      "kebab": 110,
+      "piece": 110,
+      "serving": 110,
+      "plate": 220
+    },
+    "default_portion": "kebab",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 800,
+      "items": [
+        {
+          "fdc_id": 174036,
+          "item": "beef mince 80/20, raw",
+          "g": 600
+        },
+        {
+          "fdc_id": 170000,
+          "item": "onion, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 170457,
+          "item": "tomato, raw",
+          "g": 80
+        },
+        {
+          "fdc_id": 171287,
+          "item": "egg, raw",
+          "g": 50
+        },
+        {
+          "fdc_id": 168894,
+          "item": "white flour (maida)",
+          "g": 20
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 60
+        },
+        {
+          "fdc_id": 170497,
+          "item": "green chili",
+          "g": 10
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 8
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 14.2,
+      "fat_g": 23.16,
+      "carbs_g": 3.67,
+      "kcal": 282.43,
+      "fiber_g": 0.45,
+      "calcium_mg": 22.55,
+      "iron_mg": 1.77,
+      "potassium_mg": 266.59,
+      "sodium_mg": 447.67,
+      "vitamin_d_mcg": 0.2,
+      "sugar_g": 0.9
+    },
+    "source": "recipe: beef mince 80/20, raw 600 g, onion, raw 100 g, tomato, raw 80 g, egg, raw 50 g, white flour (maida) 20 g, canola oil 60 g, green chili 10 g, coriander leaves 10 g, salt 8 g; cooked yield 800 g"
+  },
+  {
+    "id": "raita",
+    "name": "Raita",
+    "aliases": [
+      "raita",
+      "raeta",
+      "cucumber raita",
+      "kheera raita",
+      "zeera raita"
+    ],
+    "portions": {
+      "bowl": 125,
+      "cup": 245,
+      "serving": 125,
+      "tablespoon": 15
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 408,
+      "items": [
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 300
+        },
+        {
+          "fdc_id": 168409,
+          "item": "cucumber, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 169997,
+          "item": "coriander leaves",
+          "g": 5
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 3
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 2.74,
+      "fat_g": 2.42,
+      "carbs_g": 4.36,
+      "kcal": 48.81,
+      "fiber_g": 0.16,
+      "calcium_mg": 93.89,
+      "iron_mg": 0.13,
+      "potassium_mg": 156.44,
+      "sodium_mg": 319.86,
+      "vitamin_d_mcg": 0.07,
+      "sugar_g": 3.85
+    },
+    "source": "recipe: yogurt, whole milk 300 g, cucumber, raw 100 g, coriander leaves 5 g, salt 3 g; cooked yield 408 g"
+  },
+  {
+    "id": "dahi",
+    "name": "Dahi (plain yogurt)",
+    "aliases": [
+      "dahi",
+      "plain dahi"
+    ],
+    "portions": {
+      "bowl": 150,
+      "cup": 245,
+      "serving": 150
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "usda": {
+      "fdc_id": 171284,
+      "desc": "Yogurt, plain, whole milk"
+    },
+    "nutrients": {
+      "protein_g": 3.47,
+      "fat_g": 3.25,
+      "carbs_g": 4.66,
+      "kcal": 61,
+      "fiber_g": 0,
+      "calcium_mg": 121,
+      "iron_mg": 0.05,
+      "potassium_mg": 155,
+      "sodium_mg": 46,
+      "vitamin_d_mcg": 0.1,
+      "sugar_g": 4.66
+    },
+    "source": "USDA SR Legacy 171284 (Yogurt, plain, whole milk)"
+  },
+  {
+    "id": "lassi",
+    "name": "Sweet lassi",
+    "aliases": [
+      "lassi",
+      "sweet lassi",
+      "meethi lassi",
+      "lassie"
+    ],
+    "portions": {
+      "glass": 300,
+      "cup": 245,
+      "serving": 300
+    },
+    "default_portion": "glass",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 325,
+      "items": [
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 200
+        },
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 100
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 25
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.1,
+      "fat_g": 3,
+      "carbs_g": 12.04,
+      "kcal": 86.08,
+      "fiber_g": 0,
+      "calcium_mg": 109.31,
+      "iron_mg": 0.04,
+      "potassium_mg": 136.15,
+      "sodium_mg": 41.62,
+      "vitamin_d_mcg": 0.46,
+      "sugar_g": 12.1
+    },
+    "source": "recipe: yogurt, whole milk 200 g, milk, whole 100 g, sugar 25 g; cooked yield 325 g"
+  },
+  {
+    "id": "salted-lassi",
+    "name": "Salted lassi",
+    "aliases": [
+      "salted lassi",
+      "namkeen lassi",
+      "salty lassi",
+      "chaas"
+    ],
+    "portions": {
+      "glass": 300,
+      "cup": 245,
+      "serving": 300
+    },
+    "default_portion": "glass",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 302,
+      "items": [
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 200
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 2
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 2.3,
+      "fat_g": 2.15,
+      "carbs_g": 3.09,
+      "kcal": 40.4,
+      "fiber_g": 0,
+      "calcium_mg": 80.29,
+      "iron_mg": 0.04,
+      "potassium_mg": 102.7,
+      "sodium_mg": 287.14,
+      "vitamin_d_mcg": 0.07,
+      "sugar_g": 3.09
+    },
+    "source": "recipe: yogurt, whole milk 200 g, salt 2 g; cooked yield 302 g"
+  },
+  {
+    "id": "mango-lassi",
+    "name": "Mango lassi",
+    "aliases": [
+      "mango lassi",
+      "mango lassie",
+      "aam lassi",
+      "mango lasi"
+    ],
+    "portions": {
+      "glass": 300,
+      "cup": 245,
+      "serving": 300
+    },
+    "default_portion": "glass",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 340,
+      "items": [
+        {
+          "fdc_id": 171284,
+          "item": "yogurt, whole milk",
+          "g": 150
+        },
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 75
+        },
+        {
+          "fdc_id": 169910,
+          "item": "mango, raw",
+          "g": 100
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 15
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 2.47,
+      "fat_g": 2.26,
+      "carbs_g": 11.93,
+      "kcal": 75.09,
+      "fiber_g": 0.47,
+      "calcium_mg": 81.59,
+      "iron_mg": 0.08,
+      "potassium_mg": 147,
+      "sodium_mg": 30.12,
+      "vitamin_d_mcg": 0.33,
+      "sugar_g": 11.59
+    },
+    "source": "recipe: yogurt, whole milk 150 g, milk, whole 75 g, mango, raw 100 g, sugar 15 g; cooked yield 340 g"
+  },
+  {
+    "id": "chai",
+    "name": "Chai (doodh patti)",
+    "aliases": [
+      "chai",
+      "doodh patti",
+      "dudh patti",
+      "milk tea",
+      "karak chai",
+      "tea with milk",
+      "masala chai",
+      "cup of chai",
+      "tea",
+      "cup of tea"
+    ],
+    "portions": {
+      "cup": 200,
+      "mug": 300,
+      "glass": 250
+    },
+    "default_portion": "cup",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 260,
+      "items": [
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 150
+        },
+        {
+          "fdc_id": 173227,
+          "item": "black tea, brewed",
+          "g": 100
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 1.82,
+      "fat_g": 1.88,
+      "carbs_g": 6.73,
+      "kcal": 50.46,
+      "fiber_g": 0,
+      "calcium_mg": 65.23,
+      "iron_mg": 0.03,
+      "potassium_mg": 90.46,
+      "sodium_mg": 26,
+      "vitamin_d_mcg": 0.75,
+      "sugar_g": 6.75
+    },
+    "source": "recipe: milk, whole 150 g, black tea, brewed 100 g, sugar 10 g; cooked yield 260 g"
+  },
+  {
+    "id": "kheer",
+    "name": "Kheer",
+    "aliases": [
+      "kheer",
+      "rice kheer",
+      "rice pudding",
+      "kheer pudding",
+      "firni",
+      "phirni"
+    ],
+    "portions": {
+      "bowl": 150,
+      "cup": 200,
+      "serving": 150
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 800,
+      "items": [
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 1000
+        },
+        {
+          "fdc_id": 168877,
+          "item": "rice, raw",
+          "g": 60
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 80
+        },
+        {
+          "fdc_id": 170567,
+          "item": "almonds",
+          "g": 15
+        },
+        {
+          "fdc_id": 170184,
+          "item": "pistachios",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 5.12,
+      "fat_g": 5.61,
+      "carbs_g": 22.74,
+      "kcal": 160.18,
+      "fiber_g": 0.46,
+      "calcium_mg": 149.81,
+      "iron_mg": 0.48,
+      "potassium_mg": 200.38,
+      "sodium_mg": 54.26,
+      "vitamin_d_mcg": 1.63,
+      "sugar_g": 16.48
+    },
+    "source": "recipe: milk, whole 1000 g, rice, raw 60 g, sugar 80 g, almonds 15 g, pistachios 10 g; cooked yield 800 g"
+  },
+  {
+    "id": "suji-halwa",
+    "name": "Suji halwa",
+    "aliases": [
+      "halwa",
+      "suji halwa",
+      "sooji halwa",
+      "suji ka halwa",
+      "semolina halwa"
+    ],
+    "portions": {
+      "plate": 100,
+      "bowl": 100,
+      "serving": 100
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 450,
+      "items": [
+        {
+          "fdc_id": 169715,
+          "item": "semolina (suji)",
+          "g": 100
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 80
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 120
+        },
+        {
+          "fdc_id": 170567,
+          "item": "almonds",
+          "g": 10
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.34,
+      "fat_g": 19.03,
+      "carbs_g": 43.32,
+      "kcal": 351.8,
+      "fiber_g": 1.14,
+      "calcium_mg": 10.73,
+      "iron_mg": 1.06,
+      "potassium_mg": 59.04,
+      "sodium_mg": 0.87,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 26.71
+    },
+    "source": "recipe: semolina (suji) 100 g, ghee (butter oil) 80 g, sugar 120 g, almonds 10 g; cooked yield 450 g"
+  },
+  {
+    "id": "gajar-halwa",
+    "name": "Gajar halwa",
+    "aliases": [
+      "gajar halwa",
+      "gajar ka halwa",
+      "carrot halwa"
+    ],
+    "portions": {
+      "bowl": 120,
+      "plate": 120,
+      "serving": 120
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 900,
+      "items": [
+        {
+          "fdc_id": 170393,
+          "item": "carrots, raw",
+          "g": 1000
+        },
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 500
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 150
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 60
+        },
+        {
+          "fdc_id": 170567,
+          "item": "almonds",
+          "g": 20
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.27,
+      "fat_g": 9.81,
+      "carbs_g": 30.45,
+      "kcal": 215.21,
+      "fiber_g": 3.39,
+      "calcium_mg": 105.86,
+      "iron_mg": 0.44,
+      "potassium_mg": 445.84,
+      "sodium_mg": 100.88,
+      "vitamin_d_mcg": 0.72,
+      "sugar_g": 24.8
+    },
+    "source": "recipe: carrots, raw 1000 g, milk, whole 500 g, sugar 150 g, ghee (butter oil) 60 g, almonds 20 g; cooked yield 900 g"
+  },
+  {
+    "id": "gulab-jamun",
+    "name": "Gulab jamun",
+    "aliases": [
+      "gulab jamun",
+      "gulab jaman",
+      "gulab jamuns",
+      "gulaab jamun"
+    ],
+    "portions": {
+      "piece": 40,
+      "serving": 80,
+      "bowl": 120
+    },
+    "default_portion": "piece",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 400,
+      "items": [
+        {
+          "fdc_id": 173454,
+          "item": "milk powder, whole",
+          "g": 100
+        },
+        {
+          "fdc_id": 168894,
+          "item": "white flour (maida)",
+          "g": 20
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 30
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 120
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 7.12,
+      "fat_g": 14.19,
+      "carbs_g": 43.41,
+      "kcal": 324,
+      "fiber_g": 0.14,
+      "calcium_mg": 229.35,
+      "iron_mg": 0.36,
+      "potassium_mg": 338.83,
+      "sodium_mg": 93.3,
+      "vitamin_d_mcg": 0.13,
+      "sugar_g": 39.56
+    },
+    "source": "recipe: milk powder, whole 100 g, white flour (maida) 20 g, ghee (butter oil) 30 g, sugar 120 g; cooked yield 400 g"
+  },
+  {
+    "id": "jalebi",
+    "name": "Jalebi",
+    "aliases": [
+      "jalebi",
+      "jalebis",
+      "jilebi",
+      "jalaibi"
+    ],
+    "portions": {
+      "piece": 25,
+      "serving": 100,
+      "plate": 100
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 300,
+      "items": [
+        {
+          "fdc_id": 168894,
+          "item": "white flour (maida)",
+          "g": 100
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 40
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 150
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.44,
+      "fat_g": 13.66,
+      "carbs_g": 75.43,
+      "kcal": 432.7,
+      "fiber_g": 0.9,
+      "calcium_mg": 5.5,
+      "iron_mg": 1.57,
+      "potassium_mg": 36.67,
+      "sodium_mg": 1.17,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 49.99
+    },
+    "source": "recipe: white flour (maida) 100 g, canola oil 40 g, sugar 150 g; cooked yield 300 g"
+  },
+  {
+    "id": "sheer-khurma",
+    "name": "Sheer khurma",
+    "aliases": [
+      "sheer khurma",
+      "sheer korma",
+      "seviyan",
+      "sewaiyan",
+      "vermicelli pudding"
+    ],
+    "portions": {
+      "bowl": 150,
+      "cup": 200,
+      "serving": 150
+    },
+    "default_portion": "bowl",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 1200,
+      "items": [
+        {
+          "fdc_id": 171265,
+          "item": "milk, whole",
+          "g": 1000
+        },
+        {
+          "fdc_id": 169884,
+          "item": "vermicelli, dry",
+          "g": 60
+        },
+        {
+          "fdc_id": 169655,
+          "item": "sugar",
+          "g": 100
+        },
+        {
+          "fdc_id": 173412,
+          "item": "ghee (butter oil)",
+          "g": 20
+        },
+        {
+          "fdc_id": 168191,
+          "item": "dates",
+          "g": 40
+        },
+        {
+          "fdc_id": 170567,
+          "item": "almonds",
+          "g": 20
+        },
+        {
+          "fdc_id": 170184,
+          "item": "pistachios",
+          "g": 15
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.3,
+      "fat_g": 5.78,
+      "carbs_g": 19.65,
+      "kcal": 140.12,
+      "fiber_g": 0.76,
+      "calcium_mg": 105,
+      "iron_mg": 0.26,
+      "potassium_mg": 158.63,
+      "sodium_mg": 36.21,
+      "vitamin_d_mcg": 1.08,
+      "sugar_g": 15.78
+    },
+    "source": "recipe: milk, whole 1000 g, vermicelli, dry 60 g, sugar 100 g, ghee (butter oil) 20 g, dates 40 g, almonds 20 g, pistachios 15 g; cooked yield 1200 g"
+  },
+  {
+    "id": "paneer",
+    "name": "Paneer",
+    "aliases": [
+      "paneer",
+      "panir",
+      "cottage cheese paneer",
+      "indian cheese"
+    ],
+    "portions": {
+      "cup": 246,
+      "piece": 25,
+      "serving": 85,
+      "100 g": 100
+    },
+    "default_portion": "serving",
+    "priority": 10,
+    "fndds": {
+      "code": "14110050",
+      "fdc_id": 2705740,
+      "desc": "Cheese, paneer"
+    },
+    "nutrients": {
+      "protein_g": 15.86,
+      "fat_g": 15.52,
+      "carbs_g": 22.46,
+      "kcal": 299,
+      "fiber_g": 0,
+      "calcium_mg": 597,
+      "iron_mg": 0,
+      "potassium_mg": 728,
+      "sodium_mg": 185,
+      "vitamin_d_mcg": 5.3,
+      "sugar_g": 23.33
+    },
+    "source": "FNDDS 14110050 (Cheese, paneer)"
+  },
+  {
+    "id": "ginger-garlic-paste",
+    "name": "Ginger garlic paste",
+    "aliases": [
+      "ginger garlic paste",
+      "adrak lehsan paste",
+      "garlic ginger paste"
+    ],
+    "portions": {
+      "tablespoon": 16,
+      "teaspoon": 5,
+      "serving": 16
+    },
+    "default_portion": "tablespoon",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 112,
+      "items": [
+        {
+          "fdc_id": 169231,
+          "item": "ginger",
+          "g": 50
+        },
+        {
+          "fdc_id": 169230,
+          "item": "garlic",
+          "g": 50
+        },
+        {
+          "fdc_id": 172336,
+          "item": "canola oil",
+          "g": 10
+        },
+        {
+          "fdc_id": 173468,
+          "item": "salt",
+          "g": 2
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 3.65,
+      "fat_g": 9.49,
+      "carbs_g": 22.69,
+      "kcal": 181.16,
+      "fiber_g": 1.83,
+      "calcium_mg": 88.38,
+      "iron_mg": 1.03,
+      "potassium_mg": 364.43,
+      "sodium_mg": 705.5,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.21
+    },
+    "source": "recipe: ginger 50 g, garlic 50 g, canola oil 10 g, salt 2 g; cooked yield 112 g"
+  },
+  {
+    "id": "garam-masala",
+    "name": "Garam masala",
+    "aliases": [
+      "garam masala",
+      "garam masala powder"
+    ],
+    "portions": {
+      "teaspoon": 2,
+      "tablespoon": 6,
+      "serving": 2
+    },
+    "default_portion": "teaspoon",
+    "priority": 10,
+    "recipe": {
+      "yield_g": 100,
+      "items": [
+        {
+          "fdc_id": 170922,
+          "item": "coriander seed",
+          "g": 30
+        },
+        {
+          "fdc_id": 170923,
+          "item": "cumin seed",
+          "g": 25
+        },
+        {
+          "fdc_id": 170931,
+          "item": "black pepper",
+          "g": 15
+        },
+        {
+          "fdc_id": 170919,
+          "item": "cardamom",
+          "g": 12
+        },
+        {
+          "fdc_id": 171320,
+          "item": "cinnamon",
+          "g": 10
+        },
+        {
+          "fdc_id": 171321,
+          "item": "cloves",
+          "g": 8
+        }
+      ]
+    },
+    "nutrients": {
+      "protein_g": 11.89,
+      "fat_g": 13.36,
+      "carbs_g": 58.67,
+      "kcal": 304.74,
+      "fiber_g": 30.37,
+      "calcium_mg": 708.62,
+      "iron_mg": 26.4,
+      "potassium_mg": 1285.43,
+      "sodium_mg": 80.82,
+      "vitamin_d_mcg": 0,
+      "sugar_g": 1.07
+    },
+    "source": "recipe: coriander seed 30 g, cumin seed 25 g, black pepper 15 g, cardamom 12 g, cinnamon 10 g, cloves 8 g; cooked yield 100 g"
+  }
+]

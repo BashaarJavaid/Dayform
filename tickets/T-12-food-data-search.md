@@ -8,7 +8,7 @@
 | Depends on | T-10, T-02 (food-word transcripts) |
 | Owns | `data/foods/`, `packages/food-search/` |
 | Approval needed | No. The USDA download is a public government dataset. |
-| Status | TODO |
+| Status | DONE |
 
 ## Goal
 Build a curated food table and a fast, accurate search. For example, "two rotis" must resolve to the right food, portion and nutrients.
@@ -83,4 +83,22 @@ S1 opens the video. A wrong match or a strange number on camera loses the judges
 - **No match at runtime:** Opus estimates the food, and the entry is marked "estimated" (T-22).
 
 ## Result
-_The agent fills this in._
+2026-10-22. All 5 acceptance criteria pass on local Postgres (`dayform-pg`, port 5433).
+
+- **Data:** `data/foods/foods.json`, 1,659 foods: 55 desi entries (52 dishes, plus `paneer`, `ginger-garlic-paste` and `garam-masala` for the T-13 catalog), 1,396 FNDDS and 208 SR Legacy. Every `food_id` in `data/catalog/catalog.json` resolves. Selection rules: `data/foods/README.md`.
+- **Desi sources:** 15 come from FNDDS codes and 2 from SR Legacy foods (basmati rice, dahi). 38 are standard recipes of USDA ingredients divided by the cooked yield; each recipe is written into `source`.
+- **Search:** `packages/food-search` exports `searchFood`, `searchItems`, `searchText`, `splitItems`, `parsePhrase`. Steps: exact alias, then trigram (pg_trgm on `food_terms` when `DATABASE_URL` is set; an in-memory port of the same similarity otherwise, with an automatic fallback). Ranking is similarity + 0.005 × priority. Then unit and portion resolution. With no amount, the standard portion plus an assumption string (D5). Below 0.55 similarity: `no_confident_match` with up to 3 candidates.
+- **Verify:** `npm run load -w @dayform/food-search` (→ `loaded foods=1659 terms=2780`), then `npm test -w packages/food-search`:
+  - `[memory] top1=100/100  p50=0.01 ms/item`
+  - `[pg] top1=100/100  p50=10.12 ms/item  p95=17.83 ms/item`
+  - `Tests 9 passed (9)`
+- **S1:** "two rotis, chicken karahi and a mango lassi" → `roti 80g`, `chicken-karahi 250g` (assumption "Assumed 1 plate of chicken karahi = 250 g."), `mango-lassi 300g`. Same result on both backends.
+- **Held-out probe** (30 phrases not in the test set, not tuned for): 27 sensible. Wrong ones: "vegetable soup" → frozen mixed vegetables (confidence 0.67); "green salad" → 18 g of salad greens; "kebab" alone → `no_confident_match`. These sit next to the 100/100 because I wrote the test set knowing the aliases.
+- **Deviations:**
+  - USDA FNDDS nutrients are keyed by `nutrient_nbr` (F-011).
+  - Portions are stored as jsonb, which loses key order, so portion choice is made order-independent.
+  - The output adds `status`, `said`, `quantity`, `unit`, `assumed` and all 11 nutrients beyond the brief. `kcal`/`protein_g`/`carbs_g`/`fat_g` match contracts `Macros`.
+  - "a slice of pizza" uses the FNDDS generic piece (119 g).
+- **Fallbacks used:** none. The bulk download took 3 s, so both SR Legacy and FNDDS are in.
+
+**Orchestrator close-out (2026-10-22):** verified load (1,659 foods), `top1=100/100` memory and pg (p50 11.8 ms), S1 trio resolves with assumptions, compound dishes split, unknown dish → no_confident_match. DONE.

@@ -1,0 +1,441 @@
+{
+  "Egg, whole, boiled or poached": [
+    "egg",
+    "eggs",
+    "boiled egg",
+    "hard boiled egg",
+    "anda",
+    "ubla anda"
+  ],
+  "Egg, whole, fried with oil": [
+    "fried egg",
+    "fried eggs",
+    "anda fry"
+  ],
+  "Chicken breast, baked, broiled, or roasted, skin not eaten, from raw": [
+    "chicken breast",
+    "grilled chicken breast",
+    "grilled chicken",
+    "baked chicken breast",
+    "chicken breasts",
+    "roast chicken breast"
+  ],
+  "Chicken thigh, baked, broiled, or roasted, skin not eaten, from raw": [
+    "chicken thigh",
+    "chicken thighs"
+  ],
+  "Chicken nuggets, NFS": [
+    "chicken nuggets",
+    "nuggets"
+  ],
+  "Beef, steak, NFS": [
+    "steak",
+    "beef steak"
+  ],
+  "Beef, ground": [
+    "ground beef"
+  ],
+  "Fish, salmon, baked or broiled": [
+    "salmon",
+    "baked salmon"
+  ],
+  "Fish, salmon, grilled": [
+    "grilled salmon"
+  ],
+  "Fish, tuna, canned": [
+    "tuna",
+    "canned tuna",
+    "tin of tuna"
+  ],
+  "Shrimp, NFS": [
+    "shrimp",
+    "prawns",
+    "prawn",
+    "jhinga"
+  ],
+  "Almonds, NFS": [
+    "almonds",
+    "almond",
+    "badam"
+  ],
+  "Cashews, NFS": [
+    "cashews",
+    "cashew",
+    "kaju"
+  ],
+  "Peanut butter": [
+    "peanut butter"
+  ],
+  "Hummus, plain": [
+    "hummus",
+    "houmous"
+  ],
+  "Falafel": [
+    "falafel"
+  ],
+  "Gyro sandwich": [
+    "gyro",
+    "shawarma",
+    "chicken shawarma"
+  ],
+  "Sandwich, NFS": [
+    "sandwich"
+  ],
+  "Hamburger, NFS": [
+    "hamburger",
+    "burger",
+    "beef burger"
+  ],
+  "Cheeseburger, NFS": [
+    "cheeseburger",
+    "cheese burger"
+  ],
+  "Pizza, cheese, from restaurant or fast food, NS as to type of crust": [
+    "pizza",
+    "cheese pizza",
+    "pizza slice"
+  ],
+  "Burrito, NFS": [
+    "burrito"
+  ],
+  "Hot dog sandwich, NFS, on white bun": [
+    "hot dog"
+  ],
+  "Potato, french fries, NFS": [
+    "french fries",
+    "fries",
+    "french fry",
+    "finger chips"
+  ],
+  "Potato chips, NFS": [
+    "potato chips",
+    "crisps",
+    "chips"
+  ],
+  "Popcorn, NFS": [
+    "popcorn"
+  ],
+  "Bread, white": [
+    "white bread",
+    "bread",
+    "double roti"
+  ],
+  "Bread, whole wheat": [
+    "whole wheat bread",
+    "brown bread",
+    "wholemeal bread"
+  ],
+  "Bread, white, toasted": [
+    "toast",
+    "white toast",
+    "toasted bread"
+  ],
+  "Bread, whole wheat, toasted": [
+    "whole wheat toast",
+    "brown toast"
+  ],
+  "Bagel": [
+    "bagel"
+  ],
+  "Pancakes, NFS": [
+    "pancakes",
+    "pancake"
+  ],
+  "Waffle, NFS": [
+    "waffle",
+    "waffles"
+  ],
+  "Doughnut, NFS": [
+    "donut",
+    "doughnut"
+  ],
+  "Cookie, chocolate chip": [
+    "chocolate chip cookie",
+    "cookie",
+    "cookies"
+  ],
+  "Oatmeal, NFS": [
+    "oatmeal",
+    "porridge",
+    "oats porridge",
+    "daliya"
+  ],
+  "Oats, raw": [
+    "oats",
+    "rolled oats",
+    "raw oats"
+  ],
+  "Cereal, corn flakes, plain": [
+    "corn flakes",
+    "cornflakes",
+    "cereal"
+  ],
+  "Pasta, cooked": [
+    "pasta",
+    "spaghetti",
+    "macaroni"
+  ],
+  "Rice, brown, cooked, NS as to fat": [
+    "brown rice"
+  ],
+  "Quinoa, cooked": [
+    "quinoa"
+  ],
+  "Lentils, mature seeds, cooked, boiled, without salt": [
+    "boiled lentils"
+  ],
+  "Tofu, raw, firm, prepared with calcium sulfate": [
+    "tofu"
+  ],
+  "Apple, raw": [
+    "apple",
+    "apples",
+    "saib"
+  ],
+  "Banana, raw": [
+    "banana",
+    "bananas",
+    "kela"
+  ],
+  "Orange, raw": [
+    "orange",
+    "oranges",
+    "malta",
+    "kinnow"
+  ],
+  "Grapes, raw": [
+    "grapes",
+    "angoor"
+  ],
+  "Guava, raw": [
+    "guava",
+    "amrood"
+  ],
+  "Mango, raw": [
+    "mango",
+    "aam"
+  ],
+  "Pear, raw": [
+    "pear",
+    "nashpati"
+  ],
+  "Peach, raw": [
+    "peach"
+  ],
+  "Pineapple, raw": [
+    "pineapple"
+  ],
+  "Watermelon, raw": [
+    "watermelon",
+    "tarbooz"
+  ],
+  "Strawberries, raw": [
+    "strawberries",
+    "strawberry"
+  ],
+  "Blueberries, raw": [
+    "blueberries"
+  ],
+  "Avocado, raw": [
+    "avocado"
+  ],
+  "Date": [
+    "dates",
+    "date",
+    "khajoor",
+    "khajur"
+  ],
+  "Carrots, raw": [
+    "carrot",
+    "carrots",
+    "gajar"
+  ],
+  "Cucumber, raw": [
+    "cucumber",
+    "kheera"
+  ],
+  "Broccoli, raw": [
+    "broccoli"
+  ],
+  "Lettuce, raw": [
+    "lettuce",
+    "salad leaves"
+  ],
+  "Sweet potato, NFS": [
+    "sweet potato",
+    "shakarkandi"
+  ],
+  "Milk, whole": [
+    "milk",
+    "whole milk",
+    "doodh",
+    "full cream milk"
+  ],
+  "Milk, reduced fat (2%)": [
+    "2% milk",
+    "low fat milk"
+  ],
+  "Milk, fat free (skim)": [
+    "skim milk",
+    "skimmed milk"
+  ],
+  "Yogurt, Greek, whole milk, plain": [
+    "greek yogurt",
+    "greek yoghurt"
+  ],
+  "Yogurt, NFS": [
+    "yogurt",
+    "yoghurt"
+  ],
+  "Cheese, Cheddar": [
+    "cheddar",
+    "cheddar cheese",
+    "cheese",
+    "cheese slice"
+  ],
+  "Cheese, Mozzarella, NFS": [
+    "mozzarella"
+  ],
+  "Cheese, cottage, NFS": [
+    "cottage cheese"
+  ],
+  "Butter, NFS": [
+    "butter",
+    "makhan"
+  ],
+  "Ice cream, NFS": [
+    "ice cream"
+  ],
+  "Chocolate candy": [
+    "chocolate",
+    "chocolate bar",
+    "milk chocolate"
+  ],
+  "Dark chocolate candy": [
+    "dark chocolate"
+  ],
+  "Honey": [
+    "honey",
+    "shehad"
+  ],
+  "Ketchup": [
+    "ketchup"
+  ],
+  "Mayonnaise, regular": [
+    "mayo",
+    "mayonnaise"
+  ],
+  "Coffee, brewed": [
+    "coffee",
+    "black coffee"
+  ],
+  "Coffee, Latte": [
+    "latte",
+    "cafe latte"
+  ],
+  "Tea, hot, leaf, black": [
+    "black tea"
+  ],
+  "Tea, hot, leaf, green": [
+    "green tea",
+    "sabz chai",
+    "kahwa"
+  ],
+  "Orange juice, 100%, NFS": [
+    "orange juice",
+    "oj"
+  ],
+  "Apple juice, 100%": [
+    "apple juice"
+  ],
+  "Fruit smoothie, NFS": [
+    "smoothie",
+    "fruit smoothie"
+  ],
+  "Soft drink, cola": [
+    "coke",
+    "cola",
+    "pepsi",
+    "coca cola",
+    "soda",
+    "soft drink"
+  ],
+  "Soft drink, cola, diet": [
+    "diet coke",
+    "coke zero",
+    "diet pepsi",
+    "diet soda"
+  ],
+  "Energy drink (Red Bull)": [
+    "red bull",
+    "energy drink"
+  ],
+  "Nutritional powder mix, whey based, NFS": [
+    "whey",
+    "whey protein",
+    "protein powder"
+  ],
+  "Nutritional drink or shake, high protein, ready-to-drink, NFS": [
+    "protein shake",
+    "protein drink"
+  ],
+  "Beer": [
+    "beer"
+  ],
+  "Wine, red": [
+    "red wine",
+    "wine"
+  ],
+  "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw": [
+    "raw chicken breast",
+    "chicken breast raw",
+    "boneless chicken breast"
+  ],
+  "Egg, whole, raw, fresh": [
+    "raw egg"
+  ],
+  "Beef, ground, 93% lean meat / 7% fat, raw": [
+    "lean ground beef",
+    "lean beef mince"
+  ],
+  "Rice, white, long-grain, regular, raw, enriched": [
+    "raw rice",
+    "uncooked rice"
+  ],
+  "Egg omelet or scrambled egg, made with oil": [
+    "omelette",
+    "omelet",
+    "scrambled eggs",
+    "scrambled egg",
+    "anda omelette"
+  ],
+  "Cake or cupcake, NFS": [
+    "cake",
+    "cupcake",
+    "slice of cake"
+  ],
+  "Mixed nuts, NFS": [
+    "mixed nuts",
+    "nuts",
+    "dry fruit"
+  ],
+  "Milk shake, home recipe, flavors other than chocolate": [
+    "milkshake",
+    "milk shake",
+    "banana shake",
+    "mango shake",
+    "shake"
+  ],
+  "Lamb, chop": [
+    "lamb chop",
+    "lamb chops",
+    "mutton chops",
+    "chaap"
+  ],
+  "Fish, NFS": [
+    "fish",
+    "grilled fish",
+    "fried fish",
+    "machli"
+  ]
+}
