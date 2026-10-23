@@ -1,6 +1,6 @@
-// Renders the video stills (title card, architecture slide, lower thirds) to 1920x1080 PNGs with headless Chrome
-// over CDP, the same approach as cards/scripts/screens.ts. Lower thirds have a transparent background.
-// Usage: npx tsx video/scripts/render.ts
+// Renders the video stills to 1920x1080 PNGs with headless Chrome over CDP (approach from cards/scripts/screens.ts).
+// Title card and architecture slide in two variants (A light, New York + SF Pro Text; B flat dark, Helvetica Neue),
+// plus the lower thirds (transparent). Usage: npx tsx video/scripts/render.ts
 import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -8,77 +8,91 @@ import { join } from "node:path";
 
 const CHROME = process.env.CHROME ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const OUT = new URL("../assets/", import.meta.url).pathname;
+const S1 = new URL("../../simulator/frontend/screens/S1.png", import.meta.url).href;
+const TMP = mkdtempSync(join(tmpdir(), "t51-"));
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-// The look of the simulator and cards: near-black navy, Alexa cyan, violet for protein.
-const BASE = `*{box-sizing:border-box;margin:0}html,body{width:1920px;height:1080px;overflow:hidden}
-body{font-family:"Amazon Ember",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:#f2f6fc}
-.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}`;
-const BG = `body{background:radial-gradient(1200px 700px at 30% 20%,#0f1d33 0%,#090d15 60%,#06090f 100%)}`;
+// System font files (not exposed to Chrome by family name), loaded with --allow-file-access-from-files.
+const FACES = `@font-face{font-family:"NY";src:url(file:///System/Library/Fonts/NewYork.ttf)}
+@font-face{font-family:"SFText";src:url(file:///System/Library/Fonts/SFNS.ttf)}
+@font-face{font-family:"SFMono";src:url(file:///System/Library/Fonts/SFNSMono.ttf)}`;
+const ACCENT = "#31C3F0";
 
-const title = `<style>${BASE}${BG}
-.wrap{position:absolute;left:160px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
-.bar{width:420px;height:10px;border-radius:5px;background:linear-gradient(90deg,#1f7cff,#19d3ff);box-shadow:0 0 40px #19d3ff88;margin-bottom:56px}
-h1{font-size:180px;font-weight:700;letter-spacing:-4px;line-height:1}
-.tag{font-size:58px;line-height:1.3;margin-top:48px;color:#c7d3e6;max-width:1500px}
-.tag b{color:#19d3ff;font-weight:600}
-.sub{margin-top:64px;font-size:34px;letter-spacing:6px;text-transform:uppercase;color:#8fdcff}</style>
-<div class="wrap"><div class="bar"></div><h1>Dayform</h1>
-<div class="tag">Every fitness app makes you type.<br><b>This one, you just talk to.</b></div>
-<div class="sub">An Alexa+ add-on</div></div>`;
+type Theme = { bg: string; fg: string; muted: string; line: string; box: string; grid: string; head: string; body: string };
+const A: Theme = { bg: "#F4F5F7", fg: "#111111", muted: "#5B616B", line: "#2B2F36", box: "#FFFFFF", grid: "#EDEFF2", head: `'NY',Georgia,serif`, body: `'SFText',Helvetica,sans-serif` };
+const B: Theme = { bg: "#0B0F14", fg: "#EEF1F5", muted: "#8B95A3", line: "#AAB3BF", box: "#0B0F14", grid: "#0E141B", head: `'Helvetica Neue',Helvetica,sans-serif`, body: `'Helvetica Neue',Helvetica,sans-serif` };
+const MONO = `"SFMono",Menlo,monospace`;
 
-// Architecture: three columns (device, server, AWS data/AI), from docs/architecture.mmd.
-type Box = { x: number; y: number; t: string; s: string; hi?: boolean };
-const W = 420, H = 150;
-const boxes: Box[] = [
-  { x: 80, y: 220, t: "Nova 2.5 Sonic", s: "Alexa's voice · Bedrock", hi: true },
-  { x: 80, y: 480, t: "Echo Show simulator", s: "React frontend + backend" },
-  { x: 750, y: 220, t: "MCP Apps cards", s: "8 cards · 768×480", hi: true },
-  { x: 750, y: 480, t: "AgentCore Runtime", s: "Dayform MCP server · 18 tools", hi: true },
-  { x: 750, y: 760, t: "amazon.com cart", s: "you check out; Alexa never orders" },
-  { x: 1420, y: 220, t: "Nova 2 Lite on Bedrock", s: "judgment calls, checked by code", hi: true },
-  { x: 1420, y: 480, t: "Aurora Serverless v2", s: "PostgreSQL + Data API", hi: true },
-  { x: 1420, y: 760, t: "EventBridge Scheduler + Lambda", s: "overnight job: check-in, brief", hi: true },
-];
-const box = (b: Box) => `<div class="box${b.hi ? " hi" : ""}" style="left:${b.x}px;top:${b.y}px"><div class="t">${b.t}</div><div class="s">${b.s}</div></div>`;
-const label = (x: number, y: number, html: string, cls = "") => `<div class="lbl ${cls}" style="left:${x}px;top:${y}px">${html}</div>`;
-const arch = `<style>${BASE}${BG}
-h2{position:absolute;left:80px;top:70px;font-size:56px;font-weight:700;letter-spacing:-1px}
-h2 span{color:#19d3ff}
-.box{position:absolute;width:${W}px;height:${H}px;border-radius:22px;background:#121a28;border:2px solid #2a3953;padding:30px 32px;display:flex;flex-direction:column;justify-content:center}
-.box.hi{border-color:#19d3ff99;box-shadow:0 0 36px #19d3ff22}
-.t{font-size:34px;font-weight:700}.s{font-size:24px;color:#c7d3e6;margin-top:8px}
-.lbl{position:absolute;font-size:24px;color:#8fdcff;background:#090d15;padding:4px 10px;border-radius:8px;transform:translate(-50%,-50%);white-space:nowrap;text-align:center;line-height:1.3}
-.lbl.big{font-size:27px;color:#19d3ff;font-weight:600}
-.foot{position:absolute;left:80px;bottom:56px;font-size:26px;color:#c7d3e6}.foot b{color:#19d3ff;font-weight:600}
-svg{position:absolute;left:0;top:0}</style>
-<h2>How it works <span>·</span> Dayform</h2>
-<svg width="1920" height="1080"><defs>
-<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#19d3ff"/></marker>
-</defs><g stroke="#19d3ff" stroke-width="3" fill="none">
-<path d="M290 372V478" marker-start="url(#a)" marker-end="url(#a)"/>
-<path d="M502 555H748" marker-end="url(#a)" stroke-width="5"/>
-<path d="M960 478V372" marker-end="url(#a)"/>
-<path d="M750 295C600 295 600 450 502 520" stroke-dasharray="10 8" marker-end="url(#a)"/>
-<path d="M1172 520L1418 330" marker-end="url(#a)"/>
-<path d="M1172 575H1418" marker-end="url(#a)"/>
-<path d="M960 632V758" stroke-dasharray="4 8" marker-end="url(#a)"/>
-<path d="M1630 758V632" marker-end="url(#a)"/>
-<path d="M1842 835C1905 835 1905 295 1842 295" marker-end="url(#a)"/>
-</g></svg>
-${boxes.map(box).join("")}
-${label(290, 425, "bidirectional<br>audio stream")}
-${label(625, 610, "MCP 2025-11-25<br>Streamable HTTP", "big")}
-${label(960, 425, "ui:// resources")}
-${label(590, 380, "_meta.ui<br>resourceUri")}
-${label(1295, 425, "unknown foods, meal plans")}
-${label(1295, 612, "Data API")}
-${label(960, 695, "Add-to-Cart link")}
-${label(1630, 695, "nightly")}
-<div class="foot">Code does the arithmetic, storage and checks. <b>Every number is checked against the database.</b></div>`;
+// 12-column grid: 144 px side margins, 24 px gutters -> 114 px columns, 138 px step.
+const M = 144, STEP = 138;
+const colX = (c: number) => M + (c - 1) * STEP;
+const span = (n: number) => n * STEP - 24;
+const grid = (t: Theme) => Array.from({ length: 12 }, (_, i) =>
+  `<div style="position:absolute;left:${colX(i + 1)}px;top:0;width:${span(1)}px;height:1080px;background:${t.grid}"></div>`).join("");
+const page = (t: Theme, body: string) => `<!doctype html><meta charset="utf-8"><style>${FACES}
+*{box-sizing:border-box;margin:0}html,body{width:1920px;height:1080px;overflow:hidden;background:${t.bg};color:${t.fg};font-family:${t.body}}
+.abs{position:absolute}.mono{font-family:${MONO}}</style>${grid(t)}${body}`;
 
-// Lower thirds: a pill in the empty band above the Echo Show frame (top left), so it never covers the
-// burned-in captions at the bottom. Transparent background, full frame, so it drops in at 0,0.
+// The Echo Show frame from S1.png (bezel at 58..1262 x 77..849), scaled to width w; the clip follows the bezel.
+const device = (x: number, y: number, w: number) => {
+  const s = w / 1204;
+  return `<div class="abs" style="left:${x}px;top:${y}px;width:${w}px;height:${Math.round(772 * s)}px;overflow:hidden;clip-path:inset(0 round ${Math.round(46 * s)}px)">
+<img src="${S1}" style="position:absolute;left:${-58 * s}px;top:${-77 * s}px;width:${1920 * s}px"></div>`;
+};
+
+const title = (t: Theme) => page(t, `
+<div class="abs" style="left:${colX(1)}px;top:336px;width:96px;height:6px;background:${ACCENT}"></div>
+<div class="abs" style="left:${colX(1)}px;top:372px;font-family:${t.head};font-size:${t === A ? 168 : 148}px;font-weight:${t === A ? 500 : 700};letter-spacing:-3px;line-height:1">Dayform</div>
+<div class="abs" style="left:${colX(1)}px;top:590px;width:${span(5)}px;font-size:${t === A ? 46 : 40}px;line-height:1.25;font-weight:400;white-space:nowrap">Every fitness app makes you type.<br>This one, you just talk to.</div>
+<div class="abs" style="left:${colX(1)}px;top:740px;font-size:26px;color:${t.muted}">An Alexa+ add-on</div>
+<div class="abs mono" style="left:${colX(1)}px;top:984px;font-size:20px;color:${t.muted};letter-spacing:.5px">MCP 2025-11-25 · AgentCore Runtime · Nova 2.5 Sonic</div>
+${device(colX(6), 230, span(7))}`);
+
+// Architecture: tier 1 laptop row, tier 2 AWS region; orthogonal 2 px connectors.
+type Box = { c: number; n: number; y: number; h: number; t: string; s: string; thumb?: boolean };
+const arch = (t: Theme) => {
+  const box = (b: Box) => `<div class="abs" style="left:${colX(b.c)}px;top:${b.y}px;width:${span(b.n)}px;height:${b.h}px;background:${t.box};border:1px solid ${t.fg};padding:22px 24px">
+<div style="font-size:28px;font-weight:600;line-height:1.15">${b.t}</div><div style="font-size:20px;color:${t.muted};margin-top:10px;line-height:1.4">${b.s}</div>
+${b.thumb ? device(span(b.n) - 250, 17, 224).replace('class="abs"', 'class="abs" data-thumb') : ""}</div>`;
+  const lbl = (x: number, y: number, s: string, color = t.fg) => `<div class="abs mono" style="left:${x}px;top:${y}px;font-size:17px;line-height:1.35;color:${color}">${s}</div>`;
+  const p = (d: string, color = t.line, both = false) =>
+    `<path d="${d}" stroke="${color}" stroke-width="2" fill="none" marker-end="url(#a${color === ACCENT ? "x" : ""})"${both ? ` marker-start="url(#a)"` : ""}/>`;
+  const mk = (id: string, c: string) => `<marker id="${id}" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${c}"/></marker>`;
+  // Columns: 1 x144, 4 x558, 5 x696, 7 ends 1086, 10 x1386, 12 ends 1776.
+  return page(t, `
+<div class="abs" style="left:${colX(1)}px;top:64px;font-family:${t.head};font-size:56px;font-weight:${t === A ? 500 : 700};letter-spacing:-.5px">How Dayform works</div>
+<div class="abs" style="left:120px;top:470px;width:1680px;height:484px;border:1px solid ${t.muted}"></div>
+${lbl(140, 484, "AWS us-east-1", t.muted)}
+${lbl(colX(1), 170, "LAPTOP", t.muted)}
+${box({ c: 1, n: 2, y: 225, h: 130, t: "Your voice", s: "or typed text" })}
+${box({ c: 4, n: 5, y: 200, h: 180, t: "Echo Show simulator", s: "web app on the laptop<br>React frontend + backend", thumb: true })}
+${box({ c: 10, n: 3, y: 225, h: 130, t: "amazon.com cart", s: "you check out; Alexa never orders" })}
+${box({ c: 1, n: 3, y: 560, h: 170, t: "Amazon Bedrock", s: "Nova 2.5 Sonic: voice<br>Nova 2 Lite: judgment" })}
+${box({ c: 5, n: 3, y: 560, h: 170, t: "AgentCore Runtime", s: "Dayform MCP server<br>18 tools" })}
+${box({ c: 10, n: 3, y: 560, h: 170, t: "Aurora Serverless v2", s: "PostgreSQL, Data API" })}
+${box({ c: 10, n: 3, y: 780, h: 150, t: "EventBridge Scheduler + Lambda", s: "overnight job" })}
+<svg class="abs" style="left:0;top:0" width="1920" height="1080"><defs>${mk("a", t.line)}${mk("ax", ACCENT)}</defs>
+${p("M396 290H557")}
+${p("M557 340H470V559", t.line, true)}
+${p("M740 381V559", ACCENT)}
+${p("M1060 559V381")}
+${p("M695 645H535")}
+${p("M1087 645H1385")}
+${p("M1087 600H1250V290H1385")}
+${p("M1581 779V731")}
+${p("M1385 850H339V731")}
+</svg>
+${lbl(484, 400, "bidirectional<br>audio")}
+${lbl(756, 420, "MCP 2025-11-25<br>Streamable HTTP", t.fg)}
+${lbl(1074, 420, "ui:// cards")}
+${lbl(560, 612, "judgment")}
+${lbl(1102, 652, "Data API")}
+${lbl(1264, 380, "Add-to-Cart<br>link")}
+${lbl(820, 862, "nightly: check-in and brief (Nova 2 Lite)")}
+<div class="abs" style="left:${colX(1)}px;top:990px;font-size:24px;color:${t.muted}">Code does the arithmetic, storage and checks; every number in the brief is checked against the database.</div>`);
+};
+
+// Lower thirds: a flat rectangle in the empty band above the Echo Show frame (top left), clear of the captions.
 const LT = [
   ["mcp", "MCP 2025-11-25", "Streamable HTTP · 18 tools"],
   ["nova-sonic", "Nova 2.5 Sonic", "Alexa's voice · Amazon Bedrock"],
@@ -89,20 +103,22 @@ const LT = [
   ["mcp-apps-card", "MCP Apps card 768×480", "rendered on the Echo Show"],
   ["add-to-cart", "Add-to-Cart link", "you check out on Amazon; Alexa never orders"],
 ];
-const lower = (t: string, s: string) => `<style>${BASE}body{background:transparent}
-.pill{position:absolute;left:60px;top:14px;height:56px;display:flex;align-items:center;gap:18px;padding:0 28px 0 20px;border-radius:28px;background:#090d15e6;border:2px solid #19d3ff99;box-shadow:0 0 30px #19d3ff33}
-.dot{width:14px;height:14px;border-radius:7px;background:#19d3ff;box-shadow:0 0 12px #19d3ff}
-.t{font-size:28px;font-weight:700}.s{font-size:24px;color:#c7d3e6}</style>
-<div class="pill"><div class="dot"></div><div class="t">${t}</div><div class="s">${s}</div></div>`;
+const lower = (t: string, s: string) => `<!doctype html><meta charset="utf-8"><style>*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:transparent;font-family:"Helvetica Neue",Helvetica,sans-serif}</style>
+<div style="position:absolute;left:60px;top:12px;height:58px;display:flex;align-items:center;gap:16px;padding:0 24px 0 0;background:#0B0F14;border:1px solid #2A323D">
+<div style="width:6px;align-self:stretch;background:${ACCENT}"></div>
+<div style="font-size:26px;font-weight:700;color:#EEF1F5">${t}</div><div style="font-size:22px;color:#AAB3BF">${s}</div></div>`;
 
 const jobs: [string, string, boolean][] = [
-  ["title-card.png", title, false],
-  ["architecture-slide.png", arch, false],
+  ["title-card-A.png", title(A), false],
+  ["title-card-B.png", title(B), false],
+  ["architecture-slide-A.png", arch(A), false],
+  ["architecture-slide-B.png", arch(B), false],
   ...LT.map(([f, t, s]) => [`lower-thirds/${f}.png`, lower(t, s), true] as [string, string, boolean]),
 ];
 
-const proc = spawn(CHROME, ["--headless=new", "--remote-debugging-port=9335", `--user-data-dir=${mkdtempSync(join(tmpdir(), "t51-"))}`,
-  "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
+const proc = spawn(CHROME, ["--headless=new", "--remote-debugging-port=9335", `--user-data-dir=${join(TMP, "chrome")}`,
+  "--allow-file-access-from-files", "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
 try {
   let targets: any[] = [];
   for (let i = 0; i < 40 && !targets.length; i++) {
@@ -116,17 +132,31 @@ try {
   ws.addEventListener("message", (e) => { const m = JSON.parse(String(e.data)); if (m.id) pending.get(m.id)?.(m); });
   const send = (method: string, params: object = {}) =>
     new Promise<any>((r) => { pending.set(++id, r); ws.send(JSON.stringify({ id, method, params })); });
+  const evaluate = async (expression: string) =>
+    (await send("Runtime.evaluate", { expression, returnByValue: true, awaitPromise: true })).result?.result?.value;
   await send("Page.enable");
+  await send("DOM.enable");
+  await send("CSS.enable");
   await send("Emulation.setDeviceMetricsOverride", { width: 1920, height: 1080, deviceScaleFactor: 1, mobile: false });
   mkdirSync(`${OUT}lower-thirds`, { recursive: true });
   for (const [file, html, transparent] of jobs) {
     await send("Emulation.setDefaultBackgroundColorOverride", transparent ? { color: { r: 0, g: 0, b: 0, a: 0 } } : {});
-    const frame = (await send("Page.getFrameTree")).result.frameTree.frame.id;
-    await send("Page.setDocumentContent", { frameId: frame, html: `<!doctype html><meta charset="utf-8">${html}` });
-    await wait(300);
+    const src = join(TMP, file.replace("/", "-").replace(".png", ".html"));
+    writeFileSync(src, html);
+    await send("Page.navigate", { url: `file://${src}` });
+    await evaluate("document.fonts.ready.then(() => Promise.all([...document.images].map((i) => i.decode()))).then(() => true)");
+    await wait(200);
+    // Report the fonts Chrome actually drew with, to check the typography rules.
+    const doc = (await send("DOM.getDocument", { depth: -1 })).result.root;
+    const used = new Set<string>();
+    const walk = async (n: any) => {
+      if (n.nodeName === "DIV") for (const f of (await send("CSS.getPlatformFontsForNode", { nodeId: n.nodeId })).result?.fonts ?? []) used.add(f.familyName);
+      for (const c of n.children ?? []) await walk(c);
+    };
+    await walk(doc);
     const shot = await send("Page.captureScreenshot", { format: "png", clip: { x: 0, y: 0, width: 1920, height: 1080, scale: 1 } });
     writeFileSync(OUT + file, Buffer.from(shot.result.data, "base64"));
-    console.log("wrote", file);
+    console.log("wrote", file, "| fonts:", [...used].join(", "));
   }
   ws.close();
 } finally {

@@ -7,7 +7,7 @@ Order and times: [shot-list.md](shot-list.md). Stills are re-rendered with `npx 
 
 | Asset | Where | Length |
 |---|---|---|
-| `assets/title-card.png` | 0:00, before or under the start of S1; again as the close at about 2:54 | ≤ 3 s at the open (the first 20 s must show the product working) |
+| `assets/title-card-A.png` or `-B.png` (user picks) | 0:00, before or under the start of S1; again as the close at about 2:54 | ≤ 3 s at the open (the first 20 s must show the product working) |
 | `assets/lower-thirds/nova-sonic.png` | S1, when the light bar first listens | 3–4 s |
 | `assets/lower-thirds/mcp-apps-card.png` | S1, when the `meal-logged` card lands | 3–4 s |
 | `assets/lower-thirds/mcp.png` | S3 first tool call in "Under the hood"; S7 Inspector clip | 3–4 s |
@@ -16,10 +16,10 @@ Order and times: [shot-list.md](shot-list.md). Stills are re-rendered with `npx 
 | `assets/lower-thirds/eventbridge-lambda.png` | S5, on the night animation | 1–3 s |
 | `assets/lower-thirds/aurora.png` | S5, when the brief card lands | 3–4 s |
 | `assets/lower-thirds/agentcore.png` | S7, on the AgentCore console clip | 3–4 s |
-| `assets/architecture-slide.png` | S7, after the proof clips | about 5 s |
+| `assets/architecture-slide-A.png` or `-B.png` (user picks) | S7, after the proof clips | about 5 s |
 | `assets/s7-*.txt` | S7 backups only, if a console clip can't be recorded | |
 
-Lower thirds are transparent 1920×1080 PNGs: place each at 0,0 on a track above the footage. The pill sits top left, in the empty band above the Echo Show frame, so it never covers the burned-in captions or the simulator's reply text at the bottom. Fade in/out about 0.2 s.
+Lower thirds are transparent 1920×1080 PNGs: place each at 0,0 on a track above the footage. The flat label sits top left, in the empty band above the Echo Show frame, so it never covers the burned-in captions or the simulator's reply text at the bottom. Fade in/out about 0.2 s.
 
 ## Rules
 

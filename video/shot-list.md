@@ -26,8 +26,8 @@ The first 20 seconds must show the product working: keep the title card to 3 s a
 | 2 | AgentCore runtime console, runtime `dayform_server`, Status Ready | 5 s | **[USER]** AWS console, us-east-1, Bedrock AgentCore → Runtime → `dayform_server` | `assets/s7-agentcore-runtime.txt` (do not use `smoke/agentcore-mcp/screens/agentcore-runtime-console.png`: it shows the smoke runtime `dayform_smoke_mcp`, the account ID and unrelated tabs) |
 | 3 | MCP Inspector: connect over Streamable HTTP, protocol 2025-11-25, Tools list = 18 | 5 s | **[USER]** `npx @modelcontextprotocol/inspector`, URL `http://localhost:8000/mcp` (or 8001), List Tools | `npm run demo:scene -- S7` output (tools/list) |
 | 4 | CloudWatch log lines: `tool=... ms=... status=ok` | 3 s | **[USER]** CloudWatch → `/aws/bedrock-agentcore/runtimes/dayform_server-itlffCFT4p-DEFAULT` | `assets/s7-cloudwatch-tool-call.txt` |
-| 5 | Architecture slide | 5 s | `assets/architecture-slide.png` | n/a |
-| 6 | Tagline close | 3 s | `assets/title-card.png` | n/a |
+| 5 | Architecture slide | 5 s | `assets/architecture-slide-A.png` or `-B.png` | n/a |
+| 6 | Tagline close | 3 s | `assets/title-card-A.png` or `-B.png` | n/a |
 
 Optional if time allows: `assets/s7-aurora-cluster.txt` and `assets/s7-overnight-lambda.txt` as evidence for Aurora and the overnight Lambda. Hide the account ID in any console clip (crop or blur).
 
