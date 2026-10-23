@@ -1,0 +1,47 @@
+{
+  "name": "Push Pull Legs Upper",
+  "note": "One pre-set 4-day program (D19). weekday: 0 = Sunday ... 6 = Saturday. Fixed weekly schedule: Mon pull, Wed upper, Fri push, Sat legs (demo day 2026-10-23 is a Friday = push; the check-in morning 2026-10-24 is a Saturday = legs). Double progression: when every set reaches reps_max, add increment_kg and drop to reps_min.",
+  "days": [
+    {
+      "id": "push", "name": "Push day", "weekday": 5,
+      "exercises": [
+        { "exercise": "barbell-bench-press", "sets": 3, "reps_min": 6, "reps_max": 8, "rest_seconds": 150, "increment_kg": 2.5 },
+        { "exercise": "overhead-press", "sets": 3, "reps_min": 6, "reps_max": 8, "rest_seconds": 120, "increment_kg": 2.5 },
+        { "exercise": "incline-dumbbell-press", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2 },
+        { "exercise": "lateral-raise", "sets": 3, "reps_min": 12, "reps_max": 15, "rest_seconds": 60, "increment_kg": 1 },
+        { "exercise": "triceps-pushdown", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 60, "increment_kg": 2.5 }
+      ]
+    },
+    {
+      "id": "pull", "name": "Pull day", "weekday": 1,
+      "exercises": [
+        { "exercise": "barbell-row", "sets": 3, "reps_min": 6, "reps_max": 8, "rest_seconds": 120, "increment_kg": 2.5 },
+        { "exercise": "lat-pulldown", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2.5 },
+        { "exercise": "seated-cable-row", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2.5 },
+        { "exercise": "face-pull", "sets": 3, "reps_min": 12, "reps_max": 15, "rest_seconds": 60, "increment_kg": 2.5 },
+        { "exercise": "barbell-curl", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 60, "increment_kg": 2.5 }
+      ]
+    },
+    {
+      "id": "legs", "name": "Leg day", "weekday": 6,
+      "exercises": [
+        { "exercise": "barbell-back-squat", "sets": 3, "reps_min": 5, "reps_max": 7, "rest_seconds": 180, "increment_kg": 2.5 },
+        { "exercise": "romanian-deadlift", "sets": 3, "reps_min": 6, "reps_max": 8, "rest_seconds": 150, "increment_kg": 2.5 },
+        { "exercise": "leg-press", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 120, "increment_kg": 5 },
+        { "exercise": "lying-leg-curl", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 60, "increment_kg": 2.5 },
+        { "exercise": "standing-calf-raise", "sets": 3, "reps_min": 12, "reps_max": 15, "rest_seconds": 60, "increment_kg": 5 }
+      ]
+    },
+    {
+      "id": "upper", "name": "Upper day", "weekday": 3,
+      "exercises": [
+        { "exercise": "dumbbell-bench-press", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2 },
+        { "exercise": "one-arm-dumbbell-row", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2 },
+        { "exercise": "dumbbell-shoulder-press", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2 },
+        { "exercise": "lat-pulldown", "sets": 3, "reps_min": 8, "reps_max": 12, "rest_seconds": 90, "increment_kg": 2.5 },
+        { "exercise": "hammer-curl", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 60, "increment_kg": 2 },
+        { "exercise": "overhead-triceps-extension", "sets": 3, "reps_min": 10, "reps_max": 12, "rest_seconds": 60, "increment_kg": 2.5 }
+      ]
+    }
+  ]
+}

@@ -2,5 +2,26 @@
   "name": "@dayform/db",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"db: no tests yet\"" }
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/migrate.ts",
+    "db:reset": "tsx src/reset.ts",
+    "db:hash": "tsx src/hash.ts",
+    "db:report": "tsx src/report.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@aws-sdk/client-rds-data": "^3.1156.0",
+    "drizzle-orm": "^0.45.4",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.0"
+  }
 }

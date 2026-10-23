@@ -1,0 +1,22 @@
+{
+  "note": "The demo user. Placeholder values: edit freely, then `npm run db:reset`. Targets and history are derived from these.",
+  "name": "Ali",
+  "sex": "male",
+  "birth_year": 1996,
+  "height_cm": 178,
+  "start_weight_kg": 84.0,
+  "activity": "moderate",
+  "goal": "lose",
+  "rate_kg_per_week": 0.4,
+  "protein_per_kg": 2.0,
+  "preferences": {
+    "cuisines": ["desi"],
+    "high_protein": true,
+    "dislikes": ["bitter gourd", "mushrooms"],
+    "allergies": [],
+    "equipment": "full gym",
+    "max_prep_minutes": 90
+  },
+  "checkin_weekday": 6,
+  "timezone": "Asia/Karachi"
+}

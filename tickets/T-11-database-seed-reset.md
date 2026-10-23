@@ -8,7 +8,7 @@
 | Depends on | T-10, T-12 (food IDs), T-04 (DB library) |
 | Owns | `db/`, `data/exercises/`, `data/program/` |
 | Approval needed | Only to run against Aurora (it writes data to an AWS resource) |
-| Status | TODO |
+| Status | DONE (the T-21 trim and T-24 PR cross-checks run in those tickets) |
 
 ## Goal
 Create:
@@ -81,4 +81,42 @@ Create:
 4. Run `npm run db:report`. Expect the trends listed in the acceptance criteria.
 
 ## Result
-_The agent fills this in._
+**Status: REVIEW.** Four of the six criteria pass. The other two need code that doesn't exist yet (T-21 and T-24), so the seed is set up for them but not yet proven against them.
+
+**Built:**
+- **Schema** (`db/src/schema.ts`, Drizzle): all 20 tables from DESIGN §6.
+- **Migrations** (`db/migrations/0000–0002`):
+  - pg_trgm, plus an IMMUTABLE `dayform_aliases_text()` so `foods.aliases` can carry a trigram index.
+  - The generated schema.
+  - The catalog fields T-13 asked for.
+- **Data:** `data/exercises/exercises.json` (66 exercises; aliases are unique and every alternative exists) and `data/program/program.json` (4 days, with weekdays).
+- **Seed:** `db/seed/{persona.json, placeholder-foods.json, generate.ts, README.md}`.
+- **Scripts:** `db/src/{client,migrate,reset,hash,report}.ts`, plus the test `db/test/reset.test.ts`.
+- **Numbers** are in `db/seed/README.md`, which is the single place to read them.
+
+**Verification (2026-10-22):**
+- **Local** (`dayform-pg`): `db:migrate` passes. `db:reset` takes 284–393 ms of DB work and 1.6 s wall including tsx start-up. Reset, hash, reset, hash, then `diff`: no difference. `npm test -w @dayform/db`: 1 passed. `npm test -w @dayform/data`: 4 passed.
+- **Aurora** (`--target aurora`, approved): migrations applied in 5.0 s. Reset takes 2.4–3.0 s of DB work and 4.3 s wall. Two resets give identical hashes, and the **Aurora hashes equal the local ones**.
+- **`db:report`:**
+  - Bench e1RM 88.7 → 91.8 → 92.5 → 95.0 → 98.2 → 98.7.
+  - S3 target 80 × 8 = e1RM 101.3, a NEW PR (+2.6 kg).
+  - Weight by week: −0.46, −0.43, −0.43, −0.33, −0.26 kg. The check-in window to 2026-10-23 reads −0.21 kg against a −0.4 plan.
+  - Protein: 162 g on training days, 104 g on rest days. Intake averages about 2337 kcal against a 2360 target.
+
+**Acceptance:**
+- [x] Migrations run locally and on Aurora.
+- [x] Two resets give identical hashes.
+- [x] Reset time is under 3 s locally and under 10 s on Aurora.
+- [x] `db:report` shows the three trends.
+- [ ] Next check-in trims 100–200 kcal (needs T-21).
+- [ ] The S3 set is a PR (seed side is shown; needs T-24's detector).
+
+**Deviations:**
+- **Program days have fixed weekdays:** Mon pull, Wed upper, Fri push, Sat legs. This puts demo day on push and the check-in morning on legs, as S5 needs.
+- **Reset reloads more than user tables:** it also reloads exercises, program and `catalog_items` (from `data/catalog/catalog.json`, per the orchestrator). It leaves `foods` alone.
+- **Next targets are pre-seeded:** `next_targets` for 2026-10-23 is filled in, as if the overnight job of 10-22 had run.
+- **`demo_clock` has `set_at`:** `clock.now()` = `demo_now` + (wall time − `set_at`).
+
+**Fallbacks used:** none. Foods come from T-12's files. `placeholder-foods.json` is only a fallback and is not used on the current data.
+
+**Orchestrator close-out (2026-10-22):** verified two resets → identical hashes (19 tables), reset ~3 s locally, db:report shows bench e1RM 88.7→98.7 (80×8 = PR +2.6), weight loss slowing to −0.21 kg/week, protein 104 g rest vs 162 g training. Decisions: fixed weekdays stand (demo day = push, next morning = legs); seed adds a demo-day breakfast and weigh-in; overnight cache shape to be confirmed by T-27.

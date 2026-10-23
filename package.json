@@ -29,7 +29,11 @@
     "demo:scene": "npm run demo:scene -w @dayform/demo --",
     "demo:warm": "npm run demo:warm -w @dayform/demo",
     "data:load-catalog": "npm run data:load-catalog -w @dayform/data",
-    "catalog:link": "npm run catalog:link -w @dayform/data"
+    "catalog:link": "npm run catalog:link -w @dayform/data",
+    "db:migrate": "npm run db:migrate -w @dayform/db --",
+    "db:reset": "npm run db:reset -w @dayform/db --",
+    "db:hash": "npm run db:hash -w @dayform/db --",
+    "db:report": "npm run db:report -w @dayform/db --"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
