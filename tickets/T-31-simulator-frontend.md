@@ -8,7 +8,7 @@
 | Depends on | T-10 (events), T-30 (backend), T-32 (card components and host) |
 | Owns | `simulator/frontend/` |
 | Approval needed | No |
-| Status | TODO |
+| Status | DONE (live mic and 60 fps checks happen in T-41 with the user) |
 
 ## Goal
 Build a polished screen in the style of an Echo Show that makes every scene look great on video. The screen also shows what's happening "under the hood".
@@ -78,4 +78,45 @@ The judges watch this screen for the whole video. It carries the Design score (a
 4. Press `Ctrl+Shift+D`, then "Skip to morning". Expect the night transition, then the idle screen at 07:00.
 
 ## Result
-_The agent fills this in._
+**Status: REVIEW.** Everything I could test headless passes. Two criteria are the user's to check on the recording machine: the live mic, and 60 fps.
+
+**Built** (`simulator/frontend/`, React + Vite + TS, no new installs):
+- `src/App.tsx`: layout and inputs: hold Space or the mic button to talk; the "Alexa" button listens until a 1.2 s pause; `/` opens the text box; `H` toggles the panel; `Ctrl+Shift+D` opens the demo panel; `Esc` returns to the home screen. Also the WebSocket with auto-reconnect, the night transition, and the cart auto-open.
+- `src/store.ts`: reducer for the contract events. It updates a card in place when the same card comes back (S2). It holds the `meal-prep` carousel on screen for at least 8 s before another card can replace it, and shows a held card as soon as the confirm is answered. It shows the backend's "Turn:" progress in the demo panel only.
+- `src/Screen.tsx`: card layers (MCP Apps via `mountCardFrame` + `update()`, or native `CardByUri`), 450 ms crossfade, home screen (demo clock in `DEMO_TZ`, today's rings from the latest day totals, hint), light bar, confirm overlay, night overlay.
+- `src/Panel.tsx`: "Under the hood" (icon, tool name, short arguments, latency badge (green under 500 ms), progress lines, one-line summary, "MCP 2025-11-25 · Streamable HTTP · <target>") and the demo panel.
+- `src/audio.ts` + `src/mic-worklet.js`: mic as 16 kHz PCM16 in 32 ms AudioWorklet frames; 24 kHz playback scheduled as in T-02; analyser level drives the light bar while speaking.
+- `scripts/verify.ts`: headless Chrome over CDP. Runs S1–S6 through the `/` box, checks the shortcuts, layout shift and console errors (page and card iframes), and saves `screens/*.png` at 1920×1080.
+
+**Verified** (2026-10-23, `VOICE_ENGINE=text` backend → real server on :8001, `npm run demo:warm` before each run): `npx tsx scripts/verify.ts` → **15/15 PASS**.
+- S1: lights listening→thinking→speaking→idle; `meal-logged` card, 904 kcal, 970 kcal and 96 g protein left; `log_meal` row with 380 ms badge; both captions.
+- S2: same layer and same iframe (in place); 785 kcal, 1,089 left.
+- S3: `start_workout` → `log_set` (New PR 101.3 kg, +2.6) → `swap_exercise` (Landmine press 32.5 kg × 6).
+- S4: rows `get_daily_summary` → `plan_meal_prep` → `add_to_cart` → `checkout_cart`; carousel shown; overlay "Add 12 items, about $112, to your Amazon cart?"; real click on Yes → cart card $112.44 → amazon.com tab opened.
+- S5: night 3.0 s while advance-day ran → home screen at 7:00 AM → `brief` card (−110 kcal → 2,250).
+- S6: `progress` card 91.8 → 101.3.
+- Layout: screen 1152×720 and every card layer box identical. Console errors: none.
+- Native mode (`--cards native --scenes S1,S2,S6`): PASS.
+- `--scenes S4 --say-yes`: the overlay also closes on a typed "yes" (the same backend path a spoken yes takes).
+- `npm run build`: OK.
+
+**Acceptance:**
+- S1–S7 look right: S1–S6 PASS (on the real server, not the mock; S7 is the trace plus external consoles).
+- 60 fps: **user to check.**
+- No layout shift: PASS.
+- Shortcuts: PASS (Space with Chrome's fake mic).
+- Overlay closes on a click or a non-click answer: PASS; the live-voice "yes" is the user's.
+- Night transition: PASS.
+
+**Deviations:**
+- Voice engine and MCP target in the demo panel are read-only (from `/health`). Switching them needs `VOICE_ENGINE`/`MCP_URL` and a `sim:backend` restart; the backend has no switch route.
+- Rings on the home screen show "–" until a tool returns day totals; no typed numbers.
+- Card buttons that call tools are hidden: there is no client event for tool calls. "Open Amazon cart" works.
+- Screenshots go to `simulator/frontend/screens/` (per the orchestrator), not `demo/screens/`.
+
+**Demo risks:**
+1. Chrome on this laptop is 97.0.4692.71 (F-017).
+2. Auto-open after a spoken "yes" has no click behind it, so allow pop-ups for localhost:5173 before recording.
+3. Owned by other tickets: the workout card reads "PUSH DAY DAY"; the brief card cuts off "102.5…" and "this we…"; `add_to_cart` takes about 3.1 s; in text mode the model skipped `get_daily_summary` once in 6 runs.
+
+**Orchestrator close-out (2026-10-22):** verified `simulator/frontend/scripts/verify.ts` 15/15 PASS against the real server (S1–S6, keyboard shortcuts, overlay, night transition, no layout shift, no console errors) and reviewed the S1 and S4 screenshots. Card nits sent to T-32 ("PUSH DAY DAY", brief truncation, times in DEMO_TZ). DONE.

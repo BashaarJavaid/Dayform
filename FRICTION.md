@@ -183,3 +183,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: State lives in Aurora (the demo clock is a table), so a local server on the same cluster (`DB_DRIVER=data-api`, port 8019) serves the admin routes while tools go to AgentCore. All 7 scenes PASS that way.
 - Suggestion to the tool's team: Say in the MCP-protocol runtime contract that only `/mcp` is proxied, and suggest a pattern for operator-only routes.
+
+### F-017 · Chrome 97 hit-testing disagrees with getBoundingClientRect and CDP getBoxModel inside a CSS `zoom` subtree
+- Tool / service: Google Chrome 97.0.4692.71 (the Chrome installed on the recording laptop), headless, driven over CDP
+- Ticket: T-31
+- Task attempted: Click the elicitation overlay's "Yes" button from the headless check (`simulator/frontend/scripts/verify.ts`) with `Input.dispatchMouseEvent` at the button's centre. The overlay is laid out at 768×480 inside a `zoom: 1.5` element, the same way the native cards scale.
+- Steps taken: Took the centre from `getBoundingClientRect()`, then from CDP `DOM.getBoxModel`; checked each with `document.elementFromPoint`; then hit-tested a 20 px grid over the screen.
+- Expected: The rect reports where the button is drawn, so a click at its centre lands on it.
+- Actual: Both APIs returned the unzoomed layout box `{x: 232, y: 336.36, width: 200, height: 62}`, so the click centre was (332, 367). `elementFromPoint(332, 367)` returned `div.elicit-q` (the question text). The click never reached the button, and the server's `checkout_cart` failed after 60 s with `MCP error -32001: Request timed out`. The grid hit-test found the button drawn at x 384–604, y 513–593. A zoom-corrected centre (layout offset × 1.5 from the screen origin) also missed. Real mouse clicks are fine, because they hit what is drawn.
+- Severity: minor
+- Workaround: The test now finds the click point by hit-testing a 6 px grid with `elementFromPoint` and clicks the centroid of the hits.
+- Suggestion to the tool's team: none for current Chrome (CSS `zoom` behaves differently in newer releases). For anyone writing tests: don't trust element rects under CSS `zoom` on older Chrome.

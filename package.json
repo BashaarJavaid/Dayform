@@ -45,7 +45,9 @@
     "sim:probe": "npm run sim:probe -w @dayform/simulator-backend --",
     "deploy": "npm run deploy -w @dayform/infra",
     "destroy": "npm run destroy -w @dayform/infra",
-    "aws:status": "npm run aws:status -w @dayform/infra"
+    "aws:status": "npm run aws:status -w @dayform/infra",
+    "sim:frontend": "npm run sim:frontend -w @dayform/simulator-frontend",
+    "sim:verify": "npm run sim:verify -w @dayform/simulator-frontend --"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

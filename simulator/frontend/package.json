@@ -2,5 +2,22 @@
   "name": "@dayform/simulator-frontend",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"simulator-frontend: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "sim:frontend": "vite",
+    "build": "tsc -p . && vite build",
+    "sim:verify": "tsx scripts/verify.ts",
+    "test": "tsc -p ."
+  },
+  "dependencies": {
+    "@dayform/cards": "*",
+    "@dayform/contracts": "*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "vite": "^7.3.7"
+  }
 }
