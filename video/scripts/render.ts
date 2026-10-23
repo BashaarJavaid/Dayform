@@ -18,20 +18,18 @@ const FACES = `@font-face{font-family:"NY";src:url(file:///System/Library/Fonts/
 @font-face{font-family:"SFMono";src:url(file:///System/Library/Fonts/SFNSMono.ttf)}`;
 const ACCENT = "#31C3F0";
 
-type Theme = { bg: string; fg: string; muted: string; line: string; box: string; grid: string; head: string; body: string };
-const A: Theme = { bg: "#F4F5F7", fg: "#111111", muted: "#5B616B", line: "#2B2F36", box: "#FFFFFF", grid: "#EDEFF2", head: `'NY',Georgia,serif`, body: `'SFText',Helvetica,sans-serif` };
-const B: Theme = { bg: "#0B0F14", fg: "#EEF1F5", muted: "#8B95A3", line: "#AAB3BF", box: "#0B0F14", grid: "#0E141B", head: `'Helvetica Neue',Helvetica,sans-serif`, body: `'Helvetica Neue',Helvetica,sans-serif` };
+type Theme = { bg: string; fg: string; muted: string; line: string; box: string; head: string; body: string };
+const A: Theme = { bg: "#F4F5F7", fg: "#111111", muted: "#5B616B", line: "#2B2F36", box: "#FFFFFF", head: `'NY',Georgia,serif`, body: `'SFText',Helvetica,sans-serif` };
+const B: Theme = { bg: "#0B0F14", fg: "#EEF1F5", muted: "#8B95A3", line: "#AAB3BF", box: "#0B0F14", head: `'Helvetica Neue',Helvetica,sans-serif`, body: `'Helvetica Neue',Helvetica,sans-serif` };
 const MONO = `"SFMono",Menlo,monospace`;
 
-// 12-column grid: 144 px side margins, 24 px gutters -> 114 px columns, 138 px step.
+// 12-column layout grid (not drawn): 144 px side margins, 24 px gutters -> 114 px columns, 138 px step.
 const M = 144, STEP = 138;
 const colX = (c: number) => M + (c - 1) * STEP;
 const span = (n: number) => n * STEP - 24;
-const grid = (t: Theme) => Array.from({ length: 12 }, (_, i) =>
-  `<div style="position:absolute;left:${colX(i + 1)}px;top:0;width:${span(1)}px;height:1080px;background:${t.grid}"></div>`).join("");
 const page = (t: Theme, body: string) => `<!doctype html><meta charset="utf-8"><style>${FACES}
 *{box-sizing:border-box;margin:0}html,body{width:1920px;height:1080px;overflow:hidden;background:${t.bg};color:${t.fg};font-family:${t.body}}
-.abs{position:absolute}.mono{font-family:${MONO}}</style>${grid(t)}${body}`;
+.abs{position:absolute}.mono{font-family:${MONO}}</style>${body}`;
 
 // The Echo Show frame from S1.png (bezel at 58..1262 x 77..849), scaled to width w; the clip follows the bezel.
 const device = (x: number, y: number, w: number) => {
