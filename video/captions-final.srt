@@ -1,0 +1,107 @@
+1
+00:00:00,280 --> 00:00:05,140
+Every fitness app makes you type. This one, you just talk to.
+
+2
+00:00:05,840 --> 00:00:09,220
+You: "Alexa, I had two rotis, chicken curry and a mango lassi for lunch."
+
+3
+00:00:12,410 --> 00:00:16,000
+Alexa: I assumed one bowl of chicken curry and one glass of mango lassi.
+
+4
+00:00:16,000 --> 00:00:19,910
+Alexa: You have 1,153 calories left today.
+
+5
+00:00:20,840 --> 00:00:22,740
+You: "Actually, make that one roti."
+
+6
+00:00:25,250 --> 00:00:28,440
+Alexa: You have 1,272 calories left today.
+
+7
+00:00:29,300 --> 00:00:30,680
+You: "Alexa, start push day."
+
+8
+00:00:33,420 --> 00:00:35,870
+Alexa: Set one is 80 kilos for eight reps.
+
+9
+00:00:36,850 --> 00:00:38,050
+You: "Done, eight reps."
+
+10
+00:00:40,490 --> 00:00:46,970
+Alexa: New PR! Bench 101.3 kilos. Set two: 80 kg, eight reps.
+
+11
+00:00:47,920 --> 00:00:50,220
+You: "My shoulder feels off. Swap the overhead press."
+
+12
+00:00:52,680 --> 00:00:58,560
+Alexa: I have swapped overhead press for landmine press. Set one is 32.5 kilos for six reps.
+
+13
+00:00:59,550 --> 00:01:02,990
+You: "Plan my meal prep for the next four days and add what I need to my cart."
+
+14
+00:01:06,540 --> 00:01:11,650
+Alexa: Add 12 items, about $112, to your Amazon cart?
+
+15
+00:01:12,770 --> 00:01:13,970
+You: "Yes."
+
+16
+00:01:17,900 --> 00:01:22,930
+Alexa: The total is $112.44. The Amazon link is on screen.
+
+17
+00:01:24,680 --> 00:01:27,500
+Alexa: Your meal prep plan is ready.
+
+18
+00:01:28,030 --> 00:01:31,000
+Alexa: The details are on your screen.
+
+19
+00:01:31,000 --> 00:01:34,100
+[The next morning]
+
+20
+00:01:34,570 --> 00:01:35,770
+You: "Alexa, good morning."
+
+21
+00:01:39,970 --> 00:01:45,300
+Alexa: Good morning. Today is leg day, starting with back squats at 102.5 kilos.
+
+22
+00:01:47,100 --> 00:01:48,720
+You: "How's my bench going?"
+
+23
+00:01:51,300 --> 00:01:56,520
+Alexa: Your bench has improved by 9.5 kilos, ending at 101.3 kilos.
+
+24
+00:01:57,490 --> 00:02:02,980
+Every turn is a real MCP call: protocol 2025-11-25 over Streamable HTTP, 18 tools.
+
+25
+00:02:03,950 --> 00:02:09,390
+The server runs on AgentCore Runtime, with Aurora Serverless v2 and an overnight Lambda.
+
+26
+00:02:16,860 --> 00:02:23,810
+Nova 2.5 Sonic is Alexa's voice. Nova 2 Lite makes the judgment calls; code checks every number.
+
+27
+00:02:24,260 --> 00:02:32,100
+Every fitness app makes you type. This one, you just talk to.
