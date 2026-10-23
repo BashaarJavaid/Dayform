@@ -20,6 +20,15 @@ export function createApp(tools: ToolDef[]) {
   const transports = new Map<string, StreamableHTTPServerTransport>();
   const app = express();
   app.use(express.json({ limit: "1mb" }));
+  // CORS for browser-based MCP hosts (MCP Inspector v2, the T-06 host page). Alexa+ calls server-to-server and ignores it.
+  app.use("/mcp", (req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "content-type, mcp-session-id, mcp-protocol-version, authorization, last-event-id, accept");
+    res.setHeader("Access-Control-Expose-Headers", "mcp-session-id, mcp-protocol-version");
+    if (req.method === "OPTIONS") return res.sendStatus(204);
+    next();
+  });
 
   app.post("/mcp", async (req, res) => {
     const sid = req.header("mcp-session-id");
