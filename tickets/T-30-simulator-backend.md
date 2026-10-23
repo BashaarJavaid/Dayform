@@ -8,7 +8,7 @@
 | Depends on | T-10 (contracts, mock), T-02 (Sonic relay), T-03 (SigV4 client) |
 | Owns | `simulator/backend/` |
 | Approval needed | No |
-| Status | TODO |
+| Status | DONE (live-mic Sonic run is the user's, with T-31) |
 
 ## Goal
 Build the backend of the simulated Alexa+ device. It hears the user through Nova Sonic, calls tools through a real MCP client, and streams events to the screen.
@@ -70,4 +70,29 @@ Every scene depends on this loop working fast: user speaks → Alexa chooses too
 - **AgentCore slow or down:** set `MCP_URL` to the local server.
 
 ## Result
-_The agent fills this in._
+**Built** (`simulator/backend/`, about 1,060 lines):
+- `src/main.ts`: WebSocket on **port 8300** (`SIM_PORT`), contract events only, client events zod-checked; every connected client sees every event; the engine starts with the first client and stops with the last. Elicitation broker. HTTP admin proxy `/admin/{reset,advance-day,timer-speed,status}` → `ADMIN_URL` (default: the MCP_URL origin) with `Authorization: Bearer ADMIN_TOKEN`. `/health`.
+- `src/mcp.ts`: SDK 1.32.1 Client + Streamable HTTP, `MCP_AUTH=sigv4` uses the T-03 signer; elicitation capability and handler; progress and log notifications → `progress`; `tools/list` at start and on reconnect (a session error reconnects once and retries); `tool_call_started`/`tool_call_finished` with a one-line summary; `card` with html (read once per URI) + structuredContent.
+- `src/engines/sonic.ts` (default): the T-02 relay with the MCP tools. Session renews at `SONIC_RENEW_AFTER_S` (420) with a summary; renewals debounced (at most one every 2 s). Falls back to `VOICE_MODEL_FALLBACK_ID` only on a model-access error. Typed input waits until Alexa finishes talking (F-008). Sonic's tool calls run one after another; a repeated call in the same turn reuses the first result; results are held until the batch finishes (F-015). Tool results are always JSON (F-014). While an elicitation waits, mic audio goes to Transcribe for the yes or no. If a turn stalls for 8 s, the turn ends and the session renews.
+- `src/engines/converse.ts`: `text` (Nova 2 Lite Converse with the MCP tools → Polly Joanna, or silence if Polly fails) and `pipeline` (the same, with Transcribe streaming in front).
+- `src/probe.ts`: `npm run sim:probe -- [--audio] [--say-yes|--decline] [--gap s] "<line>" ...`. `--audio` speaks each line as 16 kHz `audio_in` (Polly) to test the mic path without a mic.
+- System prompt: the six ticket lines, plus "Dayform is one word", the program day names, "two rotis = roti ×2", the S4 tool order with "say the link is on screen once confirmed", and "under 30 words, no lists or links".
+
+**Verified 2026-10-22, against the mock (`npm run mock`):**
+- `text`: S1, S2 (in the same session), S3 (4 lines), S4, S5 and S6 each made the expected tool call(s) and card. S4: get_daily_summary → plan_meal_prep → add_to_cart → checkout_cart → `elicitation_request` → click → cart card `checkout.status=confirmed` with link `https://www.amazon.com/associates/addtocart?AssociateTag=dayform-20&ASIN.1=…`. Typed "yes" resolves it too.
+- `sonic`, typed: S1, S2, S3 (start, log_set, swap), S4 (click), S5 and S6 all right. Tool turns: 0.7–1.9 s to first audio.
+- `sonic`, voice (Polly audio through `audio_in`): S1 and S3 right. S4 with a spoken "yes" (heard by Transcribe as "Yes,") resolved the elicitation; 4 tool calls; first audio 0.9 s; turn total 14.7 s.
+- Renewal: `SONIC_RENEW_AFTER_S=20`, S1, wait 25 s (`[sonic] renewed (20s elapsed); summary lines=4`), then "Actually, make that one roti." → `correct_meal {set_quantity roti 1}`.
+- `pipeline`, voice: S1 → Transcribe "I had two rotas, chicken karahi and a mango lossi" → `log_meal` + meal-logged card.
+- Turn timing is in the log and in a `progress` event: `Turn: first audio 2794 ms · 1 tool call(s) 34 ms · total 19101 ms`.
+- `MCP_URL=MCP_URL_AGENTCORE MCP_AUTH=sigv4`: connected, protocol 2025-11-25, 2 tools (the smoke runtime). `MCP_URL=http://localhost:8001/mcp`: 19 tools. Admin proxy → :8001 `/admin/status` 200 and `/admin/timer-speed {10}` ok.
+
+**Deviations:**
+- No contract event exists for turn timing, so it rides `progress` (`call_id: null`). Proposal: add a `turn_timing` event.
+- In Sonic mode, Polly (Joanna) speaks the elicitation question, because Sonic is blocked waiting for the tool result.
+- Tool specs come from `tools/list` `inputSchema` (the SDK's JSON Schema of the zod inputs) instead of calling `z.toJSONSchema` on the contracts, so forwarded and new tools work too.
+- New env names not in DESIGN §9: `SIM_PORT`, `ADMIN_URL`, `SONIC_RENEW_AFTER_S`, `SONIC_DEBUG`, `SIM_URL` (probe).
+
+**Fallbacks used:** none (Nova 2.5 Sonic worked).
+
+**Orchestrator close-out (2026-10-22):** verified sim:probe in text mode against the real server: S1 → log_meal, meal-logged card, Alexa reply with 970 kcal left; S4 → plan_meal_prep → add_to_cart → checkout_cart, elicitation "Add 12 items, about $112" spoken and answered, cart card with the link. Nova sometimes skips get_daily_summary in S4 (3 tools instead of 4); acceptable. Env names added to DESIGN §9. DONE.

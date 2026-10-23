@@ -207,6 +207,9 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 | `CHECKOUT_CONFIRM` | `elicitation` (default), `tool` | server |
 | `CARDS_MODE` | `mcp-apps` (default), `native` | simulator frontend |
 | `MOCK_PASSTHROUGH_URL`, `REAL_TOOLS` | hybrid mock settings (T-10) | mock |
+| `SIM_PORT` | simulator backend WebSocket port, default 8300 (T-30) | simulator backend |
+| `ADMIN_URL` | admin route origin, default the `MCP_URL` origin (T-30) | simulator backend |
+| `SONIC_RENEW_AFTER_S`, `SONIC_DEBUG` | Sonic session renewal (default 420 s) and debug logging (T-30) | simulator backend |
 
 ---
 

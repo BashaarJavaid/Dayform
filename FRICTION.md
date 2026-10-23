@@ -150,3 +150,25 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: major
 - Workaround: Found by testing variants: `https://www.amazon.com/associates/addtocart?AssociateTag=<tag>&ASIN.1=…&Quantity.1=…` fills the cart (signed in). The same endpoint without AssociateTag was not tested separately; the legacy add.html form without a tag does not. `build-link.ts` now emits the working form.
 - Suggestion to the tool's team: Document the current status of the Add-to-Cart form and return a visible error when items are dropped, instead of an empty cart.
+
+### F-014 · Nova Sonic ends the whole session when a tool result is not JSON ("Tool Response parsing error")
+- Tool / service: Amazon Bedrock `InvokeModelWithBidirectionalStream`, `amazon.nova-2-5-sonic` (us-east-1)
+- Ticket: T-30
+- Task attempted: return an MCP tool's result to Sonic as a `toolResult` event (`toolResultInputConfiguration` type `TEXT`, `textInputConfiguration.mediaType: "text/plain"`), per https://docs.aws.amazon.com/nova/latest/nova2-userguide/sonic-input-events.html.
+- Steps taken: sent the MCP result's text content. Successful mock results happened to be JSON text and worked; an error result was the plain string `Error: fetch failed`.
+- Expected: a `text/plain` tool result accepts any text.
+- Actual: the stream failed with `ValidationException: RequestId=3a2e4906-34b8-4359-93bf-d37bfd638073 : Tool Response parsing error`, which closes the bidirectional stream, so the session (and its context) is lost mid-turn.
+- Severity: major
+- Workaround: always send JSON (`structuredContent`, or `{"result": text}` / `{"error": text}`); the backend also renews the session with a summary when the stream dies.
+- Suggestion to the tool's team: document that tool result content must be a JSON document despite `text/plain`, and reject a bad tool result with an event instead of ending the session.
+
+### F-015 · Nova Sonic calls dependent tools in parallel and re-requests tools whose results are still pending
+- Tool / service: Amazon Bedrock `InvokeModelWithBidirectionalStream`, `amazon.nova-2-5-sonic` (us-east-1)
+- Ticket: T-30
+- Task attempted: S4 "Plan my meal prep for the next four days and add what I need to my cart" with 18 MCP tools; `checkout_cart` waits on an MCP elicitation (user confirmation, about 2–3 s).
+- Steps taken: system prompt says to call get_daily_summary, plan_meal_prep, add_to_cart, checkout_cart in order; results returned to Sonic as each MCP call finished.
+- Expected: one tool at a time (each depends on the previous one), or at least no repeats.
+- Actual: Sonic emitted all four `toolUse` events at once (same millisecond), before any result. While `checkout_cart` was still waiting for the user, it emitted `toolUse` for `plan_meal_prep` and `checkout_cart` again (a second elicitation popped up), and started speaking "Please confirm the total…" over the confirmation question. A spoken "yes" sent into the session during the pending tool also started a new user turn that re-ran the tools.
+- Severity: major
+- Workaround: the backend runs Sonic's tool calls one after another in the order given, reuses the first result for an identical call in the same turn, holds all results until the batch finishes, and sends mic audio to Amazon Transcribe (not Sonic) while an elicitation waits for a yes or no.
+- Suggestion to the tool's team: document Sonic's parallel tool-call behaviour and offer a sequential tool-calling option; don't re-issue a tool call whose result is pending.

@@ -40,7 +40,9 @@
     "cards:screens": "npm run cards:screens -w @dayform/cards",
     "mealprep:bench": "npm run mealprep:bench -w @dayform/server --",
     "overnight": "npm run overnight -w @dayform/jobs-overnight --",
-    "overnight:cache": "npm run overnight:cache -w @dayform/jobs-overnight"
+    "overnight:cache": "npm run overnight:cache -w @dayform/jobs-overnight",
+    "sim:backend": "npm run sim:backend -w @dayform/simulator-backend",
+    "sim:probe": "npm run sim:probe -w @dayform/simulator-backend --"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
