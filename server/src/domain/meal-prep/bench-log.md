@@ -50,3 +50,14 @@ Targets 2250 kcal, P 165 g, C 249 g, F 66 g. **3/3 within tolerance.**
 | 1 | 1 | yes | 3 | 4 | 2236 / 164 / 250 / 66 | $190.8 (17 items, 18 packs) |  |
 | 2 | 2 | yes | 5.9 | 4 | 2266 / 166 / 260 / 68 | $202.56 (19 items, 20 packs) |  |
 | 3 | 1 | yes | 3.6 | 4 | 2211 / 165 / 249 / 65 | $195.27 (18 items, 19 packs) |  |
+
+## 2026-10-23T01:40:32.701Z · us.amazon.nova-2-lite-v1:0 · 5 runs
+Targets 2250 kcal, P 165 g, C 249 g, F 66 g. **5/5 within tolerance.**
+
+| Run | Rounds | Within tolerance | Seconds | Recipes | Day 1 kcal / P / C / F | Grocery | Misses |
+|---|---|---|---|---|---|---|---|
+| 1 | 2 | yes | 5 | 4 | 2255 / 166 / 251 / 66 | $103.99 (12 items, 13 packs) |  |
+| 2 | 2 | yes | 9.7 | 4 | 2223 / 165 / 248 / 66 | $98.11 (12 items, 14 packs) |  |
+| 3 | 2 | yes | 7.7 | 4 | 2246 / 160 / 258 / 63 | $93.79 (12 items, 13 packs) |  |
+| 4 | 3 | yes | 12.4 | 4 | 2264 / 161 / 257 / 66 | $108.32 (13 items, 15 packs) | d0 items 13/12 |
+| 5 | 3 | yes | 7.9 | 4 | 2237 / 164 / 249 / 66 | $95.03 (12 items, 13 packs) |  |

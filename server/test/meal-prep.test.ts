@@ -10,9 +10,9 @@ const draft = (noChicken: boolean) => {
   const protein = noChicken ? "canned-tuna" : "chicken-breast-frozen";
   return {
     recipes: [
-      { id: "r1", name: "Protein oats", ingredients: [{ item: "oats", grams: 80 }, { item: "whey-protein", grams: 40 }, { item: "milk", grams: 250 }, { item: "honey", grams: 10 }], steps: ["Mix and chill."] },
-      { id: "r2", name: noChicken ? "Tuna karahi with rice" : "Chicken karahi with rice", ingredients: [{ item: protein, grams: 200 }, { item: "basmati-rice", grams: 90 }, { item: "canned-tomatoes", grams: 100 }, { item: "ginger-garlic-paste", grams: 10 }, { item: "garam-masala", grams: 2 }, { item: "olive-oil", grams: 8 }], steps: ["Cook."] },
-      { id: "r3", name: "Daal chawal", ingredients: [{ item: "red-lentils", grams: 80 }, { item: "basmati-rice", grams: 70 }, { item: "canned-tomatoes", grams: 80 }, { item: "turmeric", grams: 2 }, { item: "ghee", grams: 8 }], steps: ["Cook."] },
+      { id: "r1", name: "Protein oats", ingredients: [{ item: "oats", grams: 80 }, { item: "whey-protein", grams: 40 }, { item: "milk", grams: 250 }], steps: ["Mix and chill."] },
+      { id: "r2", name: noChicken ? "Tuna karahi with rice" : "Chicken karahi with rice", ingredients: [{ item: protein, grams: 200 }, { item: "basmati-rice", grams: 90 }, { item: "canned-tomatoes", grams: 100 }, { item: "ginger-garlic-paste", grams: 10 }, { item: "garam-masala", grams: 2 }, { item: "ghee", grams: 8 }], steps: ["Cook."] },
+      { id: "r3", name: "Daal chawal", ingredients: [{ item: "red-lentils", grams: 80 }, { item: "basmati-rice", grams: 70 }, { item: "canned-tomatoes", grams: 80 }, { item: "ghee", grams: 8 }], steps: ["Cook."] },
       { id: "r4", name: "Peanut butter rice cakes", ingredients: [{ item: "rice-cakes", grams: 30 }, { item: "peanut-butter", grams: 20 }], steps: ["Spread."] },
     ],
     day_menus: [{ breakfast: "r1", lunch: "r2", dinner: "r3", snack: "r4" }, { breakfast: "r1", lunch: "r3", dinner: "r2", snack: "r4" }],
@@ -102,6 +102,22 @@ describe("generator (fixed draft)", () => {
     expect(prompts[1]).toMatch(/day 1: kcal \d+, target 2360 \(within ±5%\)/);
     expect(g.within_tolerance).toBe(false);
     expect(g.plan.days.every((d) => !d.within_tolerance)).toBe(true);
+  });
+
+  it("more than 12 catalog items is a miss sent back, naming the least-used items", async () => {
+    let n = 0;
+    const wide = vi.fn(async (req: StructuredRequest<never>) => {
+      prompts.push(req.prompt);
+      const d = draft(false);
+      if (n++ === 0) d.recipes[3].ingredients.push({ item: "honey", grams: 5 }, { item: "olive-oil", grams: 3 }, { item: "turmeric", grams: 1 });
+      return { data: d, model: "fake", ms: 1, inputTokens: 0, outputTokens: 0, attempts: 1 };
+    });
+    prompts.length = 0;
+    const g = await generatePlan({ startDate: "2026-10-24", days: 4, targets, llm: wide as never });
+    expect(wide).toHaveBeenCalledTimes(2);
+    expect(prompts[1]).toMatch(/plan uses 15 items, max 12; drop the least-used ones \(/);
+    expect(g).toMatchObject({ within_tolerance: true, rounds: 2, misses: [] });
+    expect(g.plan.grocery.length).toBeLessThanOrEqual(12);
   });
 });
 

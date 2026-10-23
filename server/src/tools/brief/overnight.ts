@@ -207,7 +207,6 @@ export function insightCandidates(i: Insights) {
     { topic: "protein on rest days vs training days", rest_days_g: i.protein_rest_g, training_days_g: i.protein_training_g, target_g: i.protein_target_g, gap: gap(i.protein_rest_g, i.protein_target_g) },
     { topic: "water", avg_ml: i.water_avg_ml, target_ml: i.water_target_ml, gap: gap(i.water_avg_ml, i.water_target_ml) },
     { topic: "calories", avg_kcal: i.kcal_avg, target_kcal: i.kcal_target, gap: gap(i.kcal_avg, i.kcal_target) },
-    { topic: "days protein target hit", days: i.protein_hit_days, of_days: i.logged_days, gap: 1 - (i.logged_days ? i.protein_hit_days / i.logged_days : 1) },
   ].sort((a, b) => b.gap - a.gap).map(({ gap: _, ...c }) => c);
 }
 
