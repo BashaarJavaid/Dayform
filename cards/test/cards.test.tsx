@@ -45,6 +45,20 @@ it("pr: both PR kinds for one set make one celebration; empty prs is a calm stat
   expect(renderToStaticMarkup(<CARD_COMPONENTS.pr data={{ prs: [] }} />)).toContain("No PR this time");
 });
 
+it("server shapes: day names render once, times are in Asia/Karachi", () => {
+  const w = renderToStaticMarkup(<CARD_COMPONENTS.workout data={{ ...CARDS.workout.parse(fx("start_workout")), day_name: "Push day" }} />);
+  expect(w).toContain("Push day · exercise");
+  expect(w).not.toMatch(/day day/i);
+  const meal = CARDS["meal-logged"].parse(fx("log_meal"));
+  const MealLogged = CARD_COMPONENTS["meal-logged"];
+  const m = renderToStaticMarkup(<MealLogged data={{ ...meal, entry: { ...meal.entry, logged_at: "2026-10-23T08:02:00.000Z" } }} />);
+  expect(m).toContain("logged · 13:02");
+  const b = CARDS.brief.parse(fx("get_morning_brief"));
+  const bh = renderToStaticMarkup(<CARD_COMPONENTS.brief data={{ ...b, yesterday: { ...b.yesterday, workout: "Push day" }, today: { ...b.today, workout: { day_name: "Legs day", lead: b.today.workout!.lead } } }} />);
+  expect(bh).not.toMatch(/day day/i);
+  expect(bh).toContain("Legs day");
+});
+
 it("CardByUri maps every ui://cards/<name>", () => {
   for (const n of Object.keys(CARD_URIS) as CardName[]) expect(CardByUri[CARD_URIS[n]]).toBe(CARD_COMPONENTS[n]);
 });

@@ -24,6 +24,13 @@ const ENTRIES: { id: string; card: CardName; tool: string; data?: Record<string,
   { id: "cart", card: "cart", tool: "view_cart" },
   { id: "cart-checkout", card: "cart", tool: "checkout_cart" },
   { id: "brief", card: "brief", tool: "get_morning_brief" },
+  // Shapes seen from the real server (T-31): "<X> day" names, rest-day yesterday, UTC timestamps.
+  { id: "brief-server", card: "brief", tool: "get_morning_brief", data: { ...fixture("get_morning_brief"),
+    yesterday: { ...(fixture("get_morning_brief").yesterday as object), workout: null },
+    today: { ...(fixture("get_morning_brief").today as Record<string, unknown>), workout: { day_name: "Legs day", lead: { exercise: "back squat", weight_kg: 102.5, reps: 5 } } } } },
+  { id: "workout-server", card: "workout", tool: "start_workout", data: { ...fixture("start_workout"), day_name: "Push day" } },
+  { id: "meal-logged-utc", card: "meal-logged", tool: "log_meal", data: { ...fixture("log_meal"),
+    entry: { ...(fixture("log_meal").entry as object), logged_at: "2026-10-23T08:02:00.000Z" } } },
 ];
 
 const params = new URLSearchParams(location.search);

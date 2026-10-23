@@ -64,7 +64,13 @@ export function fmtDate(date: string, opts: Intl.DateTimeFormatOptions = { weekd
   return new Date(`${date.slice(0, 10)}T12:00:00Z`).toLocaleDateString("en-GB", { ...opts, timeZone: "UTC" }).replace("Sept", "Sep");
 }
 /** Clock time as written in the ISO string (demo clock), not converted to the browser zone. */
-export const fmtTime = (iso: string) => iso.slice(11, 16);
+/** Demo time zone (server DEMO_TZ default). Cards run in the browser, so it is fixed here. */
+export const DEMO_TZ = "Asia/Karachi";
+/** Clock time of an ISO instant in the demo zone, whatever zone the browser or the string uses. */
+export const fmtTime = (iso: string) =>
+  new Date(iso).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: DEMO_TZ });
+/** "Push" -> "Push day"; "Push day" stays as it is. */
+export const dayLabel = (name: string) => (/\bday$/i.test(name.trim()) ? name.trim() : `${name.trim()} day`);
 
 export function Ring({ size, stroke, frac, color, delayMs = 150, children }: {
   size: number; stroke: number; frac: number; color: string; delayMs?: number; children?: ReactNode;

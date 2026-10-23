@@ -1,14 +1,13 @@
 import type { BriefCard } from "@dayform/contracts";
-import { CardRoot, MACROS, cap, delay, fmt, fmtDate, fmtKg, signed, type CardProps } from "../ui.tsx";
+import { CardRoot, MACROS, cap, dayLabel, delay, fmt, fmtDate, fmtKg, signed, type CardProps } from "../ui.tsx";
 
 export function Brief({ data }: CardProps<BriefCard>) {
   const { yesterday: y, today, weight, targets_change: tc } = data;
   const facts = [
     { k: "Calories", v: `${fmt(y.eaten.kcal)} / ${fmt(y.targets.kcal)}`, color: "var(--kcal)" },
     { k: "Protein", v: `${fmt(y.eaten.protein_g)} / ${fmt(y.targets.protein_g)} g`, color: "var(--protein)" },
-    y.workout
-      ? { k: "Trained", v: `${y.workout} day`, color: "var(--good)" }
-      : { k: "Weight", v: `${signed(weight.change_kg_week)} kg this week`, color: "var(--water)" },
+    // Weight is always in the header chip, so the third fact is the training day.
+    y.workout ? { k: "Trained", v: dayLabel(y.workout), color: "var(--good)" } : { k: "Rest", v: "day", color: "var(--good)" },
   ];
 
   return (
@@ -29,17 +28,19 @@ export function Brief({ data }: CardProps<BriefCard>) {
           {facts.map((f) => (
             <div key={f.k} className="df-row" style={{ gap: 10 }}>
               <span className="df-dot" style={{ background: f.color }} />
-              <span className="df-ellipsis"><span className="df-muted">{f.k}</span> <strong>{f.v}</strong></span>
+              <span><span className="df-muted">{f.k}</span> <strong>{f.v}</strong></span>
             </div>
           ))}
         </div>
         <div className="df-panel df-col df-grow df-in" style={{ gap: 6, ...delay(180) }}>
           <span className="df-muted df-strong">Today</span>
-          <span className="df-md df-strong df-ellipsis">
-            {today.workout
-              ? <>{today.workout.day_name} · {cap(today.workout.lead.exercise)} <span style={{ color: "var(--cyan)" }}>{fmtKg(today.workout.lead.weight_kg)} kg × {today.workout.lead.reps}</span></>
-              : "Rest day"}
-          </span>
+          {/* Day and lead lift on their own lines so long names wrap instead of truncating. */}
+          <span className="df-md df-strong">{today.workout ? dayLabel(today.workout.day_name) : "Rest day"}</span>
+          {today.workout && (
+            <span className="df-strong" style={{ fontSize: 22 }}>
+              {cap(today.workout.lead.exercise)} <span style={{ color: "var(--cyan)", whiteSpace: "nowrap" }}>{fmtKg(today.workout.lead.weight_kg)} kg × {today.workout.lead.reps}</span>
+            </span>
+          )}
           <div style={{ display: "grid", gridTemplateColumns: "auto auto", gap: "6px 18px", justifyContent: "start" }}>
             {MACROS.map((m) => (
               <span key={m.key} className="df-row" style={{ gap: 6 }}>

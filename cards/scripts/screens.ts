@@ -10,7 +10,7 @@ import { join } from "node:path";
 const CHROME = process.env.CHROME ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const BASE = process.env.PREVIEW_URL ?? "http://localhost:5180/";
 const scale = Number(process.argv[process.argv.indexOf("--scale") + 1] || 1) || 1;
-const IDS = ["rings", "meal-logged", "workout", "workout-pr", "pr", "pr-both-kinds", "pr-none", "progress", "meal-prep", "meal-prep-preparing", "cart", "cart-checkout", "brief"];
+const IDS = ["rings", "meal-logged", "workout", "workout-pr", "pr", "pr-both-kinds", "pr-none", "progress", "meal-prep", "meal-prep-preparing", "cart", "cart-checkout", "brief", "brief-server", "workout-server", "meal-logged-utc"];
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const OUT = new URL("../screens/", import.meta.url).pathname;
 

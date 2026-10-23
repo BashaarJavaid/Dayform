@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { WorkoutCard } from "@dayform/contracts";
-import { CardRoot, Confetti, Ring, cap, delay, fmtKg, signed, type CardProps } from "../ui.tsx";
+import { CardRoot, Confetti, Ring, cap, dayLabel, delay, fmtKg, signed, type CardProps } from "../ui.tsx";
 
 /** Seconds left in the rest. Counts from when this result arrived: rest_ends_at is on the demo clock, not the browser clock. */
 function useRest(restEndsAt: string | null, restSeconds: number) {
@@ -29,7 +29,7 @@ export function Workout({ data }: CardProps<WorkoutCard>) {
       {d.pr && <Confetti top="20%" startDelay={150} />}
       <div className="df-spread df-in">
         <div className="df-col" style={{ gap: 4 }}>
-          <span className="df-eyebrow">{d.day_name} day · exercise {d.exercise_index} of {d.exercise_count}</span>
+          <span className="df-eyebrow">{dayLabel(d.day_name)} · exercise {d.exercise_index} of {d.exercise_count}</span>
           <span className="df-title df-ellipsis" style={{ fontSize: 42, maxWidth: 520 }}>{cap(d.exercise)}</span>
         </div>
         {d.pr && (

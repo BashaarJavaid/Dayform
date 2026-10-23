@@ -95,3 +95,9 @@ Agent run 2026-10-22.
 - 60 fps on real hardware has not been measured (see above).
 
 **Orchestrator close-out (2026-10-22):** verified build (8 single files, 0 external refs), 14 tests, screenshots reviewed (rings, meal-logged, PR, meal-prep). Follow-ups done by the orchestrator: cards/dist committed (un-ignored), mock serves cards/dist when present, mock checkout fixtures use the working cart link. DONE.
+
+**Follow-up 2026-10-22 (fixes from T-31's real-server run):**
+- `workout` and `brief` print day names through `dayLabel()`, so "Push" and "Push day" both render as "Push day".
+- `brief`: the "Today" day and the lead lift sit on separate lines and wrap instead of being cut off. The yesterday facts no longer use an ellipsis. On a rest day the third fact reads "Rest day", because the weight change is already in the header chip.
+- `fmtTime` formats in `Asia/Karachi` (constant `DEMO_TZ` in `src/ui.tsx`), so a UTC `08:02Z` time shows as 13:02.
+- New preview and check entries `brief-server`, `workout-server` and `meal-logged-utc` reproduce these shapes. `npm test`: 15 passed (15). `cards:screens`: 16 entries x 2 modes, the batch slide and the 3 MCP button checks all PASS at 768x480 and at 1152x720.
