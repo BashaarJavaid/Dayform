@@ -7,7 +7,7 @@ line() { if eval "$2" >/dev/null 2>&1; then echo "PASS  $1"; else echo "FAIL  $1
 converse() { aws bedrock-runtime converse --region "$R" --model-id "$1" \
   --messages '[{"role":"user","content":[{"text":"hi"}]}]' --inference-config '{"maxTokens":1}'; }
 sonic() { aws bedrock get-foundation-model-availability --region "$R" --model-id "$1" \
-  --query 'authorizationStatus=="AUTHORIZED" && entitlementAvailability=="AVAILABLE" && regionAvailability=="AVAILABLE"' --output text | grep -q True; }
+  --query 'authorizationStatus==`AUTHORIZED` && entitlementAvailability==`AVAILABLE` && regionAvailability==`AVAILABLE`' --output text | grep -q True; }
 
 line "credentials ($AWS_PROFILE) and region $R" "aws sts get-caller-identity && [ \"\$(aws configure get region)\" = us-east-1 -o -n \"\$AWS_REGION\" ]"
 line "reasoning model $REASONING_MODEL_ID (converse)" "converse $REASONING_MODEL_ID" "REASONING_MODEL_FALLBACK_ID"

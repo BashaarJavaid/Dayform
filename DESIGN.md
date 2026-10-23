@@ -28,7 +28,7 @@ This is the agreed design for Dayform. It's the single source of truth for decis
 | D18 | Overnight job | Runs nightly on EventBridge Scheduler, and on demand from "skip to morning". Produces the morning brief, weekly targets, next-session targets and a ready meal plan. The user hears it on "good morning". No push notifications. |
 | D19 | Program | One pre-set 4-day program. Alexa progresses it and swaps exercises on request. No program building from scratch. |
 | D20 | Demo profile | One seeded demo user with 6 weeks of history. A hidden demo panel offers reset, skip to morning, and short rest timers. |
-| D21 | Reasoning model | **Amazon Nova only** (user decision, 2026-10-22). No Claude models on Bedrock. Primary: the strongest Nova reasoning model available in us-east-1 (Nova 2 Pro if listed, else Nova 2 Lite); T-00 records the ID in `REASONING_MODEL_ID`. Wherever a ticket says "Opus" or "Claude", read "the reasoning model". |
+| D21 | Reasoning model | **Amazon Nova only** (user decision, 2026-10-22). No Claude models on Bedrock. Primary: Nova 2 Lite (`us.amazon.nova-2-lite-v1:0`; Nova 2 Pro is not offered in us-east-1), fallback Nova Pro. T-00 confirmed both with a Converse call on 2026-10-22. Wherever a ticket says "Opus" or "Claude", read "the reasoning model". |
 
 ---
 
@@ -187,10 +187,10 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 |---|---|---|
 | `AWS_REGION` | `us-east-1` | all |
 | `AWS_PROFILE` | `hirz-login` (account root; user decision 2026-10-22) | all, local only |
-| `REASONING_MODEL_ID` | Nova reasoning model ID (D21; recorded in T-00 and T-01). Provisional: `us.amazon.nova-2-lite-v1:0` (Nova 2 Pro does not exist as a Bedrock ID on 2026-10-22) | server, jobs |
-| `REASONING_MODEL_FALLBACK_ID` | second Nova model, provisional `us.amazon.nova-pro-v1:0` | server, jobs |
-| `VOICE_MODEL_FALLBACK_ID` | second Sonic model ID | simulator backend |
-| `VOICE_MODEL_ID` | Nova 2.5 Sonic or Nova 2 Sonic ID (recorded in T-02) | simulator backend |
+| `REASONING_MODEL_ID` | Nova reasoning model ID (D21; recorded in T-00 and T-01). Confirmed by T-00 on 2026-10-22: `us.amazon.nova-2-lite-v1:0` (Nova 2 Pro is not offered in us-east-1) | server, jobs |
+| `REASONING_MODEL_FALLBACK_ID` | `us.amazon.nova-pro-v1:0` (confirmed by T-00) | server, jobs |
+| `VOICE_MODEL_FALLBACK_ID` | `amazon.nova-2-sonic-v1:0` | simulator backend |
+| `VOICE_MODEL_ID` | `amazon.nova-2-5-sonic` (Nova 2.5 Sonic, authorized per T-00; T-02 confirms it works) | simulator backend |
 | `ALEXA_VOICE` | Sonic voice ID, for example `tiffany` | simulator backend |
 | `UNDERSTANDING` | `alexa` (default), `server` | server |
 | `VOICE_ENGINE` | `sonic` (default), `pipeline`, `text` | simulator backend |

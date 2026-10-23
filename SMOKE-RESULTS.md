@@ -10,14 +10,14 @@
 ---
 
 ## T-00 · AWS access and tooling
-- Status: BLOCKED (hirz-operator has no Bedrock/CloudFormation/Budgets permissions)
-- Account and region: 661550216013, us-east-1, profile `hirz-operator` (sts OK, 2026-10-22)
-- Reasoning model ID (D21, Nova): provisional `us.amazon.nova-2-lite-v1:0` (exists, AccessDenied on InvokeModel). Nova 2 Pro: `amazon.nova-2-pro-v1:0` / `us.` prefix rejected as invalid ID; real ID unknown until ListFoundationModels is allowed.
-- Fallback reasoning model ID: provisional `us.amazon.nova-pro-v1:0` (exists, AccessDenied). Nova Premier is end-of-life.
-- Voice model ID (Nova Sonic): provisional `amazon.nova-2-sonic-v1:0` (not tested); Nova 2.5 Sonic ID unknown.
-- CDK bootstrap: not run (awaiting approval, and hirz-operator cannot call CloudFormation). Command: `npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`
-- ARM64 build path (local buildx or CodeBuild): local, native linux/arm64 (Apple Silicon, buildx v0.32.2). `docker buildx build --platform linux/arm64` of smoke/env/Dockerfile.arm64 built in 5.4 s; container printed `aarch64`.
-- Notes: see FRICTION.md F-004. Budget not created (no budgets permission, no contact email readable).
+- Status: REVIEW. Every check.sh line PASSes except the CDK bootstrap, which is waiting for approval.
+- Account and region: 661550216013, us-east-1, profile `hirz-login` (root; user decision 2026-10-22). `hirz-operator` has no service permissions (FRICTION.md F-004).
+- Reasoning model ID (D21, Nova): `us.amazon.nova-2-lite-v1:0`. Nova 2 Pro is not listed in us-east-1, so the first fallback is used. Availability: AUTHORIZED/AVAILABLE. 1-token Converse: stopReason max_tokens, 377 ms.
+- Fallback reasoning model ID: `us.amazon.nova-pro-v1:0`. Availability: AUTHORIZED/AVAILABLE. 1-token Converse: 397 ms. Nova Premier is listed as a `us.` profile but returns "end of its life" on Converse.
+- Voice model ID (Nova Sonic): `amazon.nova-2-5-sonic` (Nova 2.5 Sonic, ON_DEMAND). Fallback: `amazon.nova-2-sonic-v1:0`. Both AUTHORIZED/AVAILABLE in us-east-1. No stream test yet (T-02 does that).
+- CDK bootstrap: the CDKToolkit stack does not exist yet ("Stack with id CDKToolkit does not exist"). Waiting for approval: `npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`
+- ARM64 build path (local buildx or CodeBuild): local, using native linux/arm64 (Apple Silicon, buildx v0.32.2). Building smoke/env/Dockerfile.arm64 with `docker buildx build --platform linux/arm64` took 5.4 s, and the container printed `aarch64`.
+- Notes: the USD 50 budget is not created because it needs an alert email. The command is ready in smoke/env/wizard.sh step 3 (budget `dayform-50`, alert at 80%).
 
 ## T-01 · Claude on Bedrock
 - Status:

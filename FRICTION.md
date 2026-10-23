@@ -49,7 +49,7 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Expected: model list and a one-token reply.
 - Actual: `AccessDeniedException ... is not authorized to perform: bedrock:ListFoundationModels because no identity-based policy allows the bedrock:ListFoundationModels action`. Same AccessDenied for bedrock:ListInferenceProfiles, bedrock:InvokeModel (us.amazon.nova-2-lite-v1:0, amazon.nova-2-lite-v1:0, us.amazon.nova-pro-v1:0), cloudformation:DescribeStacks, budgets:ViewBudget, account:GetContactInformation, ecr, s3, lambda, rds, scheduler, codebuild, bedrock-agentcore, iam. `amazon.nova-2-pro-v1:0` and `us.amazon.nova-2-pro-v1:0` return `ValidationException: The provided model identifier is invalid.` `us.amazon.nova-premier-v1:0` returns `ResourceNotFoundException: This model version has reached the end of its life.`
 - Severity: blocker
-- Workaround: none yet; needs an IAM policy on hirz-operator (or use of the HirzDeploy role via profile `hirz`), decided by the user.
+- Workaround: the user switched to the root profile `hirz-login` (2026-10-22). With it, ListFoundationModels shows no Nova 2 Pro in us-east-1 (Nova 2 Lite is the strongest), and Nova Premier is still listed as an inference profile even though it is end-of-life.
 - Suggestion to the tool's team: the "invalid identifier" error could say whether the model exists in another region or needs an inference profile.
 
 ### F-003 · amazon.com search pages intermittently return a JS stub to scripted reads
@@ -69,7 +69,7 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Task attempted: pick "the newest PostgreSQL version Aurora offers" for a Serverless v2 cluster with the Data API turned on.
 - Steps taken: read the release notes (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/AuroraPostgreSQL.Updates.html: newest 18.6.1 and 17.11.1, 2026-10-15) and the Data API support table (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.Aurora_Fea_Regions_DB-eng.Feature.Data_API.html). Tried `aws rds describe-db-engine-versions --engine aurora-postgresql` to check.
 - Expected: the Data API table to say whether Aurora PG 18 supports the Data API.
-- Actual: the table has columns for Aurora PostgreSQL 17 ("Version 17.4 and higher") down to 13 only; PG 18 is not mentioned, neither supported nor "Not available". The CLI check failed: `AccessDenied ... not authorized to perform: rds:DescribeDBEngineVersions` (see F-001, T-00 permissions).
+- Actual: the table has columns for Aurora PostgreSQL 17 ("Version 17.4 and higher") down to 13 only; PG 18 is not mentioned, neither supported nor "Not available". The CLI check failed: `AccessDenied ... not authorized to perform: rds:DescribeDBEngineVersions` (see F-004, T-00 permissions).
 - Severity: minor
 - Workaround: chose 17.11, the newest version the Data API table covers (also matches local `postgres:17`). `ENGINE_VERSION` can be overridden in `smoke/aurora/create-cluster.sh`.
 - Suggestion to the tool's team: add a PG 18 column to the Data API table, or list Data API support in each version's release notes.
