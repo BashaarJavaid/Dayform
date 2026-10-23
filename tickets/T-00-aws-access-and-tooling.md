@@ -8,7 +8,7 @@
 | Depends on | — |
 | Owns | `smoke/env/`, `.gitignore`, `.env.example` |
 | Approval needed | Yes: package installs, AWS Budget, CDK bootstrap, ARM64 build setup |
-| Status | REVIEW: CDK bootstrap approved but blocked by the agent permission classifier; the user runs it by hand |
+| Status | DONE |
 
 ## Goal
 Make AWS, Bedrock and the local tools ready, so every smoke test can run.
