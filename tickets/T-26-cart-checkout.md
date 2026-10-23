@@ -95,6 +95,15 @@ S4 ends with the judges' "purchasing capabilities" example: Alexa confirms, and 
 - The input field is `packs`, not `quantity`, per the contract.
 - The cart is kept after a confirmed checkout; the ticket says nothing about clearing it.
 
+**Follow-up after T-40 (Aurora latency):** `add_to_cart {from_plan}` took 2161 ms on the Data API, because it made 3 calls per line.
+- The cart is now changed in memory, then written with one clock read and one statement (a CTE: UPDATE the existing rows, INSERT the new ones in order).
+- `remove_from_cart` makes one UPDATE or DELETE and no clock read.
+- The tools reuse the rows they already read instead of reading the cart again.
+- Behaviour is unchanged, except that the same item named twice in one `items[]` now sums its packs (before, the second name overwrote the first).
+- Timings, server-side:
+  - Local pg: from_plan writing 12 lines takes 80 ms (cold).
+  - Aurora Data API (port 8015): from_plan writing 12 lines takes 287 ms; a from_plan retry 88 ms; items[] 243 ms; view_cart 38 ms; remove_from_cart 168 ms; checkout_cart accept 220 ms and decline 199 ms.
+
 **Fallbacks used:** none. `SearchLinkProvider` is wired, but no catalog item has a null ASIN.
 
 **Orchestrator close-out (2026-10-22):** verified 8 tests and the live sequence (add 5 items → 4 added, eggs unavailable → elicitation → accept returns the /associates/addtocart link in 31 ms → decline keeps the cart). The user already confirmed the link form fills a real cart (T-05); the full plan cart gets opened once during T-41 rehearsal. DONE.

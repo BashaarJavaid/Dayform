@@ -85,13 +85,22 @@ export async function readCart(): Promise<Row[]> {
   });
 }
 
-async function setPacks(id: string, packs: number, planId: number | null) {
-  if (packs <= 0) return void (await query(sql`DELETE FROM cart_items WHERE catalog_item_id = ${id}`));
+/**
+ * Write changed lines in one statement (Data API: every query is a round trip). Existing rows are updated in place
+ * (keeping their id, so cart order holds); new ones are inserted in the given order.
+ */
+async function saveLines(lines: Row[]) {
+  if (!lines.length) return;
   const at = (await clock.now()).toISOString();
-  const [u] = await query<{ id: number }>(
-    sql`UPDATE cart_items SET quantity = ${packs}, meal_plan_id = COALESCE(${planId}, meal_plan_id) WHERE catalog_item_id = ${id} RETURNING id`,
+  const values = sql.join(
+    lines.map((l, i) => sql`(${i}::int, ${l.item.id}::text, ${l.packs}::int, ${l.meal_plan_id}::int)`),
+    sql`, `,
   );
-  if (!u) await query(sql`INSERT INTO cart_items (catalog_item_id, quantity, meal_plan_id, added_at) VALUES (${id}, ${packs}, ${planId}, ${at}::timestamptz)`);
+  await query(sql`WITH v(ord, id, packs, plan_id) AS (VALUES ${values}),
+    u AS (UPDATE cart_items c SET quantity = v.packs, meal_plan_id = COALESCE(v.plan_id, c.meal_plan_id)
+          FROM v WHERE c.catalog_item_id = v.id RETURNING c.catalog_item_id)
+    INSERT INTO cart_items (catalog_item_id, quantity, meal_plan_id, added_at)
+    SELECT v.id, v.packs, v.plan_id, ${at}::timestamptz FROM v WHERE v.id NOT IN (SELECT catalog_item_id FROM u) ORDER BY v.ord`);
 }
 
 const cents = (n: number) => Math.round(n * 100) / 100;
@@ -124,10 +133,13 @@ export interface AddResult {
   added: { name: string; packs: number }[];
   unavailable: string[];
   unknown: string[];
+  /** The cart after the change (so the tool needs no second read). */
+  cart?: Row[];
 }
 
 async function addLines(lines: { id: string; packs: number }[], planId: number | null, out: AddResult) {
   const cart = new Map((await readCart()).map((r) => [r.item.id, r]));
+  const changed = new Map<string, Row>();
   for (const { id, packs } of lines) {
     const item = byId(id)!;
     if (!item.available) {
@@ -137,9 +149,12 @@ async function addLines(lines: { id: string; packs: number }[], planId: number |
     const have = cart.get(id);
     // Same plan added again (a retry): leave the line as is, so the packs never double.
     if (planId != null && have?.meal_plan_id === planId) continue;
-    await setPacks(id, (have?.packs ?? 0) + packs, planId);
+    const row = { item, packs: (have?.packs ?? 0) + packs, meal_plan_id: planId ?? have?.meal_plan_id ?? null };
+    cart.set(id, row), changed.set(id, row);
     out.added.push({ name: item.name, packs });
   }
+  await saveLines([...changed.values()]);
+  out.cart = [...cart.values()];
 }
 
 /** The plan's grocery list, as {catalog_item_id, packs}: the newest ready meal_plans row (T-25 stores it in totals.grocery). */
@@ -179,13 +194,16 @@ export async function addNamed(items: { name: string; packs?: number }[]): Promi
 }
 
 /** Remove `packs` (default all) of the cart line that best matches `said`. Undefined when nothing matches. */
-export async function removeItem(said: string, packs?: number): Promise<{ name: string; packs: number } | undefined> {
+export async function removeItem(said: string, packs?: number): Promise<{ removed: { name: string; packs: number }; cart: Row[] } | undefined> {
   const rows = await readCart();
   const hit = matchItem(said, rows.map((r) => ({ ...r, id: r.item.id, name: r.item.name })));
   if (!hit) return undefined;
   const n = Math.min(packs ?? hit.packs, hit.packs);
-  await setPacks(hit.item.id, hit.packs - n, null);
-  return { name: hit.item.name, packs: n };
+  const left = hit.packs - n;
+  if (left > 0) await query(sql`UPDATE cart_items SET quantity = ${left} WHERE catalog_item_id = ${hit.item.id}`);
+  else await query(sql`DELETE FROM cart_items WHERE catalog_item_id = ${hit.item.id}`);
+  const cart = rows.flatMap((r) => (r.item.id !== hit.item.id ? [r] : left > 0 ? [{ ...r, packs: left }] : []));
+  return { removed: { name: hit.item.name, packs: n }, cart };
 }
 
 // ---- Checkout ----

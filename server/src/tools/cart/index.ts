@@ -5,7 +5,7 @@ import { add_to_cart, checkout_cart, confirm_checkout, remove_from_cart, view_ca
 import { defineTool, ToolError } from "../../core/registry.ts";
 import { env } from "../../core/env.ts";
 import {
-  addFromPlan, addNamed, cartCard, cartFacts, cartLinks, confirmMessage, readCart, recordCheckout, removeItem, type AddResult,
+  addFromPlan, addNamed, cartCard, cartFacts, cartLinks, confirmMessage, readCart, recordCheckout, removeItem, type AddResult, type Row,
 } from "../../domain/cart/index.ts";
 
 const list = (xs: string[]) => xs.join(", ");
@@ -17,8 +17,8 @@ const addFacts = (r: AddResult) => [
 
 type Status = "confirmed" | "declined" | "cancelled";
 /** Finish a checkout the user answered: the link on yes, the cart kept either way. */
-async function finish(status: Status) {
-  const rows = await readCart();
+async function finish(status: Status, rows?: Row[]) {
+  rows ??= await readCart();
   if (!rows.length) throw new ToolError("The cart is empty.");
   const { link, search } = cartLinks(rows);
   const card = cartCard(rows, status === "confirmed" ? link : null);
@@ -43,17 +43,18 @@ export function cartTools(mode: "elicitation" | "tool") {
       }
       if (items?.length) {
         const n = await addNamed(items);
-        r.added.push(...n.added), r.unavailable.push(...n.unavailable), r.unknown.push(...n.unknown);
+        r.added.push(...n.added), r.unavailable.push(...n.unavailable), r.unknown.push(...n.unknown), (r.cart = n.cart);
       }
       if (!r.added.length && !from_plan && r.unknown.length) throw new ToolError(`Not in the grocery catalog: ${list(r.unknown)}.`);
-      const card = cartCard(await readCart());
+      const card = cartCard(r.cart ?? (await readCart()));
       return { data: { ...card, added: r.added }, text: [...addFacts(r), cartFacts(card)].filter(Boolean).join(" ") };
     }),
 
     defineTool(remove_from_cart, async ({ item, quantity }) => {
-      const removed = await removeItem(item, quantity);
-      if (!removed) throw new ToolError(`${item} is not in the cart.`);
-      const card = cartCard(await readCart());
+      const hit = await removeItem(item, quantity);
+      if (!hit) throw new ToolError(`${item} is not in the cart.`);
+      const { removed } = hit;
+      const card = cartCard(hit.cart);
       return { data: { ...card, removed }, text: `Removed ${removed.packs} × ${removed.name}. ${cartFacts(card)}` };
     }),
 
@@ -63,7 +64,8 @@ export function cartTools(mode: "elicitation" | "tool") {
     }),
 
     defineTool(checkout_cart, async (_args, ctx) => {
-      const card = cartCard(await readCart());
+      const rows = await readCart();
+      const card = cartCard(rows);
       if (!card.item_count) throw new ToolError("The cart is empty.");
       if (mode === "tool")
         return {
@@ -74,7 +76,7 @@ export function cartTools(mode: "elicitation" | "tool") {
         message: confirmMessage(card),
         requestedSchema: { type: "object", properties: { confirm: { type: "boolean", title: "Add to Amazon cart" } }, required: ["confirm"] },
       });
-      return finish(r.action === "accept" && r.content?.confirm !== false ? "confirmed" : r.action === "cancel" ? "cancelled" : "declined");
+      return finish(r.action === "accept" && r.content?.confirm !== false ? "confirmed" : r.action === "cancel" ? "cancelled" : "declined", rows);
     }),
   ];
   if (mode === "tool") tools.push(defineTool(confirm_checkout, async ({ confirm }) => finish(confirm ? "confirmed" : "declined")) as never);
