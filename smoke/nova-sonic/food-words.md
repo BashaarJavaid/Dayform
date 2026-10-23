@@ -1,22 +1,25 @@
-# T-02 food-word test (Nova Sonic hearing)
+# Food-word test (user, 2026-10-22, amazon.nova-2-5-sonic, voice tiffany)
 
-Model: `amazon.nova-2-5-sonic` · Voice: ____ · Mic / room: ____ · Date: 2026-10-__
+Phrases were spoken in one run-on stream with no pause between them, which is harsher than the demo lines will be.
 
-Say each phrase once, after "Mic on". Copy what Sonic heard from the `USER:` line in the log pane. Match = yes if the heard text names the same food or command (spelling variants such as "roti"/"rotis" count as yes).
+| said | heard | match |
+|---|---|---|
+| two rotis and chicken karahi | two rotis and chicken karai | yes (alias: karai) |
+| a plate of chicken biryani | a plate of chicken biryani | yes |
+| a mango lassi | and a mango lassi | yes |
+| daal chawal | dal chawal | yes (alias: dal) |
+| an aloo paratha with raita | aloo paratha with raita | yes |
+| nihari with naan | nihari with naan | yes |
+| chana chaat | chana chaat | yes |
+| start push day | start pushte | **no** |
+| done, eight reps | done eight trips | **no** |
+| eighty kilos | eighty kilos | yes |
+| swap the overhead press | swap the overhead press | yes |
+| ask Dayform what's left for today | ask day form what's left for the day | partial (Dayform → "day form") |
 
-| # | Said | Heard | Match (yes/no) |
-|---|---|---|---|
-| 1 | two rotis and chicken karahi | | |
-| 2 | a plate of chicken biryani | | |
-| 3 | a mango lassi | | |
-| 4 | daal chawal | | |
-| 5 | an aloo paratha with raita | | |
-| 6 | nihari with naan | | |
-| 7 | chana chaat | | |
-| 8 | start push day | | |
-| 9 | done, eight reps | | |
-| 10 | eighty kilos | | |
-| 11 | swap the overhead press | | |
-| 12 | ask Dayform what's left for today | | |
+Sonic's own tool call mapped the heard words to clean items: roti ×2, "chicken karai", "chicken biryani" (unit plate), "dal chawal", "aloo paratha with raita", "nihari with naan", "chana chaat". So the server's food search must accept `karai` and `dal`, and should split compound items ("aloo paratha with raita", "nihari with naan") into two foods.
 
-Watch row 12 for "deform" or "day for him". Misheard forms go to T-12 as aliases.
+Follow-ups:
+- T-12: aliases `karai`, `kadai`, `dal`, `daal`; handle "X with Y" as two items.
+- T-30 system prompt: name the program days ("push, pull, legs, upper day") and say that "reps" may be heard as "trips"/"wraps"; the product name is "Dayform" (one word).
+- Safe lines: S3's "start push day" and "done, eight reps" get typed fallbacks (already in DEMO-SCRIPT).

@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/nova-sonic/` |
 | Approval needed | No |
-| Status | DONE (food-words.md pending from the user; feeds T-12) |
+| Status | DONE |
 
 ## Goal
 Prove a full browser voice round trip through Nova Sonic that includes one tool call. Measure the latency. Find out how well Sonic hears desi food words.
