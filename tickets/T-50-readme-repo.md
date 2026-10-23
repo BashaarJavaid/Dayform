@@ -8,7 +8,7 @@
 | Depends on | T-40 (or a local-only setup), T-30, T-31 |
 | Owns | `README.md`, `LICENSE`, `docs/` |
 | Approval needed | Yes: creating the GitHub repo, pushing, installing a secrets scanner |
-| Status | REVIEW (push, public repo and GitHub license check wait for user approval) |
+| Status | DONE (video link added after T-51) |
 
 ## Goal
 Publish a public GitHub repo that judges can read, run and verify.
@@ -89,3 +89,5 @@ Deviations:
 - `docker compose up` (task) is `docker compose up -d postgres`: the compose `server` service needs `.env.local` and AWS mounts; `npm run dev` is the simpler path.
 
 Open for the orchestrator/user: video link (T-51); whether PLAN.md, DESIGN.md, tickets/ stay public (task 3); create the repo, push, check the license in About (tasks 2, 5); simulator frontend section once T-31 lands.
+
+**Orchestrator close-out (2026-10-23):** pushed to https://github.com/BashaarJavaid/Dayform (public; GitHub detects MIT); planning files kept per the user; secrets scan clean (T-50 agent); fresh-clone test passed. DONE.
