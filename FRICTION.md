@@ -194,3 +194,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: The test now finds the click point by hit-testing a 6 px grid with `elementFromPoint` and clicks the centroid of the hits.
 - Suggestion to the tool's team: none for current Chrome (CSS `zoom` behaves differently in newer releases). For anyone writing tests: don't trust element rects under CSS `zoom` on older Chrome.
+
+### F-018 · Homebrew ffmpeg 8.1.2 has no `subtitles` filter, so it cannot burn in captions
+- Tool / service: ffmpeg 8.1.2 from Homebrew (`/opt/homebrew/bin/ffmpeg`)
+- Ticket: T-51
+- Task attempted: Test the caption burn-in step for the demo video on a still: `ffmpeg -loop 1 -i video/assets/title-card.png -vf "subtitles=captions.srt:force_style='FontName=Helvetica,FontSize=20,Outline=1,MarginV=30'" -frames:v 1 out.png`.
+- Steps taken: Ran the command; then `ffmpeg -filters | grep subtitles` and `ffmpeg -buildconf | grep -E "libass|freetype"`.
+- Expected: The SRT is drawn onto the frame.
+- Actual: `Error parsing filterchain 'subtitles=captions.srt:force_style=...' around:` then `Error opening output files: Invalid argument`. The filter list has no `subtitles`, `ass` or `drawtext`; the build has no libass or freetype. (The SRT itself parses: `ffmpeg -i captions.srt -f srt -` returns all 26 cues.)
+- Severity: minor
+- Workaround: Burn the captions in the video editor (DaVinci Resolve or Clipchamp: import the SRT, render with subtitles burned in), or use an ffmpeg build with libass.
+- Suggestion to the tool's team: Print "filter not found in this build (needs libass)" instead of a generic parse error.

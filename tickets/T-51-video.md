@@ -8,7 +8,7 @@
 | Depends on | T-41 (script v1) |
 | Owns | `video/` (shot list, captions, assets; raw footage stays out of git) |
 | Approval needed | Human steps: the user records, and uploads to YouTube |
-| Status | TODO |
+| Status | IN PROGRESS (assets by agent; recording, edit and upload are the user's) |
 
 ## Goal
 Produce a video under 3 minutes that shows every hero scene, and proves the technology.
@@ -51,4 +51,14 @@ The rules let judges stop watching at 3:00, and judge only from the video and th
 3. Check the length in YouTube: at most 2:59.
 
 ## Result
-_The agent fills this in._
+
+### Asset part (agent, 2026-10-23)
+- `video/shot-list.md`: one row per scene from script v1 (line, safe line, expected screen with real numbers, start–end, overlays), the S7 clip list with backups, and the OBS and recording steps.
+- `video/assets/title-card.png` and `video/assets/architecture-slide.png`: 1920×1080 PNGs, dark navy + Alexa cyan (#19d3ff), as in the simulator.
+- `video/assets/lower-thirds/*.png`: 8 transparent 1920×1080 PNGs (pill top left, above the Echo Show frame, clear of the captions): mcp, nova-sonic, agentcore, nova-lite, aurora, eventbridge-lambda, mcp-apps-card, add-to-cart.
+- `video/captions.srt`: 26 cues at the script timings (parses in ffmpeg). Alexa cues are drafts from the script numbers; S7 voice-over cues 23–26 are a draft (the script has no S7 lines). The user retimes after the edit.
+- `video/edit-notes.md`: where each asset goes, P2 (night animation to 1 s), P3 (cut S6), ≤ 2:59, no music, captions burned in, crop the account ID.
+- `video/scripts/render.ts`: re-renders all stills (`npx tsx video/scripts/render.ts`, headless Chrome over CDP).
+- Deviations: the lower third and slide say "Nova 2 Lite on Bedrock", not "Claude Opus 5.5 on Bedrock" (the ticket list), because README and the deployed stack use Nova 2 Lite. Added an EventBridge Scheduler + Lambda lower third for S5. Do not use `smoke/agentcore-mcp/screens/agentcore-runtime-console.png` in S7: it shows the smoke runtime, the account ID and personal tabs.
+- Friction: F-018 (Homebrew ffmpeg has no `subtitles` filter; burn captions in the editor).
+- Recording, edit, YouTube upload and links: the user (open).
