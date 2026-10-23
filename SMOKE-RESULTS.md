@@ -61,6 +61,7 @@
   - CloudWatch `/aws/bedrock-agentcore/runtimes/dayform_smoke_mcp-mfaMgSF843-DEFAULT` holds only the startup line `MCP server: http://0.0.0.0:8000/mcp` (12 starts over the runs, one per session plus platform starts); the server logs no request lines, so the dropped elicitation left no trace there.
   - Fallback `CHECKOUT_CONFIRM=tool` not recorded: root cause found and fixed; decide after the redeploy rerun.
   - Local run: host port 18003 (8000 is taken by unrelated container `hirz-hirz-1`).
+- Orchestrator (2026-10-22, after redeploy of tag t03b with the relatedRequestId fix): `PASS protocol=2025-11-25 tools=2 ping_p50=118ms elicitation=accepted init=790ms first_ping=126ms` against AgentCore. Elicitation round trip on AgentCore: 230 ms. **Status: PASS.** Console screenshot for S7 still to be taken by the user.
 
 ## T-04 · Aurora + Data API
 - Status: BLOCKED (local PASS; cluster approved 2026-10-22, but the create call was refused by the agent permission classifier; not created)

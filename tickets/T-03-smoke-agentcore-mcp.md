@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/agentcore-mcp/` |
 | Approval needed | Yes: creates an AgentCore runtime, an ECR repository and an IAM role |
-| Status | BLOCKED: AgentCore deployed, elicitation fix proven locally, waits for user redeploy (TAG=t03b) and rerun |
+| Status | DONE |
 
 ## Goal
 Prove three things about an MCP server on AgentCore Runtime:
@@ -90,3 +90,5 @@ Use them in this order:
 - Invoke URL format: `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<URL-encoded ARN>/invocations?qualifier=DEFAULT` (SigV4, service `bedrock-agentcore`). Stored in .env.local as AGENTCORE_RUNTIME_ARN and MCP_URL_AGENTCORE; client.ts reads AGENTCORE_RUNTIME_ARN by default.
 - Client debug switches: `DEBUG=1` (trace HTTP), `NO_GET=1` (405 the GET stream), `ELICIT_TIMEOUT_MS`.
 - **S7 screenshot (human step):** AgentCore console, Runtime list, then `dayform_smoke_mcp`: `https://us-east-1.console.aws.amazon.com/bedrock-agentcore/home?region=us-east-1#/agents` (deep link not verified; open the runtime from the list). Save to `smoke/agentcore-mcp/screens/`.
+
+**Orchestrator close-out (2026-10-22):** redeployed tag t03b; AgentCore target PASS with elicitation accepted (230 ms), warm ping p50 118 ms, initialize 790 ms. DONE. The S7 console screenshot is a pending human step (not an acceptance criterion).
