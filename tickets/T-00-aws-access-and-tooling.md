@@ -8,7 +8,7 @@
 | Depends on | — |
 | Owns | `smoke/env/`, `.gitignore`, `.env.example` |
 | Approval needed | Yes: package installs, AWS Budget, CDK bootstrap, ARM64 build setup |
-| Status | TODO |
+| Status | BLOCKED: IAM user hirz-operator has no Bedrock, CloudFormation or Budgets permissions; CDK bootstrap awaiting approval |
 
 ## Goal
 Make AWS, Bedrock and the local tools ready, so every smoke test can run.
@@ -75,4 +75,10 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 - **ARM64 local build fails or is slow:** CodeBuild.
 
 ## Result
-_The agent fills this in: what was done, IDs found, deviations._
+2026-10-22. Details and IDs: [SMOKE-RESULTS.md §T-00](../SMOKE-RESULTS.md); friction: FRICTION.md F-001.
+- Done: `.gitignore` (`.env.local` ignored, `.env.example` not), `.env.example` (all §9 names plus `AWS_PROFILE`, `REASONING_MODEL_FALLBACK_ID`, `VOICE_MODEL_FALLBACK_ID`), `.env.local` (profile, region, provisional IDs), `smoke/env/wizard.sh`, `smoke/env/check.sh`, `smoke/env/Dockerfile.arm64`.
+- Identity: `aws sts get-caller-identity` returns account 661550216013 as user/hirz-operator.
+- ARM64: native linux/arm64 buildx on Apple Silicon, tested (built, container printed `aarch64`). No machine change.
+- Blocked: every Bedrock, CloudFormation, Budgets, Account and IAM read call is AccessDenied for hirz-operator, so model availability, the CDK stack check and the budget cannot be done. Nova 2 Pro ID `amazon.nova-2-pro-v1:0` is rejected as invalid; Nova Premier is end-of-life.
+- Not verified: check.sh full run (its model and CDK lines will FAIL until permissions land).
+- Deviation: .env.example adds three names not in DESIGN.md §9 (AWS_PROFILE and two fallback IDs); orchestrator to accept or drop.

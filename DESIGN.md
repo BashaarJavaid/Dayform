@@ -186,7 +186,10 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 | Variable | Values | Used by |
 |---|---|---|
 | `AWS_REGION` | `us-east-1` | all |
-| `REASONING_MODEL_ID` | Nova reasoning model ID (D21; recorded in T-00 and T-01) | server, jobs |
+| `AWS_PROFILE` | `hirz-operator` (or the profile T-00 settles on) | all, local only |
+| `REASONING_MODEL_ID` | Nova reasoning model ID (D21; recorded in T-00 and T-01). Provisional: `us.amazon.nova-2-lite-v1:0` (Nova 2 Pro does not exist as a Bedrock ID on 2026-10-22) | server, jobs |
+| `REASONING_MODEL_FALLBACK_ID` | second Nova model, provisional `us.amazon.nova-pro-v1:0` | server, jobs |
+| `VOICE_MODEL_FALLBACK_ID` | second Sonic model ID | simulator backend |
 | `VOICE_MODEL_ID` | Nova 2.5 Sonic or Nova 2 Sonic ID (recorded in T-02) | simulator backend |
 | `ALEXA_VOICE` | Sonic voice ID, for example `tiffany` | simulator backend |
 | `UNDERSTANDING` | `alexa` (default), `server` | server |

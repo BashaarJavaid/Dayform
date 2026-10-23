@@ -1,7 +1,8 @@
 node_modules/
-.env.local
-.env*.local
+.env*
+!.env.example
 dist/
 cdk.out/
-.DS_Store
+*.raw.csv
 video/raw/
+.DS_Store
