@@ -62,3 +62,25 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: Keep a cookie jar (`curl -c jar -b jar`); with it every search and product page returned full HTML. The Add-to-Cart link can only be verified in a real browser by the user.
 - Suggestion to the tool's team: With PA-API 5 retired, offer a documented read-only way to look up a grocery ASIN's title, price and availability, and document whether the Add-to-Cart form link is still supported.
+
+### F-006 · Aurora PostgreSQL 18 is released, but the Data API version table stops at 17
+- Tool / service: Amazon Aurora PostgreSQL + RDS Data API docs (us-east-1)
+- Ticket: T-04
+- Task attempted: pick "the newest PostgreSQL version Aurora offers" for a Serverless v2 cluster with the Data API turned on.
+- Steps taken: read the release notes (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraPostgreSQLReleaseNotes/AuroraPostgreSQL.Updates.html: newest 18.6.1 and 17.11.1, 2026-10-15) and the Data API support table (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.Aurora_Fea_Regions_DB-eng.Feature.Data_API.html). Tried `aws rds describe-db-engine-versions --engine aurora-postgresql` to check.
+- Expected: the Data API table to say whether Aurora PG 18 supports the Data API.
+- Actual: the table has columns for Aurora PostgreSQL 17 ("Version 17.4 and higher") down to 13 only; PG 18 is not mentioned, neither supported nor "Not available". The CLI check failed: `AccessDenied ... not authorized to perform: rds:DescribeDBEngineVersions` (see F-001, T-00 permissions).
+- Severity: minor
+- Workaround: chose 17.11, the newest version the Data API table covers (also matches local `postgres:17`). `ENGINE_VERSION` can be overridden in `smoke/aurora/create-cluster.sh`.
+- Suggestion to the tool's team: add a PG 18 column to the Data API table, or list Data API support in each version's release notes.
+
+### F-005 · AgentCore stateful MCP docs only cover Python `stateless_http=False`; no runtime-level stateful setting
+- Tool / service: Amazon Bedrock AgentCore Runtime docs (MCP), CloudFormation `AWS::BedrockAgentCore::Runtime`
+- Ticket: T-03
+- Task attempted: Deploy a stateful TypeScript MCP server (`@modelcontextprotocol/sdk` 1.32.1) with elicitation on AgentCore via CloudFormation.
+- Steps taken: read https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-mcp-protocol-contract.html, https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/mcp-stateful-features.html and https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-bedrockagentcore-runtime.html.
+- Expected: a runtime property that marks the MCP runtime stateful, and a statement of whether the platform or the server mints `Mcp-Session-Id` on `initialize` in stateful mode.
+- Actual: stateful mode is described only as the FastMCP flag `stateless_http=False`; `ProtocolConfiguration` is a plain string (`MCP | HTTP | A2A | AGUI`) with no stateful option. The contract says for stateful "Platform returns `Mcp-Session-Id` in the response" without saying whether the platform injects it into the container's `initialize` request. All samples are Python; none for the TypeScript SDK.
+- Severity: minor
+- Workaround: server.ts adopts an `Mcp-Session-Id` that arrives on `initialize` and otherwise mints its own, so it works either way. Unverified on AgentCore until deploy is approved.
+- Suggestion to the tool's team: state the session-ID owner for stateful MCP explicitly and add a TypeScript SDK sample.

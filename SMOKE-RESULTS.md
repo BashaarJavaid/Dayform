@@ -40,22 +40,31 @@
 - Notes:
 
 ## T-03 · MCP on AgentCore
-- Status:
-- Negotiated protocol version:
-- Elicitation round trip (local / AgentCore):
-- Ping latency, warm p50 / cold:
-- Invoke URL format:
-- Deploy method (starter toolkit, CDK or CloudFormation):
+- Status: BLOCKED (local target PASS; AgentCore deploy waits for IAM permissions on the AWS profile and deploy approval)
+- Negotiated protocol version: 2025-11-25 (local container)
+- Elicitation round trip (local / AgentCore): accepted / not run
+- Ping latency, warm p50 / cold: local Docker 4 ms (first ping 9 ms, initialize 59–167 ms) / AgentCore not run
+- Invoke URL format: `https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/<URL-encoded runtime ARN>/invocations?qualifier=DEFAULT` (from the AgentCore docs; AWS accepted our SigV4 signature on this URL and answered 403 `not authorized to perform: bedrock-agentcore:InvokeAgentRuntime`, so not yet proven end to end)
+- Deploy method (starter toolkit, CDK or CloudFormation): CloudFormation (`smoke/agentcore-mcp/template.yaml` + `deploy.sh`), prepared, not run
 - Notes:
+  - Local run: `docker run -p 18003:8000 dayform-smoke-mcp:local` (host port 8000 is taken by an unrelated container `hirz-hirz-1`); image linux/arm64, 89.6 MB, built natively in 38 s.
+  - Client output: `PASS protocol=2025-11-25 tools=2 ping_p50=4ms elicitation=accepted init=99ms first_ping=9ms`.
+  - MCP Inspector CLI (`npx @modelcontextprotocol/inspector --cli http://localhost:18003/mcp --method tools/list`) lists `ping` and `confirm_demo` with output schemas; `tools/call ping` returns `structuredContent.server_time`.
+  - SigV4 needs `bedrock-agentcore:InvokeAgentRuntime` on the caller. Deploy needs CloudFormation, ECR, IAM (create role, PassRole) and bedrock-agentcore create permissions.
+  - Stateful mode is a server choice (session ID generator), not a runtime property (FRICTION F-005).
 
 ## T-04 · Aurora + Data API
-- Status:
-- Engine version:
-- Data API p50 from the laptop:
-- Data API from an AWS role (yes or no):
-- Trigram results ("rotee" → ?):
-- DB library chosen:
+- Status: BLOCKED (local PASS; Aurora not created: needs AWS permissions for RDS/Secrets Manager and cluster approval)
+- Engine version: local `postgres:17` = PostgreSQL 17.11. Aurora planned: aurora-postgresql 17.11 (newest version in the Data API support table; Aurora PG 18.6 exists but the table has no PG 18 column, FRICTION F-006).
+- Data API p50 from the laptop: not measured (no cluster). Local node-postgres p50=4ms (min 3, max 9, n=20).
+- Data API from an AWS role (yes or no): not tested.
+- Trigram results ("rotee" → ?): local "roti" first (0.375), then missi roti, makki ki roti, tandoori roti. "chiken karahi" → chicken karahi (0.706). "biryani" → beef/egg biryani (0.667; the list has no plain "biryani").
+- DB library chosen: Drizzle ORM 0.45.4, `drizzle-orm/node-postgres` (pg 8.23.1) for local, `drizzle-orm/aws-data-api/pg` (@aws-sdk/client-rds-data 3.1156.0) for Aurora; both drivers present in 0.45.4, same `sql` query code for both. Data API path written, not yet run.
 - Notes:
+  - Run: `npx tsx smoke/aurora/run.ts --target local|aurora`. Local container `dayform-pg` on 127.0.0.1:5433, `DATABASE_URL` in `.env.local`.
+  - Cluster script: `smoke/aurora/create-cluster.sh check|create|wait|env|teardown` (min 0.5 / max 4 ACU, `--enable-http-endpoint`, `--manage-master-user-password`, one `db.serverless` instance, default VPC).
+  - The ticket's `ORDER BY similarity(...)` query does not use the GIN index (seq scan); fine at 1,500 rows. Add `WHERE name % :q` if the index is needed.
+  - Fallback not yet triggered; local Postgres (fallback 3) already works.
 
 ## T-05 · Amazon cart link
 - Status: BLOCKED (waiting for the user's cart check, steps in `smoke/amazon-cart/README.md`)

@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/agentcore-mcp/` |
 | Approval needed | Yes: creates an AgentCore runtime, an ECR repository and an IAM role |
-| Status | TODO |
+| Status | BLOCKED: local PASS; AgentCore deploy waits for AWS permissions (F-004) and deploy approval |
 
 ## Goal
 Prove three things about an MCP server on AgentCore Runtime:
@@ -82,4 +82,8 @@ Use them in this order:
 **ARM64 builds:** if local builds are slow or fail, build in AWS CodeBuild. The starter toolkit does this by default.
 
 ## Result
-_The agent fills this in._
+- **Local target: PASS.** `npx tsx client.ts --target local` against the ARM64 container: `PASS protocol=2025-11-25 tools=2 ping_p50=4ms elicitation=accepted init=99ms first_ping=9ms`. MCP Inspector CLI lists both tools.
+- **AgentCore target: not run.** Prepared `template.yaml` (ECR repo, execution role per runtime-permissions.html, `AWS::BedrockAgentCore::Runtime` with `ProtocolConfiguration: MCP`, `NetworkMode: PUBLIC`, no authorizer = SigV4, idle 900 s / max 28800 s) and `deploy.sh` (two-pass stack, push image in between; `./deploy.sh destroy` tears down). Template not validated against AWS (no CloudFormation permission).
+- SigV4 wrapper (`@smithy/signature-v4`, service `bedrock-agentcore`) is accepted by AWS: a call with a dummy ARN returned 403 `not authorized to perform: bedrock-agentcore:InvokeAgentRuntime`, not a signature error.
+- Deviations: local run maps host port 18003 (port 8000 held by unrelated container `hirz-hirz-1`; client honours `MCP_URL_LOCAL`). Server adopts an `Mcp-Session-Id` sent on `initialize`, otherwise mints one (F-005). No console screenshot yet.
+- Run: `cd smoke/agentcore-mcp && npm install && docker buildx build --platform linux/arm64 --load -t dayform-smoke-mcp:local . && docker run -d -p 18003:8000 dayform-smoke-mcp:local && MCP_URL_LOCAL=http://localhost:18003/mcp npx tsx client.ts --target local`.

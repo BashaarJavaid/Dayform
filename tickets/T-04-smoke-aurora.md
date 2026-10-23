@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/aurora/` |
 | Approval needed | Yes: creates an Aurora cluster and a Secrets Manager secret |
-| Status | TODO |
+| Status | BLOCKED: local Postgres PASS; Aurora waits for AWS permissions (RDS, Secrets Manager, rds-data) and cluster approval |
 
 ## Goal
 Prove that Aurora PostgreSQL Serverless v2 works through the RDS Data API, with pg_trgm fuzzy search, from the laptop and from AWS compute. Choose the database library for the build.
@@ -53,4 +53,10 @@ Use them in this order:
 4. **DynamoDB** for records, plus in-memory fuzzy search (Fuse.js) over the 1,500 foods inside the server. 1,500 items fit in memory easily.
 
 ## Result
-_The agent fills this in._
+Phase 1 (local) done 2026-10-22; Phase 2 (Aurora) prepared, not run. Details and numbers: [SMOKE-RESULTS.md §T-04](../SMOKE-RESULTS.md).
+
+- Files: `smoke/aurora/run.ts` (`--target local|aurora`), `gen-foods.ts` → `foods.txt` (1,500 names), `create-cluster.sh`, `package.json` (own deps).
+- Local: container `dayform-pg` (postgres:17 = 17.11), 127.0.0.1:5433, db `dayform`; `DATABASE_URL` in `.env.local`. "rotee" → "roti" first; p50=4ms.
+- Library: Drizzle ORM 0.45.4, node-postgres driver (local) and aws-data-api/pg driver (Aurora). The Data API path is untested.
+- Deviations: engine 17.11 instead of 18.x, because the Data API support table covers PG 17 only (FRICTION F-006). Test from an AWS role (task 6) not done.
+- Acceptance: 2/5 (rotee→roti, local Docker). Open: Data API from the laptop and from a role, Data API p50, the library on the Data API driver.

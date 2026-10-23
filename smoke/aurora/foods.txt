@@ -1,0 +1,1500 @@
+roti
+chapati
+paratha
+aloo paratha
+gobi paratha
+naan
+garlic naan
+butter naan
+puri
+kulcha
+tandoori roti
+missi roti
+makki ki roti
+chicken karahi
+mutton karahi
+chicken handi
+chicken tikka
+chicken tikka masala
+butter chicken
+chicken korma
+mutton korma
+nihari
+haleem
+chicken biryani
+mutton biryani
+beef biryani
+sindhi biryani
+vegetable biryani
+pulao
+chicken pulao
+yakhni pulao
+daal
+daal chawal
+daal makhani
+daal mash
+chana daal
+masoor daal
+moong daal
+chana masala
+aloo gobi
+aloo matar
+palak paneer
+saag
+sarson ka saag
+bhindi masala
+baingan bharta
+keema
+aloo keema
+matar keema
+seekh kebab
+shami kebab
+chapli kebab
+bihari kebab
+tandoori chicken
+chicken jalfrezi
+paya
+kofta
+nargisi kofta
+samosa
+pakora
+aloo tikki
+chaat
+dahi bhalla
+gol gappa
+raita
+kheer
+gulab jamun
+jalebi
+halwa
+gajar halwa
+suji halwa
+ras malai
+barfi
+lassi
+sweet lassi
+mango lassi
+chai
+doodh patti
+kashmiri chai
+paratha roll
+chicken roll
+anda paratha
+halwa puri
+channay
+lahori chanay
+kadhi pakora
+qorma
+dum pukht
+sajji
+tawa chicken
+karahi gosht
+achar gosht
+bhuna gosht
+dahi
+khichdi
+sooji
+zarda
+falooda
+kulfi
+apple
+banana
+orange
+grapes
+strawberries
+blueberries
+raspberries
+mango
+pineapple
+watermelon
+cantaloupe
+pear
+peach
+plum
+cherries
+kiwi
+papaya
+pomegranate
+guava
+dates
+figs
+apricot
+avocado
+lemon
+lime
+grapefruit
+coconut
+raisins
+prunes
+broccoli
+spinach
+kale
+lettuce
+cabbage
+cauliflower
+carrot
+cucumber
+tomato
+onion
+garlic
+potato
+sweet potato
+peas
+green beans
+corn
+zucchini
+eggplant
+bell pepper
+mushrooms
+celery
+asparagus
+beetroot
+okra
+pumpkin
+radish
+turnip
+brussels sprouts
+chicken breast
+chicken thigh
+chicken wings
+ground beef
+beef steak
+lamb chops
+mutton
+pork chop
+bacon
+ham
+turkey breast
+salmon
+tuna
+cod
+tilapia
+shrimp
+sardines
+mackerel
+egg
+egg white
+tofu
+tempeh
+lentils
+chickpeas
+black beans
+kidney beans
+edamame
+white rice
+brown rice
+basmati rice
+quinoa
+oats
+oatmeal
+bread
+whole wheat bread
+white bread
+bagel
+pasta
+spaghetti
+macaroni
+couscous
+barley
+tortilla
+croissant
+muffin
+pancake
+waffle
+cereal
+granola
+cornflakes
+crackers
+milk
+skim milk
+yogurt
+greek yogurt
+cheddar cheese
+mozzarella
+cottage cheese
+paneer
+butter
+ghee
+cream
+ice cream
+cream cheese
+almonds
+walnuts
+cashews
+peanuts
+pistachios
+peanut butter
+almond butter
+chia seeds
+flax seeds
+sunflower seeds
+pumpkin seeds
+olive oil
+vegetable oil
+mayonnaise
+ketchup
+honey
+sugar
+jam
+dark chocolate
+milk chocolate
+protein bar
+whey protein
+protein shake
+pizza
+burger
+cheeseburger
+hot dog
+french fries
+sandwich
+club sandwich
+burrito
+taco
+sushi
+ramen
+fried rice
+noodles
+lasagna
+mac and cheese
+caesar salad
+garden salad
+chicken soup
+tomato soup
+lentil soup
+omelette
+scrambled eggs
+boiled egg
+fried egg
+orange juice
+apple juice
+coffee
+latte
+cappuccino
+green tea
+black tea
+cola
+diet cola
+sports drink
+coconut water
+smoothie
+popcorn
+potato chips
+pretzels
+cookies
+brownie
+cake
+cheesecake
+donut
+apple pie
+rice cake
+hummus
+falafel
+pita bread
+guacamole
+chicken curry
+chicken masala
+chicken fry
+chicken kebab
+chicken wrap
+chicken salad
+chicken stir fry
+chicken sandwich
+chicken burger
+chicken rice bowl
+chicken noodles
+chicken pasta
+beef curry
+beef masala
+beef fry
+beef kebab
+beef wrap
+beef salad
+beef soup
+beef stir fry
+beef sandwich
+beef pulao
+beef karahi
+beef korma
+beef tikka
+beef burger
+beef rice bowl
+beef noodles
+beef pasta
+lamb curry
+lamb masala
+lamb fry
+lamb kebab
+lamb wrap
+lamb salad
+lamb soup
+lamb stir fry
+lamb sandwich
+lamb pulao
+lamb biryani
+lamb karahi
+lamb korma
+lamb tikka
+lamb burger
+lamb rice bowl
+lamb noodles
+lamb pasta
+mutton curry
+mutton masala
+mutton fry
+mutton kebab
+mutton wrap
+mutton salad
+mutton soup
+mutton stir fry
+mutton sandwich
+mutton pulao
+mutton tikka
+mutton burger
+mutton rice bowl
+mutton noodles
+mutton pasta
+fish curry
+fish masala
+fish fry
+fish kebab
+fish wrap
+fish salad
+fish soup
+fish stir fry
+fish sandwich
+fish pulao
+fish biryani
+fish karahi
+fish korma
+fish tikka
+fish burger
+fish rice bowl
+fish noodles
+fish pasta
+prawn curry
+prawn masala
+prawn fry
+prawn kebab
+prawn wrap
+prawn salad
+prawn soup
+prawn stir fry
+prawn sandwich
+prawn pulao
+prawn biryani
+prawn karahi
+prawn korma
+prawn tikka
+prawn burger
+prawn rice bowl
+prawn noodles
+prawn pasta
+egg curry
+egg masala
+egg fry
+egg kebab
+egg wrap
+egg salad
+egg soup
+egg stir fry
+egg sandwich
+egg pulao
+egg biryani
+egg karahi
+egg korma
+egg tikka
+egg burger
+egg rice bowl
+egg noodles
+egg pasta
+paneer curry
+paneer masala
+paneer fry
+paneer kebab
+paneer wrap
+paneer salad
+paneer soup
+paneer stir fry
+paneer sandwich
+paneer pulao
+paneer biryani
+paneer karahi
+paneer korma
+paneer tikka
+paneer burger
+paneer rice bowl
+paneer noodles
+paneer pasta
+tofu curry
+tofu masala
+tofu fry
+tofu kebab
+tofu wrap
+tofu salad
+tofu soup
+tofu stir fry
+tofu sandwich
+tofu pulao
+tofu biryani
+tofu karahi
+tofu korma
+tofu tikka
+tofu burger
+tofu rice bowl
+tofu noodles
+tofu pasta
+turkey curry
+turkey masala
+turkey fry
+turkey kebab
+turkey wrap
+turkey salad
+turkey soup
+turkey stir fry
+turkey sandwich
+turkey pulao
+turkey biryani
+turkey karahi
+turkey korma
+turkey tikka
+turkey burger
+turkey rice bowl
+turkey noodles
+turkey pasta
+salmon curry
+salmon masala
+salmon fry
+salmon kebab
+salmon wrap
+salmon salad
+salmon soup
+salmon stir fry
+salmon sandwich
+salmon pulao
+salmon biryani
+salmon karahi
+salmon korma
+salmon tikka
+salmon burger
+salmon rice bowl
+salmon noodles
+salmon pasta
+pork curry
+pork masala
+pork fry
+pork kebab
+pork wrap
+pork salad
+pork soup
+pork stir fry
+pork sandwich
+pork pulao
+pork biryani
+pork karahi
+pork korma
+pork tikka
+pork burger
+pork rice bowl
+pork noodles
+pork pasta
+aloo sabzi
+aloo curry
+aloo bhujia
+aloo masala
+aloo pakora
+gobi sabzi
+gobi curry
+gobi bhujia
+gobi masala
+gobi pakora
+matar sabzi
+matar curry
+matar bhujia
+matar masala
+matar pakora
+matar paratha
+palak sabzi
+palak curry
+palak bhujia
+palak masala
+palak pakora
+palak paratha
+bhindi sabzi
+bhindi curry
+bhindi bhujia
+bhindi pakora
+bhindi paratha
+baingan sabzi
+baingan curry
+baingan bhujia
+baingan masala
+baingan pakora
+baingan paratha
+mushroom sabzi
+mushroom curry
+mushroom bhujia
+mushroom masala
+mushroom pakora
+mushroom paratha
+mixed vegetable sabzi
+mixed vegetable curry
+mixed vegetable bhujia
+mixed vegetable masala
+mixed vegetable pakora
+mixed vegetable paratha
+lauki sabzi
+lauki curry
+lauki bhujia
+lauki masala
+lauki pakora
+lauki paratha
+tinda sabzi
+tinda curry
+tinda bhujia
+tinda masala
+tinda pakora
+tinda paratha
+karela sabzi
+karela curry
+karela bhujia
+karela masala
+karela pakora
+karela paratha
+arvi sabzi
+arvi curry
+arvi bhujia
+arvi masala
+arvi pakora
+arvi paratha
+apple, grilled
+apple, baked
+apple, fried
+apple, boiled
+apple, steamed
+apple, roasted
+apple, raw
+apple, canned
+apple, frozen
+apple, dried
+banana, grilled
+banana, baked
+banana, fried
+banana, boiled
+banana, steamed
+banana, roasted
+banana, raw
+banana, canned
+banana, frozen
+banana, dried
+orange, grilled
+orange, baked
+orange, fried
+orange, boiled
+orange, steamed
+orange, roasted
+orange, raw
+orange, canned
+orange, frozen
+orange, dried
+grapes, grilled
+grapes, baked
+grapes, fried
+grapes, boiled
+grapes, steamed
+grapes, roasted
+grapes, raw
+grapes, canned
+grapes, frozen
+grapes, dried
+strawberries, grilled
+strawberries, baked
+strawberries, fried
+strawberries, boiled
+strawberries, steamed
+strawberries, roasted
+strawberries, raw
+strawberries, canned
+strawberries, frozen
+strawberries, dried
+blueberries, grilled
+blueberries, baked
+blueberries, fried
+blueberries, boiled
+blueberries, steamed
+blueberries, roasted
+blueberries, raw
+blueberries, canned
+blueberries, frozen
+blueberries, dried
+raspberries, grilled
+raspberries, baked
+raspberries, fried
+raspberries, boiled
+raspberries, steamed
+raspberries, roasted
+raspberries, raw
+raspberries, canned
+raspberries, frozen
+raspberries, dried
+mango, grilled
+mango, baked
+mango, fried
+mango, boiled
+mango, steamed
+mango, roasted
+mango, raw
+mango, canned
+mango, frozen
+mango, dried
+pineapple, grilled
+pineapple, baked
+pineapple, fried
+pineapple, boiled
+pineapple, steamed
+pineapple, roasted
+pineapple, raw
+pineapple, canned
+pineapple, frozen
+pineapple, dried
+watermelon, grilled
+watermelon, baked
+watermelon, fried
+watermelon, boiled
+watermelon, steamed
+watermelon, roasted
+watermelon, raw
+watermelon, canned
+watermelon, frozen
+watermelon, dried
+cantaloupe, grilled
+cantaloupe, baked
+cantaloupe, fried
+cantaloupe, boiled
+cantaloupe, steamed
+cantaloupe, roasted
+cantaloupe, raw
+cantaloupe, canned
+cantaloupe, frozen
+cantaloupe, dried
+pear, grilled
+pear, baked
+pear, fried
+pear, boiled
+pear, steamed
+pear, roasted
+pear, raw
+pear, canned
+pear, frozen
+pear, dried
+peach, grilled
+peach, baked
+peach, fried
+peach, boiled
+peach, steamed
+peach, roasted
+peach, raw
+peach, canned
+peach, frozen
+peach, dried
+plum, grilled
+plum, baked
+plum, fried
+plum, boiled
+plum, steamed
+plum, roasted
+plum, raw
+plum, canned
+plum, frozen
+plum, dried
+cherries, grilled
+cherries, baked
+cherries, fried
+cherries, boiled
+cherries, steamed
+cherries, roasted
+cherries, raw
+cherries, canned
+cherries, frozen
+cherries, dried
+kiwi, grilled
+kiwi, baked
+kiwi, fried
+kiwi, boiled
+kiwi, steamed
+kiwi, roasted
+kiwi, raw
+kiwi, canned
+kiwi, frozen
+kiwi, dried
+papaya, grilled
+papaya, baked
+papaya, fried
+papaya, boiled
+papaya, steamed
+papaya, roasted
+papaya, raw
+papaya, canned
+papaya, frozen
+papaya, dried
+pomegranate, grilled
+pomegranate, baked
+pomegranate, fried
+pomegranate, boiled
+pomegranate, steamed
+pomegranate, roasted
+pomegranate, raw
+pomegranate, canned
+pomegranate, frozen
+pomegranate, dried
+guava, grilled
+guava, baked
+guava, fried
+guava, boiled
+guava, steamed
+guava, roasted
+guava, raw
+guava, canned
+guava, frozen
+guava, dried
+dates, grilled
+dates, baked
+dates, fried
+dates, boiled
+dates, steamed
+dates, roasted
+dates, raw
+dates, canned
+dates, frozen
+dates, dried
+figs, grilled
+figs, baked
+figs, fried
+figs, boiled
+figs, steamed
+figs, roasted
+figs, raw
+figs, canned
+figs, frozen
+figs, dried
+apricot, grilled
+apricot, baked
+apricot, fried
+apricot, boiled
+apricot, steamed
+apricot, roasted
+apricot, raw
+apricot, canned
+apricot, frozen
+apricot, dried
+avocado, grilled
+avocado, baked
+avocado, fried
+avocado, boiled
+avocado, steamed
+avocado, roasted
+avocado, raw
+avocado, canned
+avocado, frozen
+avocado, dried
+lemon, grilled
+lemon, baked
+lemon, fried
+lemon, boiled
+lemon, steamed
+lemon, roasted
+lemon, raw
+lemon, canned
+lemon, frozen
+lemon, dried
+lime, grilled
+lime, baked
+lime, fried
+lime, boiled
+lime, steamed
+lime, roasted
+lime, raw
+lime, canned
+lime, frozen
+lime, dried
+grapefruit, grilled
+grapefruit, baked
+grapefruit, fried
+grapefruit, boiled
+grapefruit, steamed
+grapefruit, roasted
+grapefruit, raw
+grapefruit, canned
+grapefruit, frozen
+grapefruit, dried
+coconut, grilled
+coconut, baked
+coconut, fried
+coconut, boiled
+coconut, steamed
+coconut, roasted
+coconut, raw
+coconut, canned
+coconut, frozen
+coconut, dried
+raisins, grilled
+raisins, baked
+raisins, fried
+raisins, boiled
+raisins, steamed
+raisins, roasted
+raisins, raw
+raisins, canned
+raisins, frozen
+raisins, dried
+prunes, grilled
+prunes, baked
+prunes, fried
+prunes, boiled
+prunes, steamed
+prunes, roasted
+prunes, raw
+prunes, canned
+prunes, frozen
+prunes, dried
+broccoli, grilled
+broccoli, baked
+broccoli, fried
+broccoli, boiled
+broccoli, steamed
+broccoli, roasted
+broccoli, raw
+broccoli, canned
+broccoli, frozen
+broccoli, dried
+spinach, grilled
+spinach, baked
+spinach, fried
+spinach, boiled
+spinach, steamed
+spinach, roasted
+spinach, raw
+spinach, canned
+spinach, frozen
+spinach, dried
+kale, grilled
+kale, baked
+kale, fried
+kale, boiled
+kale, steamed
+kale, roasted
+kale, raw
+kale, canned
+kale, frozen
+kale, dried
+lettuce, grilled
+lettuce, baked
+lettuce, fried
+lettuce, boiled
+lettuce, steamed
+lettuce, roasted
+lettuce, raw
+lettuce, canned
+lettuce, frozen
+lettuce, dried
+cabbage, grilled
+cabbage, baked
+cabbage, fried
+cabbage, boiled
+cabbage, steamed
+cabbage, roasted
+cabbage, raw
+cabbage, canned
+cabbage, frozen
+cabbage, dried
+cauliflower, grilled
+cauliflower, baked
+cauliflower, fried
+cauliflower, boiled
+cauliflower, steamed
+cauliflower, roasted
+cauliflower, raw
+cauliflower, canned
+cauliflower, frozen
+cauliflower, dried
+carrot, grilled
+carrot, baked
+carrot, fried
+carrot, boiled
+carrot, steamed
+carrot, roasted
+carrot, raw
+carrot, canned
+carrot, frozen
+carrot, dried
+cucumber, grilled
+cucumber, baked
+cucumber, fried
+cucumber, boiled
+cucumber, steamed
+cucumber, roasted
+cucumber, raw
+cucumber, canned
+cucumber, frozen
+cucumber, dried
+tomato, grilled
+tomato, baked
+tomato, fried
+tomato, boiled
+tomato, steamed
+tomato, roasted
+tomato, raw
+tomato, canned
+tomato, frozen
+tomato, dried
+onion, grilled
+onion, baked
+onion, fried
+onion, boiled
+onion, steamed
+onion, roasted
+onion, raw
+onion, canned
+onion, frozen
+onion, dried
+garlic, grilled
+garlic, baked
+garlic, fried
+garlic, boiled
+garlic, steamed
+garlic, roasted
+garlic, raw
+garlic, canned
+garlic, frozen
+garlic, dried
+potato, grilled
+potato, baked
+potato, fried
+potato, boiled
+potato, steamed
+potato, roasted
+potato, raw
+potato, canned
+potato, frozen
+potato, dried
+sweet potato, grilled
+sweet potato, baked
+sweet potato, fried
+sweet potato, boiled
+sweet potato, steamed
+sweet potato, roasted
+sweet potato, raw
+sweet potato, canned
+sweet potato, frozen
+sweet potato, dried
+peas, grilled
+peas, baked
+peas, fried
+peas, boiled
+peas, steamed
+peas, roasted
+peas, raw
+peas, canned
+peas, frozen
+peas, dried
+green beans, grilled
+green beans, baked
+green beans, fried
+green beans, boiled
+green beans, steamed
+green beans, roasted
+green beans, raw
+green beans, canned
+green beans, frozen
+green beans, dried
+corn, grilled
+corn, baked
+corn, fried
+corn, boiled
+corn, steamed
+corn, roasted
+corn, raw
+corn, canned
+corn, frozen
+corn, dried
+zucchini, grilled
+zucchini, baked
+zucchini, fried
+zucchini, boiled
+zucchini, steamed
+zucchini, roasted
+zucchini, raw
+zucchini, canned
+zucchini, frozen
+zucchini, dried
+eggplant, grilled
+eggplant, baked
+eggplant, fried
+eggplant, boiled
+eggplant, steamed
+eggplant, roasted
+eggplant, raw
+eggplant, canned
+eggplant, frozen
+eggplant, dried
+bell pepper, grilled
+bell pepper, baked
+bell pepper, fried
+bell pepper, boiled
+bell pepper, steamed
+bell pepper, roasted
+bell pepper, raw
+bell pepper, canned
+bell pepper, frozen
+bell pepper, dried
+mushrooms, grilled
+mushrooms, baked
+mushrooms, fried
+mushrooms, boiled
+mushrooms, steamed
+mushrooms, roasted
+mushrooms, raw
+mushrooms, canned
+mushrooms, frozen
+mushrooms, dried
+celery, grilled
+celery, baked
+celery, fried
+celery, boiled
+celery, steamed
+celery, roasted
+celery, raw
+celery, canned
+celery, frozen
+celery, dried
+asparagus, grilled
+asparagus, baked
+asparagus, fried
+asparagus, boiled
+asparagus, steamed
+asparagus, roasted
+asparagus, raw
+asparagus, canned
+asparagus, frozen
+asparagus, dried
+beetroot, grilled
+beetroot, baked
+beetroot, fried
+beetroot, boiled
+beetroot, steamed
+beetroot, roasted
+beetroot, raw
+beetroot, canned
+beetroot, frozen
+beetroot, dried
+okra, grilled
+okra, baked
+okra, fried
+okra, boiled
+okra, steamed
+okra, roasted
+okra, raw
+okra, canned
+okra, frozen
+okra, dried
+pumpkin, grilled
+pumpkin, baked
+pumpkin, fried
+pumpkin, boiled
+pumpkin, steamed
+pumpkin, roasted
+pumpkin, raw
+pumpkin, canned
+pumpkin, frozen
+pumpkin, dried
+radish, grilled
+radish, baked
+radish, fried
+radish, boiled
+radish, steamed
+radish, roasted
+radish, raw
+radish, canned
+radish, frozen
+radish, dried
+turnip, grilled
+turnip, baked
+turnip, fried
+turnip, boiled
+turnip, steamed
+turnip, roasted
+turnip, raw
+turnip, canned
+turnip, frozen
+turnip, dried
+brussels sprouts, grilled
+brussels sprouts, baked
+brussels sprouts, fried
+brussels sprouts, boiled
+brussels sprouts, steamed
+brussels sprouts, roasted
+brussels sprouts, raw
+brussels sprouts, canned
+brussels sprouts, frozen
+brussels sprouts, dried
+chicken breast, grilled
+chicken breast, baked
+chicken breast, fried
+chicken breast, boiled
+chicken breast, steamed
+chicken breast, roasted
+chicken breast, raw
+chicken breast, canned
+chicken breast, frozen
+chicken breast, dried
+chicken thigh, grilled
+chicken thigh, baked
+chicken thigh, fried
+chicken thigh, boiled
+chicken thigh, steamed
+chicken thigh, roasted
+chicken thigh, raw
+chicken thigh, canned
+chicken thigh, frozen
+chicken thigh, dried
+chicken wings, grilled
+chicken wings, baked
+chicken wings, fried
+chicken wings, boiled
+chicken wings, steamed
+chicken wings, roasted
+chicken wings, raw
+chicken wings, canned
+chicken wings, frozen
+chicken wings, dried
+ground beef, grilled
+ground beef, baked
+ground beef, fried
+ground beef, boiled
+ground beef, steamed
+ground beef, roasted
+ground beef, raw
+ground beef, canned
+ground beef, frozen
+ground beef, dried
+beef steak, grilled
+beef steak, baked
+beef steak, fried
+beef steak, boiled
+beef steak, steamed
+beef steak, roasted
+beef steak, raw
+beef steak, canned
+beef steak, frozen
+beef steak, dried
+lamb chops, grilled
+lamb chops, baked
+lamb chops, fried
+lamb chops, boiled
+lamb chops, steamed
+lamb chops, roasted
+lamb chops, raw
+lamb chops, canned
+lamb chops, frozen
+lamb chops, dried
+mutton, grilled
+mutton, baked
+mutton, fried
+mutton, boiled
+mutton, steamed
+mutton, roasted
+mutton, raw
+mutton, canned
+mutton, frozen
+mutton, dried
+pork chop, grilled
+pork chop, baked
+pork chop, fried
+pork chop, boiled
+pork chop, steamed
+pork chop, roasted
+pork chop, raw
+pork chop, canned
+pork chop, frozen
+pork chop, dried
+bacon, grilled
+bacon, baked
+bacon, fried
+bacon, boiled
+bacon, steamed
+bacon, roasted
+bacon, raw
+bacon, canned
+bacon, frozen
+bacon, dried
+ham, grilled
+ham, baked
+ham, fried
+ham, boiled
+ham, steamed
+ham, roasted
+ham, raw
+ham, canned
+ham, frozen
+ham, dried
+turkey breast, grilled
+turkey breast, baked
+turkey breast, fried
+turkey breast, boiled
+turkey breast, steamed
+turkey breast, roasted
+turkey breast, raw
+turkey breast, canned
+turkey breast, frozen
+turkey breast, dried
+salmon, grilled
+salmon, baked
+salmon, fried
+salmon, boiled
+salmon, steamed
+salmon, roasted
+salmon, raw
+salmon, canned
+salmon, frozen
+salmon, dried
+tuna, grilled
+tuna, baked
+tuna, fried
+tuna, boiled
+tuna, steamed
+tuna, roasted
+tuna, raw
+tuna, canned
+tuna, frozen
+tuna, dried
+cod, grilled
+cod, baked
+cod, fried
+cod, boiled
+cod, steamed
+cod, roasted
+cod, raw
+cod, canned
+cod, frozen
+cod, dried
+tilapia, grilled
+tilapia, baked
+tilapia, fried
+tilapia, boiled
+tilapia, steamed
+tilapia, roasted
+tilapia, raw
+tilapia, canned
+tilapia, frozen
+tilapia, dried
+shrimp, grilled
+shrimp, baked
+shrimp, fried
+shrimp, boiled
+shrimp, steamed
+shrimp, roasted
+shrimp, raw
+shrimp, canned
+shrimp, frozen
+shrimp, dried
+sardines, grilled
+sardines, baked
+sardines, fried
+sardines, boiled
+sardines, steamed
+sardines, roasted
+sardines, raw
+sardines, canned
+sardines, frozen
+sardines, dried
+mackerel, grilled
+mackerel, baked
+mackerel, fried
+mackerel, boiled
+mackerel, steamed
+mackerel, roasted
+mackerel, raw
+mackerel, canned
+mackerel, frozen
+mackerel, dried
+egg, grilled
+egg, baked
+egg, fried
+egg, boiled
+egg, steamed
+egg, roasted
+egg, raw
+egg, canned
+egg, frozen
+egg, dried
+egg white, grilled
+egg white, baked
+egg white, fried
+egg white, boiled
+egg white, steamed
+egg white, roasted
+egg white, raw
+egg white, canned
+egg white, frozen
+egg white, dried
+tofu, grilled
+tofu, baked
+tofu, fried
+tofu, boiled
+tofu, steamed
+tofu, roasted
+tofu, raw
+tofu, canned
+tofu, frozen
+tofu, dried
+tempeh, grilled
+tempeh, baked
+tempeh, fried
+tempeh, boiled
+tempeh, steamed
+tempeh, roasted
+tempeh, raw
+tempeh, canned
+tempeh, frozen
+tempeh, dried
+lentils, grilled
+lentils, baked
+lentils, fried
+lentils, boiled
+lentils, steamed
+lentils, roasted
+lentils, raw
+lentils, canned
+lentils, frozen
+lentils, dried
+chickpeas, grilled
+chickpeas, baked
+chickpeas, fried
+chickpeas, boiled
+chickpeas, steamed
+chickpeas, roasted
+chickpeas, raw
+chickpeas, canned
+chickpeas, frozen
+chickpeas, dried
+black beans, grilled
+black beans, baked
+black beans, fried
+black beans, boiled
+black beans, steamed
+black beans, roasted
+black beans, raw
+black beans, canned
+black beans, frozen
+black beans, dried
+kidney beans, grilled
+kidney beans, baked
+kidney beans, fried
+kidney beans, boiled
+kidney beans, steamed
+kidney beans, roasted
+kidney beans, raw
+kidney beans, canned
+kidney beans, frozen
+kidney beans, dried
+edamame, grilled
+edamame, baked
+edamame, fried
+edamame, boiled
+edamame, steamed
+edamame, roasted
+edamame, raw
+edamame, canned
+edamame, frozen
+edamame, dried
+white rice, grilled
+white rice, baked
+white rice, fried
+white rice, boiled
+white rice, steamed
+white rice, roasted
+white rice, raw
+white rice, canned
+white rice, frozen
+white rice, dried
+brown rice, grilled
+brown rice, baked
+brown rice, fried
+brown rice, boiled
+brown rice, steamed
+brown rice, roasted
+brown rice, raw
+brown rice, canned
+brown rice, frozen
+brown rice, dried
+basmati rice, grilled
+basmati rice, baked
+basmati rice, fried
+basmati rice, boiled
+basmati rice, steamed
+basmati rice, roasted
+basmati rice, raw
+basmati rice, canned
+basmati rice, frozen
+basmati rice, dried
+quinoa, grilled
+quinoa, baked
+quinoa, fried
+quinoa, boiled
+quinoa, steamed
+quinoa, roasted
+quinoa, raw
+quinoa, canned
+quinoa, frozen
+quinoa, dried
+oats, grilled
+oats, baked
+oats, fried
+oats, boiled
+oats, steamed
+oats, roasted
+oats, raw
+oats, canned
+oats, frozen
+oats, dried
+oatmeal, grilled
+oatmeal, baked
+oatmeal, fried
+oatmeal, boiled
+oatmeal, steamed
+oatmeal, roasted
+oatmeal, raw
+oatmeal, canned
+oatmeal, frozen
+oatmeal, dried
+bread, grilled
+bread, baked
+bread, fried
+bread, boiled
+bread, steamed
+bread, roasted
+bread, raw
+bread, canned
+bread, frozen
+bread, dried
+whole wheat bread, grilled
+whole wheat bread, baked
+whole wheat bread, fried
+whole wheat bread, boiled
+whole wheat bread, steamed
+whole wheat bread, roasted
+whole wheat bread, raw
+whole wheat bread, canned
+whole wheat bread, frozen
+whole wheat bread, dried
+white bread, grilled
+white bread, baked
+white bread, fried
+white bread, boiled
+white bread, steamed
+white bread, roasted
+white bread, raw
+white bread, canned
+white bread, frozen
+white bread, dried
+bagel, grilled
+bagel, baked

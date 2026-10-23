@@ -1,0 +1,71 @@
+# T-03: ECR repo + execution role + AgentCore MCP runtime (SigV4 inbound = no AuthorizerConfiguration).
+# Two passes: CreateRuntime=false creates the repo and role so the image can be pushed; then true adds the runtime.
+# Refs: CFN AWS::BedrockAgentCore::Runtime; devguide runtime-permissions.html (role + trust policy).
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  RuntimeName: { Type: String, Default: dayform_smoke_mcp }
+  ImageTag: { Type: String, Default: t03 }
+  CreateRuntime: { Type: String, Default: "false", AllowedValues: ["true", "false"] }
+Conditions:
+  WithRuntime: !Equals [!Ref CreateRuntime, "true"]
+Resources:
+  Repo:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: dayform-smoke-mcp
+      EmptyOnDelete: true
+  ExecRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: bedrock-agentcore.amazonaws.com }
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals: { aws:SourceAccount: !Ref AWS::AccountId }
+              ArnLike: { aws:SourceArn: !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:*" }
+      Policies:
+        - PolicyName: runtime
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: [ecr:BatchGetImage, ecr:GetDownloadUrlForLayer]
+                Resource: !GetAtt Repo.Arn
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: "*"
+              - Effect: Allow
+                Action: [logs:DescribeLogStreams, logs:CreateLogGroup]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/bedrock-agentcore/runtimes/*"
+              - Effect: Allow
+                Action: logs:DescribeLogGroups
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/bedrock-agentcore/runtimes/*:log-stream:*"
+              - Effect: Allow
+                Action: [xray:PutTraceSegments, xray:PutTelemetryRecords, xray:GetSamplingRules, xray:GetSamplingTargets]
+                Resource: "*"
+              - Effect: Allow
+                Action: cloudwatch:PutMetricData
+                Resource: "*"
+                Condition: { StringEquals: { cloudwatch:namespace: bedrock-agentcore } }
+  Runtime:
+    Type: AWS::BedrockAgentCore::Runtime
+    Condition: WithRuntime
+    Properties:
+      AgentRuntimeName: !Ref RuntimeName
+      Description: Dayform T-03 smoke MCP server (stateful, elicitation)
+      AgentRuntimeArtifact:
+        ContainerConfiguration:
+          ContainerUri: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/dayform-smoke-mcp:${ImageTag}"
+      NetworkConfiguration: { NetworkMode: PUBLIC }
+      ProtocolConfiguration: MCP
+      RoleArn: !GetAtt ExecRole.Arn
+      LifecycleConfiguration: { IdleRuntimeSessionTimeout: 900, MaxLifetime: 28800 }
+Outputs:
+  RepoUri: { Value: !GetAtt Repo.RepositoryUri }
+  RuntimeArn: { Condition: WithRuntime, Value: !GetAtt Runtime.AgentRuntimeArn }
