@@ -4,7 +4,7 @@ This is the one place T-21, T-24, T-27 and the Demo Monitor read the seed number
 
 ## Calendar
 - **Demo day:** 2026-10-23, a Friday, in Asia/Karachi (+05:00). **Demo clock after reset:** `2026-10-23T13:00:00+05:00` (S1 is lunch).
-- **History:** 42 days, 2026-09-11 (Fri) to 2026-10-22 (Thu). Nothing is logged on demo day.
+- **History:** 42 days, 2026-09-11 (Fri) to 2026-10-22 (Thu). On demo day itself, only a morning weigh-in and a breakfast exist (see "Demo day so far").
 - **Check-in weekday:** 6, Saturday, the day after demo day. "Skip to morning" lands on 2026-10-24, the next check-in.
 - **Program schedule** (`data/program/program.json`, fixed weekdays): Mon pull, Wed upper, Fri push, Sat legs. Tue, Thu and Sun are rest days. Demo day is push (S3). 2026-10-24 is legs (S5: "Today is legs").
 
@@ -14,7 +14,7 @@ Ali, male, born 1996 (age 30 in 2026), 178 cm, starts at 84.0 kg, moderate activ
 ## Targets
 - **Initial (2026-09-11):** Mifflin-St Jeor BMR 1807.5 × 1.55 = 2801.6 TDEE, minus 0.4 × 7700 / 7 = 440, rounded to 10: **2360 kcal**. Protein 168 g, fat 66 g (25% of kcal), carbs 274 g (the remainder), fiber 33 g (14 g per 1000 kcal), sodium 2300 mg, water 2900 ml (35 ml/kg, rounded to 100).
 - **Weekly check-ins** on 2026-09-26, 10-03, 10-10 and 10-17 (Saturdays with 14 days of data behind them). All are on track, so kcal stays at 2360 and protein follows weight (167, 166, 165, 165 g). Reason code `on_track`.
-- **Next check-in, 2026-10-24:** weight is down 0.21 kg against a 0.4 kg plan (mean of the 7 days to 2026-10-23 vs the 7 days before), so T-21 should trim calories. Acceptance target: a 100–200 kcal trim, to be checked with T-21. S5's line is "trimmed 150".
+- **Next check-in, 2026-10-24:** weight is down 0.23 kg against a 0.4 kg plan (mean of the 7 days to 2026-10-23, demo-day weigh-in included, vs the 7 days before), so T-21 should trim calories. Acceptance target: a 100–200 kcal trim, to be checked with T-21. S5's line is "trimmed 150".
 
 ## Body weight
 Daily at 07:10. Each Fri–Thu week's mean follows a fixed step, with zero-mean noise of ±0.3 kg on Sat–Thu. Fridays sit on the mean, so the Sat–Fri check-in windows read cleanly.
@@ -26,7 +26,21 @@ Daily at 07:10. Each Fri–Thu week's mean follows a fixed step, with zero-mean 
 | 09-25..10-01 | 83.1 | −0.43 |
 | 10-02..10-08 | 82.7 | −0.43 |
 | 10-09..10-15 | 82.4 | −0.33 |
-| 10-16..10-22 | 82.1 | −0.26 (−0.21 in the check-in window) |
+| 10-16..10-22 | 82.1 | −0.26 (−0.23 in the check-in window, with the demo-day 82.0) |
+
+## Demo day so far (S1 at 13:00)
+- **Weigh-in** at 07:10: 82.0 kg (last week's mean minus 0.1, continuing the slower trend).
+- **Breakfast** at 08:30: "two eggs, one roti, a cup of chai and one banana". That's one entry, four items.
+- **Rings at 13:00** (`db:report`), against the 2026-10-17 targets:
+
+| | Eaten | Target | Remaining |
+|---|---|---|---|
+| kcal | 486 | 2360 | 1874 |
+| Protein g | 20 | 165 | 145 |
+| Carbs g | 61 | 277 | 216 |
+| Fat g | 18 | 66 | 48 |
+
+- No water is logged on demo day.
 
 ## Intake
 - 3–4 meal entries a day, made from day templates: 3 for training days and 3 for rest days. Plate, bowl and serving amounts are scaled in quarter steps so each day lands at the target ±6%. Counted items (roti, egg, naan) stay whole.

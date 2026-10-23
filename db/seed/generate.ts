@@ -142,6 +142,8 @@ const REST: Meal[][] = [
     ["dinner", "21:00", [["daal-chawal", 1, "plate"], ["raita", 1, "bowl"]]],
   ],
 ];
+/** Demo day, before the 13:00 clock: breakfast only. */
+const DEMO_BREAKFAST: Meal[] = [["breakfast", "08:30", [["eggs", 2, "egg"], ["roti", 1, "roti"], ["chai", 1, "cup"], ["banana", 1, "banana"]]]];
 /** Units scaled to hit the day's calories (in quarter steps); counted units (roti, egg, naan...) stay whole. */
 const SCALABLE = new Set(["plate", "bowl", "serving"]);
 
@@ -183,6 +185,8 @@ export function generateSeed() {
       bodyweight_logs.push({ id: bodyweight_logs.length + 1, logged_at: at(date, "07:10"), date, weight_kg: r1(weekMeans[w] + noise[i] - mean) });
     }
   }
+  // Demo-day morning weigh-in, continuing the slowed trend (inside the 2026-10-24 check-in window).
+  bodyweight_logs.push({ id: bodyweight_logs.length + 1, logged_at: at(DEMO_DAY, "07:10"), date: DEMO_DAY, weight_kg: r1(weekMeans[5] - 0.1) });
   const weightOn = new Map(bodyweight_logs.map((b) => [b.date, b.weight_kg]));
   const avgWeight = (endDate: string) => {
     const ws = Array.from({ length: 7 }, (_, i) => weightOn.get(addDays(endDate, -i))).filter((x) => x != null) as number[];
@@ -207,18 +211,7 @@ export function generateSeed() {
   // Meals.
   const meal_entries: any[] = [];
   const meal_items: any[] = [];
-  let ti = 0, ri = 0;
-  for (const date of days) {
-    const training = trainingDayByWeekday.has(weekday(date));
-    const template = training ? TRAINING[ti++ % TRAINING.length] : REST[ri++ % REST.length];
-    const desired = targetOn(date).kcal * (1 + (rand() - 0.5) * 0.12);
-    let fixed = 0, scalable = 0;
-    for (const [, , items] of template) for (const [fid, q, u] of items) {
-      const f = foodsById.get(fid)!;
-      const k = itemNutrients(f, gramsOf(f, q, u)).kcal;
-      if (SCALABLE.has(u)) scalable += k; else fixed += k;
-    }
-    const factor = Math.min(1.8, Math.max(0.6, (desired - fixed) / scalable));
+  function addMeals(date: string, template: Meal[], factor: number) {
     for (const [type, time, items] of template) {
       const entryId = meal_entries.length + 1;
       const rows = items.map(([fid, q, u]) => {
@@ -233,6 +226,22 @@ export function generateSeed() {
       meal_entries.push({ id: entryId, eaten_at: at(date, time), date, meal_type: type, said: words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words.at(-1)}` : words[0] });
     }
   }
+  let ti = 0, ri = 0;
+  for (const date of days) {
+    const training = trainingDayByWeekday.has(weekday(date));
+    const template = training ? TRAINING[ti++ % TRAINING.length] : REST[ri++ % REST.length];
+    const desired = targetOn(date).kcal * (1 + (rand() - 0.5) * 0.12);
+    let fixed = 0, scalable = 0;
+    for (const [, , items] of template) for (const [fid, q, u] of items) {
+      const f = foodsById.get(fid)!;
+      const k = itemNutrients(f, gramsOf(f, q, u)).kcal;
+      if (SCALABLE.has(u)) scalable += k; else fixed += k;
+    }
+    const factor = Math.min(1.8, Math.max(0.6, (desired - fixed) / scalable));
+    addMeals(date, template, factor);
+  }
+  // Demo day so far (S1 at 13:00): a light breakfast, so the rings are not empty.
+  addMeals(DEMO_DAY, DEMO_BREAKFAST, 1);
 
   // Water: most days, 3-5 logs.
   const water_logs: any[] = [];

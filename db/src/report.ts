@@ -35,7 +35,7 @@ for (const { w, ws } of weeks) {
 }
 const win = (end: string) => avg(weights.filter((x) => x.date <= end && x.date > addDays(end, -7)).map((x) => num(x.weight_kg)));
 const checkin = addDays(clock.day, 1);
-console.log(`  Next check-in ${checkin}: mean of 7 days to ${clock.day} (data to ${last}) vs the 7 days before: ${(win(clock.day) - win(addDays(clock.day, -7))).toFixed(2)} kg (plan -${profile.rate_kg_per_week})`);
+console.log(`  Next check-in ${checkin}: mean of 7 days to ${clock.day} (data to ${weights.at(-1).date}) vs the 7 days before: ${(win(clock.day) - win(addDays(clock.day, -7))).toFixed(2)} kg (plan -${profile.rate_kg_per_week})`);
 
 console.log(`\nIntake, weekly mean:`);
 for (const { w } of weeks) {
@@ -57,5 +57,15 @@ if (s3) {
 console.log(`\nTargets:`);
 for (const t of targets) console.log(`  ${t.d} ${t.source.padEnd(7)} ${t.kcal} kcal P${t.protein_g} C${t.carbs_g} F${t.fat_g} water ${t.water_ml} ml`);
 console.log(`  Last check-in: ${targets.at(-1).d}: ${targets.at(-1).reason}`);
+const [today] = await rows<any>(db, sql`
+  SELECT count(DISTINCT e.id)::int AS entries, string_agg(DISTINCT e.said, '; ') AS said, sum(i.kcal) AS kcal, sum(i.protein_g) AS protein_g, sum(i.carbs_g) AS carbs_g, sum(i.fat_g) AS fat_g
+  FROM meal_entries e JOIN meal_items i ON i.entry_id = e.id WHERE e.date = ${clock.day}::date`);
+const [tw] = await rows<any>(db, sql`SELECT weight_kg FROM bodyweight_logs WHERE date = ${clock.day}::date`);
+const tt = targets.filter((t) => t.d <= clock.day).at(-1);
+console.log(`\nDemo day so far (${clock.day}, before ${clock.now.slice(11)}): weigh-in ${tw ? `${tw.weight_kg} kg` : "none"}; ${today.entries} entr${today.entries === 1 ? "y" : "ies"}: ${today.said ?? "-"}`);
+for (const [k, label] of [["kcal", "kcal"], ["protein_g", "protein g"], ["carbs_g", "carbs g"], ["fat_g", "fat g"]] as const) {
+  const eaten = Math.round(num(today[k] ?? 0));
+  console.log(`  ${label.padEnd(10)} eaten ${String(eaten).padStart(4)} / target ${String(tt[k]).padStart(4)}  remaining ${Math.round(num(tt[k]) - eaten)}`);
+}
 console.log(`\nNext targets for ${clock.day}: ${next.map((n) => `${n.exercise_id} ${n.weight_kg}x${n.reps}`).join(", ")}`);
 await close();
