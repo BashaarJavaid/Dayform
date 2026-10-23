@@ -4,7 +4,7 @@ Draft for the Build, Ship, Shape: Amazon Developer Hackathon. **Deadline: 2026-1
 
 ## Before you paste (checklist)
 
-- [ ] Replace `<REPO_URL>` (T-50) and `<VIDEO_URL>` (T-51) everywhere in this file. Open both signed out; both must load.
+- [ ] Replace `https://github.com/BashaarJavaid/Dayform` (T-50) and `<VIDEO_URL>` (T-51) everywhere in this file. Open both signed out; both must load.
 - [ ] T-40 status: the full server is deployed to AgentCore Runtime and the overnight job to Lambda + EventBridge Scheduler? If T-40 is not DONE, change the two sentences marked `[T-40]` to say the smoke deployment ran on AgentCore and the demo ran on the local container.
 - [ ] Open Source mini challenge: tick it only if T-53 is DONE (it is CUT-FIRST). Otherwise delete that section.
 - [ ] Add teammates on Devpost, if any.
@@ -127,7 +127,7 @@ amazon-alexa, alexa-plus, model-context-protocol, mcp-apps, amazon-bedrock, amaz
 
 ## "Try it out" links
 
-- Code: `<REPO_URL>`
+- Code: `https://github.com/BashaarJavaid/Dayform`
 - Demo video: `<VIDEO_URL>`
 
 ## Video demo link
