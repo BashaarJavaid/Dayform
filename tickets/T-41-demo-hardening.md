@@ -9,7 +9,7 @@
 | Depends on | Every HERO ticket, T-40 |
 | Owns | `demo/`, [DEMO-SCRIPT.md](../DEMO-SCRIPT.md) |
 | Approval needed | The user approves script v1 |
-| Status | TODO |
+| Status | DONE except the user's voice practice takes (T-51) |
 
 ## Goal
 Make the full demo run clean three times in a row, inside the time budget, on the final stack. Produce script v1.
@@ -55,3 +55,5 @@ The video is recorded from these runs. Everything the judges see depends on this
 
 ## Result
 _The agent fills this in._
+
+**Orchestrator close-out (2026-10-23):** three clean full runs in a row through the simulator (text engine) against the AgentCore server with the Aurora admin path: S1–S7 PASS each time; S1–S6 on-air ≈ 149–158 s against a 154 s budget (S1/S2/S6 individually over, S4 under; total within the 2:59 limit with S7). Script v1 approved by the user. Warm-up READY in ≤ 10 s. Drills D1–D3 tested; D4 (Amazon sign-in, pop-ups) is the user's. Remaining: the user's live voice takes and practice recordings.
