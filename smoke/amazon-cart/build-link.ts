@@ -1,8 +1,11 @@
 // Builds an Amazon Add-to-Cart link from asin:qty pairs.
 // Usage: npx tsx smoke/amazon-cart/build-link.ts B089BWP51D:1 B08P6MF2D9:2
-export function buildCartLink(items: { asin: string; qty: number }[]): string {
+// Verified 2026-10-22 (user, signed in): the legacy /gp/aws/cart/add.html form lands on an EMPTY cart.
+// The endpoint it redirects to, /associates/addtocart, fills the cart only when AssociateTag is present.
+export const AMAZON_ASSOCIATE_TAG = "dayform-20";
+export function buildCartLink(items: { asin: string; qty: number }[], tag = AMAZON_ASSOCIATE_TAG): string {
   const params = items.map(({ asin, qty }, i) => `ASIN.${i + 1}=${asin}&Quantity.${i + 1}=${qty}`);
-  return `https://www.amazon.com/gp/aws/cart/add.html?${params.join("&")}`;
+  return `https://www.amazon.com/associates/addtocart?AssociateTag=${tag}&${params.join("&")}`;
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

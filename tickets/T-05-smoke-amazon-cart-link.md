@@ -8,7 +8,7 @@
 | Depends on | — |
 | Owns | `smoke/amazon-cart/` |
 | Approval needed | Human step: the user signs in to amazon.com. Agents only read product pages. |
-| Status | BLOCKED (waiting for the user's signed-in cart check; steps in `smoke/amazon-cart/README.md`) |
+| Status | DONE |
 
 ## Goal
 Prove that one Amazon Add-to-Cart link puts several real products, with the right quantities, into the user's real Amazon cart. Record the exact flow.
@@ -58,3 +58,5 @@ Use them in this order:
 - Not done: tasks 3, 4, 6, 7 and the screenshots need the user's browser and sign-in. Acceptance 0/3 until the user reports back.
 - Deviations: none. Fallbacks used: none yet.
 - Note: signed-out curl of the add.html link gets HTTP 503 (bot block), so only a real browser can prove the link.
+
+**Orchestrator close-out (2026-10-22):** user tested signed in. Working format: `https://www.amazon.com/associates/addtocart?AssociateTag=dayform-20&ASIN.1=…&Quantity.1=…`. The legacy `/gp/aws/cart/add.html` form opens an empty cart. Builder updated. The 10-item link in the new format is still to be opened once by the user. DONE.

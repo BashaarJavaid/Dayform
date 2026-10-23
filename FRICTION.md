@@ -148,5 +148,5 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Expected: The cart shows the 3 items with quantities 1, 2 and 1.
 - Actual: Signed in, the link lands on the cart page and the cart is empty. Signed out, it asks for sign-in first. No error message is shown.
 - Severity: major
-- Workaround: Testing the redirect target `/associates/addtocart` directly, with and without AssociateTag, and single-item links (smoke/amazon-cart/variants.txt). If none fills the cart, fall back to per-item search links or product pages (T-05 fallbacks 1 and 3).
+- Workaround: Found by testing variants: `https://www.amazon.com/associates/addtocart?AssociateTag=<tag>&ASIN.1=…&Quantity.1=…` fills the cart (signed in). The same endpoint without AssociateTag was not tested separately; the legacy add.html form without a tag does not. `build-link.ts` now emits the working form.
 - Suggestion to the tool's team: Document the current status of the Add-to-Cart form and return a visible error when items are dropped, instead of an empty cart.
