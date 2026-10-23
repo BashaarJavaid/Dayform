@@ -39,7 +39,7 @@ The orchestrator sends each ticket agent this prompt:
 
 > You are the ticket agent for T-XX. Read PLAN.md (sections 1 and 2), DESIGN.md, and tickets/T-XX-*.md. Do the ticket. Work only in the paths under "Owns". Update the Status line as you work. Fill in the Result section at the end of the ticket. Finish with the hand-off report from PLAN.md §1.4.
 
-- Give every ticket agent that writes code its own git worktree (`isolation: "worktree"`).
+- Ticket agents work directly in the main tree (user decision 2026-10-22: tickets own disjoint paths, so worktrees only add merge time). The orchestrator commits each ticket when it passes.
 - Run at most 5 ticket agents at the same time, plus the Demo Monitor.
 - Start the Demo Monitor when Gate G0 passes. Keep it running until submission.
 
@@ -152,7 +152,7 @@ flowchart LR
 | Ticket | Brief | Importance | Size | Depends on |
 |---|---|---|---|---|
 | [T-00](tickets/T-00-aws-access-and-tooling.md) AWS access and tooling | Get AWS sign-in, Bedrock model access, CDK and ARM64 builds ready. | ENABLER | S | — |
-| [T-01](tickets/T-01-smoke-claude-bedrock.md) Smoke: Claude on Bedrock | Opus 5.5 tool use, valid JSON, streaming, latency. | ENABLER | S | T-00 |
+| [T-01](tickets/T-01-smoke-claude-bedrock.md) Smoke: Nova on Bedrock | Nova reasoning model (D21) tool use, valid JSON, streaming, latency. | ENABLER | S | T-00 |
 | [T-02](tickets/T-02-smoke-nova-sonic.md) Smoke: Nova Sonic voice | Browser voice round trip with a tool call. Test how well it hears desi food words. | ENABLER | M | T-00 |
 | [T-03](tickets/T-03-smoke-agentcore-mcp.md) Smoke: MCP on AgentCore | Stateful MCP 2025-11-25 server with elicitation. Latency. | ENABLER | M | T-00 |
 | [T-04](tickets/T-04-smoke-aurora.md) Smoke: Aurora + Data API | Fuzzy food search (pg_trgm) from the laptop and from AWS. Choose the DB library. | ENABLER | S | T-00 |

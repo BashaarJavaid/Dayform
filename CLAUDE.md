@@ -8,7 +8,7 @@ Project-specific context and instructions for Dayform, merged with a set of gene
 
 ## Project
 
-Dayform — an Alexa+ add-on (a self-hosted MCP server) that lets you talk to Alexa to log meals and workouts, run a live gym session, plan meal prep, and fill your Amazon cart. A web simulator plays the part of an Echo Show (Nova Sonic as Alexa's voice and brain); Claude Opus 5.5 on Bedrock makes the judgment calls, and code does the arithmetic, storage and checks. Built for the Build, Ship, Shape: Amazon Developer Hackathon (submission deadline **2026-10-23 12:00 PT**, 2026-10-24 00:00 PKT): the Alexa+ track and the AWS Builder mini challenge, with the Open Source mini challenge (T-53) cut first. **The demo comes first:** put effort where the judges see it, simplify everything else.
+Dayform — an Alexa+ add-on (a self-hosted MCP server) that lets you talk to Alexa to log meals and workouts, run a live gym session, plan meal prep, and fill your Amazon cart. A web simulator plays the part of an Echo Show (Nova Sonic as Alexa's voice and brain); an Amazon Nova reasoning model on Bedrock makes the judgment calls (D21: Nova only, no Claude), and code does the arithmetic, storage and checks. Built for the Build, Ship, Shape: Amazon Developer Hackathon (submission deadline **2026-10-23 12:00 PT**, 2026-10-24 00:00 PKT): the Alexa+ track and the AWS Builder mini challenge, with the Open Source mini challenge (T-53) cut first. **The demo comes first:** put effort where the judges see it, simplify everything else.
 
 ## Where things live
 
@@ -76,7 +76,7 @@ No code exists yet; these are the target commands named in the tickets. Mark the
 
 ## Current phase
 
-Planning is done (`PLAN.md`, `DESIGN.md`, 30 tickets, all TODO). Wave 0 is next: T-00 AWS access, then smoke tests T-01–T-07; Gate G0 is OPEN and Wave 1 waits for it. Caveat: the folder is not a git repo yet, and per-ticket worktrees need one.
+Planning is done (`PLAN.md`, `DESIGN.md`, 30 tickets). Wave 0 started 2026-10-22: T-00 AWS access, then smoke tests T-01–T-07; Gate G0 is OPEN and Wave 1 waits for it. Git repo exists; agents work in the main tree (no worktrees). Reasoning model is Nova only (D21).
 
 ---
 

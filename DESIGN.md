@@ -18,7 +18,7 @@ This is the agreed design for Dayform. It's the single source of truth for decis
 | D8 | Targets | Start targets come from Mifflin-St Jeor plus activity level. Every week, targets adapt to real intake and the weight trend. Protein is set per kg of body weight. The reason for each change is stored so Alexa can say it. |
 | D9 | Buying | Alexa builds the cart and confirms it. The user checks out on Amazon. Alexa never places an order. |
 | D10 | Switch | One env var, `UNDERSTANDING=alexa\|server`, defaulting to `alexa`. |
-| D11 | LLM vs code | Claude Opus 5.5 on Bedrock makes every judgment call. Code does arithmetic, storage and checks. LLM work stays out of the tool request path where possible (§7). |
+| D11 | LLM vs code | The reasoning model on Bedrock makes every judgment call. Code does arithmetic, storage and checks. LLM work stays out of the tool request path where possible (§7). |
 | D12 | Alexa side | Nova 2.5 Sonic (or Nova 2 Sonic) is the simulated Alexa's voice and brain. Typed input also works. |
 | D13 | Hosting | AgentCore Runtime in stateful mode, with SigV4 inbound auth. The same container runs locally in Docker. |
 | D14 | Database | Aurora PostgreSQL Serverless v2 through the RDS Data API, with pg_trgm for fuzzy search. Local Postgres in Docker for development. |
@@ -28,6 +28,7 @@ This is the agreed design for Dayform. It's the single source of truth for decis
 | D18 | Overnight job | Runs nightly on EventBridge Scheduler, and on demand from "skip to morning". Produces the morning brief, weekly targets, next-session targets and a ready meal plan. The user hears it on "good morning". No push notifications. |
 | D19 | Program | One pre-set 4-day program. Alexa progresses it and swaps exercises on request. No program building from scratch. |
 | D20 | Demo profile | One seeded demo user with 6 weeks of history. A hidden demo panel offers reset, skip to morning, and short rest timers. |
+| D21 | Reasoning model | **Amazon Nova only** (user decision, 2026-10-22). No Claude models on Bedrock. Primary: the strongest Nova reasoning model available in us-east-1 (Nova 2 Pro if listed, else Nova 2 Lite); T-00 records the ID in `REASONING_MODEL_ID`. Wherever a ticket says "Opus" or "Claude", read "the reasoning model". |
 
 ---
 
@@ -41,7 +42,7 @@ flowchart LR
   BE -- MCP 2025-11-25<br/>Streamable HTTP --> MCP[Fitness MCP server<br/>AgentCore Runtime]
   BE -- admin routes<br/>DEMO_MODE only --> MCP
   MCP --> DB[(Aurora PostgreSQL<br/>Data API)]
-  MCP --> OPUS[Claude Opus 5.5<br/>Bedrock]
+  MCP --> OPUS[Amazon Nova reasoning model<br/>Bedrock]
   SCHED[EventBridge Scheduler] --> JOB[Overnight job<br/>Lambda]
   JOB --> DB
   JOB --> OPUS
@@ -49,7 +50,7 @@ flowchart LR
 ```
 
 - **Alexa side:** the simulator backend plus Nova Sonic. It hears the user, chooses tools, and speaks.
-- **Server side:** the MCP server. It does lookups, maths, storage and Opus reasoning.
+- **Server side:** the MCP server. It does lookups, maths, storage and Nova reasoning.
 - **Overnight job:** one library, `runOvernight()`, that runs in three places: Lambda (nightly), the server's admin route (the demo button), and a CLI.
 
 ---
@@ -149,7 +150,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 
 ## 7. LLM and code
 
-| Opus 5.5 does (judgment) | Code does (facts and checks) |
+| The reasoning model does (judgment) | Code does (facts and checks) |
 |---|---|
 | Estimates foods the food table can't match | Food search, portions, nutrient maths |
 | Writes meal-prep plans | Checks plan macros (±5%) and does the grocery maths |
@@ -185,7 +186,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 | Variable | Values | Used by |
 |---|---|---|
 | `AWS_REGION` | `us-east-1` | all |
-| `REASONING_MODEL_ID` | Opus 5.5 inference profile ID (recorded in T-00 and T-01) | server, jobs |
+| `REASONING_MODEL_ID` | Nova reasoning model ID (D21; recorded in T-00 and T-01) | server, jobs |
 | `VOICE_MODEL_ID` | Nova 2.5 Sonic or Nova 2 Sonic ID (recorded in T-02) | simulator backend |
 | `ALEXA_VOICE` | Sonic voice ID, for example `tiffany` | simulator backend |
 | `UNDERSTANDING` | `alexa` (default), `server` | server |
@@ -210,7 +211,7 @@ The orchestrator updates the **Chosen** column at Gate G0.
 
 | Need | Primary | Smoke test | Fallbacks, in order | Chosen |
 |---|---|---|---|---|
-| Reasoning LLM | Claude Opus 5.5 on Bedrock | T-01 | Sonnet 5.5 → Nova 2 Lite → (Anthropic API, orchestrator decides) | — |
+| Reasoning LLM | Amazon Nova 2 Pro on Bedrock (D21) | T-01 | Nova 2 Lite → Nova Pro / Nova Premier (whichever is available) | — |
 | Alexa voice | Nova 2.5 Sonic | T-02 | Nova 2 Sonic → Sonic in us-west-2 → Transcribe + Claude + Polly → Web Speech + Polly → text + Polly | — |
 | MCP hosting | AgentCore Runtime (stateful, SigV4) | T-03 | ECS Fargate + ALB sticky sessions → Lambda + two-step confirm → local server | — |
 | Database | Aurora PG Serverless v2 + Data API | T-04 | Aurora direct connection in a VPC → RDS PostgreSQL → local Postgres → DynamoDB + in-memory search | — |

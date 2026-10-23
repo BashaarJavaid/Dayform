@@ -1,4 +1,4 @@
-# T-01 · Smoke test: Claude Opus 5.5 on Bedrock
+# T-01 · Smoke test: the Nova reasoning model on Bedrock (D21)
 
 | Field | Value |
 |---|---|
@@ -11,7 +11,7 @@
 | Status | TODO |
 
 ## Goal
-Prove the server can call Claude Opus 5.5 on Bedrock, use tools, and get valid structured JSON back. Measure the latency.
+Prove the server can call the Nova reasoning model (DESIGN.md D21: `REASONING_MODEL_ID` from T-00, Nova 2 Pro or Nova 2 Lite) on Bedrock, use tools, and get valid structured JSON back. Measure the latency. Wherever this ticket says Opus, read the Nova model.
 
 ## Why it matters for the demo
 Opus does every judgment call: meal plans (S4), the morning brief (S5), the reasons targets change (S5), and estimates for unknown foods. If Opus fails, S4 and S5 fail.
@@ -45,9 +45,9 @@ Opus does every judgment call: meal plans (S4), the morning brief (S5), the reas
 2. Expect a table with columns test · result · p50 ms · max ms · notes, and every result PASS.
 
 ## Fallbacks
-1. **Claude Sonnet 5.5:** faster, but only `auto` or `none` tool choice.
-2. **Amazon Nova 2 Lite:** Amazon-native, supports Converse with tools.
-3. **Anthropic API directly:** outside the Amazon stack, so it weakens AWS Builder. The orchestrator decides.
+1. **Amazon Nova 2 Lite**, if Nova 2 Pro fails or is unavailable.
+2. **Another Nova model** (Nova Pro, Nova Premier), whichever is available.
+3. Never Claude (D21).
 
 ## Result
 _The agent fills this in._

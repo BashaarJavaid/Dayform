@@ -21,10 +21,10 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 - [DESIGN.md §9 Environment variables](../DESIGN.md#9-environment-variables) and [§10 Services and fallbacks](../DESIGN.md#10-services-and-fallbacks)
 
 ## Facts at plan time (2026-10-23)
-- **AWS:** no credentials, no `~/.aws` folder, no `AWS_*` variables.
-- **AWS CLI:** v1.44.7 (Python), at `~/.local/bin/aws`.
-- **Present:** git 2.43, docker 27.1 (daemon not checked), node 26.7, npm 11.19.
-- **Missing:** `gh`, `cdk`, `sam`.
+- **AWS (re-checked 2026-10-22 by the orchestrator):** `~/.aws/config` has profiles `hirz-login`, `hirz`, `hirz-bootstrap`, `hirz-operator-login`, `hirz-operator` for account 661550216013, region us-east-1. Use `hirz-operator` (an IAM user; the user signs in with `aws login --profile hirz-operator-login`). Login sessions were expired at check time; the user re-logs in as a human step. Skip the SSO/access-key setup.
+- **AWS CLI:** v2.37.0 at `/usr/local/bin/aws` already. Skip task 5.
+- **Present:** git, docker 29.7 (daemon running), node 23.11, npm 10.9, `gh`.
+- **Missing:** `cdk`, `sam`.
 
 ## Tasks
 1. Run `git init` in `dayform/`. Make one first commit with the plan files. This lets later tickets use git worktrees.
@@ -33,15 +33,13 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 4. **Human step.** The user signs in to AWS. Prefer `aws configure sso`; use access keys only if SSO isn't possible. Region: `us-east-1`.
 5. **Approval needed.** Install AWS CLI v2 for the user only, and put it first in `PATH`. Keep v1 in place.
 6. Check identity: `aws sts get-caller-identity`.
-7. **Human step.** In the Bedrock console (us-east-1), request access to:
-   - Claude Opus 5.5 and Claude Sonnet 5.5
+7. **Human step.** In the Bedrock console (us-east-1), request access to (DESIGN.md D21: Nova only, no Claude):
    - Amazon Nova 2.5 Sonic and Amazon Nova 2 Sonic
-   - Amazon Nova 2 Lite
+   - Amazon Nova 2 Pro (or the strongest Nova reasoning model listed) and Amazon Nova 2 Lite
 
-   If Bedrock asks for an Anthropic use-case form or model terms, the user completes it.
+   If Bedrock asks for model terms, the user completes it.
 8. Find the exact IDs, and record them in `.env.local` and in [SMOKE-RESULTS.md](../SMOKE-RESULTS.md) §T-00:
-   - `aws bedrock list-inference-profiles --region us-east-1`: find the `global.` or `us.` profile for Opus 5.5 and Sonnet 5.5. The 5.5 models have no in-region IDs.
-   - `aws bedrock list-foundation-models --by-provider amazon --region us-east-1`: find the Nova Sonic IDs. The known ID is `amazon.nova-2-sonic-v1:0`.
+   - `aws bedrock list-foundation-models --by-provider amazon --region us-east-1` and `aws bedrock list-inference-profiles --region us-east-1`: find the Nova reasoning model IDs (Nova 2 Pro, Nova 2 Lite; some need a `us.` inference profile) and the Nova Sonic IDs. The known Sonic ID is `amazon.nova-2-sonic-v1:0`.
    - `aws bedrock get-foundation-model-availability --model-id <id> --region us-east-1` for each model.
 9. **Approval needed.** Create an AWS Budget with an email alert. The user picks the limit (suggest USD 50).
 10. **Approval needed.** Install AWS CDK, either globally with `npm i -g aws-cdk` or through `npx aws-cdk`. Run `cdk bootstrap aws://<account>/us-east-1`.
@@ -59,7 +57,7 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 
 ## Acceptance criteria
 - [ ] `aws sts get-caller-identity` returns the account.
-- [ ] Opus 5.5 (or its fallback) and one Nova Sonic model are available in us-east-1. Their IDs are recorded.
+- [ ] One Nova reasoning model (D21) and one Nova Sonic model are available in us-east-1. Their IDs are recorded.
 - [ ] The CDK bootstrap stack exists in us-east-1.
 - [ ] One ARM64 build path is chosen and tested.
 - [ ] The budget alert exists, if the user approved it.
@@ -71,7 +69,7 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 2. Expect every line PASS. A FAIL line must name its fallback (below), and the fallback must PASS.
 
 ## Fallbacks
-- **Opus 5.5 not available:** Sonnet 5.5, then Nova 2 Lite. The last resort is the Anthropic API, but it's outside the Amazon stack; the orchestrator decides.
+- **Nova 2 Pro not available:** Nova 2 Lite, then any other Nova reasoning model (Nova Pro, Nova Premier). Never Claude (D21).
 - **Nova Sonic not available in us-east-1:** use us-west-2 for voice only.
 - **SSO not possible:** an IAM user with access keys, limited to the services in DESIGN.md §10.
 - **ARM64 local build fails or is slow:** CodeBuild.
