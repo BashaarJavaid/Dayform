@@ -1,0 +1,12 @@
+flowchart LR
+  U[User: voice or text] --> FE[Simulator frontend<br/>Echo Show screen]
+  FE <-- WebSocket --> BE[Simulator backend]
+  BE <-- bidirectional stream --> SONIC[Nova 2.5 Sonic<br/>Bedrock]
+  BE -- MCP 2025-11-25<br/>Streamable HTTP --> MCP[Dayform MCP server<br/>AgentCore Runtime]
+  BE -- admin routes<br/>DEMO_MODE only --> MCP
+  MCP --> DB[(Aurora PostgreSQL<br/>Serverless v2, Data API)]
+  MCP --> NOVA[Nova 2 Lite<br/>Bedrock]
+  SCHED[EventBridge Scheduler] --> JOB[Overnight job<br/>Lambda]
+  JOB --> DB
+  JOB --> NOVA
+  MCP -. Add-to-Cart link .-> AMZ[amazon.com cart]

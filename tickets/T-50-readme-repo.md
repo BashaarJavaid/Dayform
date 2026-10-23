@@ -8,7 +8,7 @@
 | Depends on | T-40 (or a local-only setup), T-30, T-31 |
 | Owns | `README.md`, `LICENSE`, `docs/` |
 | Approval needed | Yes: creating the GitHub repo, pushing, installing a secrets scanner |
-| Status | TODO |
+| Status | REVIEW (push, public repo and GitHub license check wait for user approval) |
 
 ## Goal
 Publish a public GitHub repo that judges can read, run and verify.
@@ -68,4 +68,24 @@ Publish a public GitHub repo that judges can read, run and verify.
 3. Type the S1 line. Expect the `meal-logged` card.
 
 ## Result
-_The agent fills this in._
+**REVIEW, 2026-10-22.** README, LICENSE and docs/ written; no commit, repo or push (orchestrator holds those until the user approves).
+
+Built:
+- `README.md`: pitch, video placeholder (`_VIDEO_LINK_`), user stories, Mermaid architecture + `docs/architecture.png`, Alexa+ compliance, generated tool table (18 + `confirm_checkout`), run locally, deploy, demo controls, sample-data disclosure, understanding switch (T-28 note), built with.
+- `LICENSE`: MIT, "Copyright (c) 2026 Bashaar Javaid" (name inferred from the git user `BashaarJavaid`; confirm).
+- `docs/gen-tools.ts` (`npx tsx docs/gen-tools.ts` prints the table; paste between the `tools:start/end` markers), `docs/architecture.mmd`, `docs/architecture.png` (mermaid-cli 11.4.2 via npx, 1600 px).
+
+Fresh-clone test (`git clone` of the local repo to /tmp/aff-test, README/LICENSE/docs copied in since they are uncommitted; separate database `dayform_t50` in the same `dayform-pg` container; server on 8011 because the main tree's server holds 8001):
+- `npm install`, `npm run db:migrate` (166 ms), `npm run db:reset` (174 ms, clock 2026-10-23T13:00+05:00), `npm run data:load-foods` (1659 foods), `PORT=8011 npm run dev`: 18 tools, demo_mode=true.
+- First `npm run demo`: S3 FAIL "10 s demo rest timer, got 150 s (run demo:warm)". README gap fixed: step 5 is now `npm run demo:warm && npm run demo`. Rerun: `S1 PASS | S2 PASS | S3 PASS | S4 PASS | S5 PASS | S6 PASS | S7 PASS`, slowest turn 71 ms (S4), 18 tools.
+- Test scenario, text mode: simulator backend (main tree; `simulator/backend/src` is untracked so absent from the clone) with `VOICE_ENGINE=text`, `MCP_URL` = clone server; `sim:probe "I had two rotis, chicken karahi and a mango lassi for lunch"` → `log_meal` 145 ms, `card ui://cards/meal-logged`, Alexa: "...904 kcal and 48.7 g protein...". Needs Bedrock (Nova 2 Lite).
+- Cleaned up: processes stopped, `dayform_t50` dropped, /tmp/aff-test removed.
+
+Secrets scan (grep, all 41 commits, `git grep ... $(git rev-list --all)`): no AKIA/ASIA keys, no secret access key or session token, no private keys, no `.env*` file ever committed except `.env.example`, no literal token/password assignments; the `.env.local` values of ADMIN_TOKEN, DATABASE_URL and AURORA_SECRET_ARN appear in 0 blobs. Only DB URL literal: the `postgres:postgres@127.0.0.1:5433` default in code. Note: the AWS account ID appears in SMOKE-RESULTS.md, T-00 and T-03 (not a secret; relevant to the planning-files question).
+
+Deviations:
+- The entry point is `server/src/main.ts` (no `index.ts` exists); the README points there plus `app.ts` and `registry.ts`.
+- Deploy is CloudFormation templates + `infra/deploy.sh` (T-40's actual method), not CDK, and reuses the existing Aurora cluster; the README says so. Root has no `deploy`, `destroy`, `aws:status`, `sim:backend`, `sim:probe` scripts, so the README uses the `-w @dayform/infra` / `-w @dayform/simulator-backend` forms. Proposal: add root aliases in package.json, then simplify the README.
+- `docker compose up` (task) is `docker compose up -d postgres`: the compose `server` service needs `.env.local` and AWS mounts; `npm run dev` is the simpler path.
+
+Open for the orchestrator/user: video link (T-51); whether PLAN.md, DESIGN.md, tickets/ stay public (task 3); create the repo, push, check the license in About (tasks 2, 5); simulator frontend section once T-31 lands.
