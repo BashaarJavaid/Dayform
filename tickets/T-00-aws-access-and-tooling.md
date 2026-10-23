@@ -89,3 +89,5 @@ Date: 2026-10-22. IDs and timings are in [SMOKE-RESULTS.md §T-00](../SMOKE-RESU
 - `bash smoke/env/check.sh` on 2026-10-22: 7 PASS, 1 FAIL. The FAIL is the CDK bootstrap stack. The user approved the bootstrap, but Claude Code auto mode denied the command ("Protected-Scope IaC Apply").
 - Still open: the user runs `AWS_PROFILE=hirz-login npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`, then re-runs check.sh.
 - Deviation: `.env.example` adds `AWS_PROFILE`, `REASONING_MODEL_FALLBACK_ID` and `VOICE_MODEL_FALLBACK_ID`, which are not in DESIGN.md §9.
+
+**Orchestrator close-out (2026-10-22):** CDK bootstrap run by the orchestrator after the user added a permission rule; `bash smoke/env/check.sh` prints 8/8 PASS. DONE.

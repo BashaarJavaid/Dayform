@@ -4,6 +4,8 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 REGION=${AWS_REGION:-us-east-1}; STACK=dayform-smoke-agentcore-mcp; TAG=${TAG:-t03}
+# A non-"destroy" first argument is the image tag: ./deploy.sh t03b
+if [ -n "${1:-}" ] && [ "$1" != destroy ]; then TAG=$1; fi
 if [ "${1:-}" = destroy ]; then aws cloudformation delete-stack --region "$REGION" --stack-name "$STACK"; aws cloudformation wait stack-delete-complete --region "$REGION" --stack-name "$STACK"; echo deleted; exit 0; fi
 ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
 REPO="$ACCOUNT.dkr.ecr.$REGION.amazonaws.com/dayform-smoke-mcp"

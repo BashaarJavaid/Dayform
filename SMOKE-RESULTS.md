@@ -18,6 +18,7 @@
 - CDK bootstrap: the CDKToolkit stack does not exist yet ("Stack with id CDKToolkit does not exist"). Waiting for approval: `npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`
 - ARM64 build path (local buildx or CodeBuild): local, using native linux/arm64 (Apple Silicon, buildx v0.32.2). Building smoke/env/Dockerfile.arm64 with `docker buildx build --platform linux/arm64` took 5.4 s, and the container printed `aarch64`.
 - Budget: `dayform-50` created 2026-10-22: USD 50 per month, alert by email at 80% of actual spend. Checked with describe-budget and describe-notifications-for-budget.
+- Orchestrator (2026-10-22): CDKToolkit bootstrapped; check.sh 8/8 PASS. **Status: PASS.**
 
 ## T-01 · Reasoning model on Bedrock (Nova, D21)
 - Status: PASS (2026-10-22, `npx tsx smoke/bedrock-claude/run.ts`)
