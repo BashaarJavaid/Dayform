@@ -60,7 +60,6 @@ const Per100 = z.object({
 });
 export const Estimate = z
   .object({
-    name: z.string().min(1).describe("Short name of the dish, e.g. 'Chicken pulao (home-style)'."),
     per_100g: Per100.describe("Nutrients per 100 g as eaten."),
     portion: z.string().min(1).describe("The usual serving unit, e.g. 'plate', 'bowl', 'piece', 'glass'."),
     portion_g: z.number().positive().max(1500).describe("Grams in one usual serving."),
@@ -80,23 +79,25 @@ async function estimateFood(input: SearchInput): Promise<{ item: Item; info: Est
   const p = parsePhrase(input.food);
   const quantity = input.quantity ?? p.quantity;
   const unit = input.unit?.toLowerCase().trim() || p.unit;
+  // The user's words without the amount, apostrophes kept ("grandma's special pulao").
+  const food = p.quantity === undefined && p.unit === undefined ? input.food.trim() : p.food;
   const r = await structured({
     name: "estimate_food",
     description: "Record the nutrient estimate for one food or dish.",
     schema: Estimate,
     system: "You are a nutritionist who knows South Asian and international home cooking. Estimate typical values; never refuse.",
-    prompt: `Estimate nutrients for: "${p.food || input.food}". Give values per 100 g as eaten and the usual single serving.`,
+    prompt: `Estimate nutrients for: "${food}". Give values per 100 g as eaten and the usual single serving.`,
     maxTokens: 400,
     timeoutMs: 15_000,
   });
   const e = r.data;
   const qty = quantity ?? 1;
   const grams = Math.round(unit && WEIGHT[unit] ? qty * WEIGHT[unit] : qty * e.portion_g);
-  const assumptions = quantity === undefined && unit === undefined ? [`Assumed 1 ${e.portion} of ${p.food || input.food} = ${grams} g.`] : [];
+  const assumptions = quantity === undefined && unit === undefined ? [`Assumed 1 ${e.portion} of ${food} = ${grams} g.`] : [];
   return {
     item: {
       food_id: null,
-      name: e.name,
+      name: food[0].toUpperCase() + food.slice(1),
       said: input.food,
       quantity: qty,
       unit: unit ?? e.portion,

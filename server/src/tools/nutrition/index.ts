@@ -29,7 +29,7 @@ export const tools = [
       const assumptions = assumptionsOf(r.items);
       return {
         data: { entry: card, day, assumptions },
-        text: [`Logged ${mealType}: ${card.items.length} items, ${card.totals.kcal} kcal, ${card.totals.protein_g} g protein.`, dayFacts(day), ...assumptions].join(" "),
+        text: [`Logged ${mealType}: ${card.items.length} ${card.items.length === 1 ? "item" : "items"}, ${card.totals.kcal} kcal, ${card.totals.protein_g} g protein.`, dayFacts(day), ...assumptions].join(" "),
       };
     });
   }),

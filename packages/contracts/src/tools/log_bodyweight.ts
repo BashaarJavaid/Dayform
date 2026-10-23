@@ -12,7 +12,7 @@ export const log_bodyweight = {
   output: z.object({
     date: DateStr,
     kg: z.number(),
-    trend_kg: z.number().describe("7-day average."),
+    trend_kg: z.number().describe("exponential moving average (alpha 0.1) of daily weights."),
     weekly_change_kg: z.number().describe("Trend change over the last 7 days; negative is a loss."),
   }),
 } satisfies ToolContract;
