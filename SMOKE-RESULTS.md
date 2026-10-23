@@ -10,14 +10,14 @@
 ---
 
 ## T-00 · AWS access and tooling
-- Status: REVIEW. Every check.sh line PASSes except the CDK bootstrap, which is waiting for approval.
+- Status: REVIEW. Every check.sh line PASSes except the CDK bootstrap. The user approved it, but the Claude Code auto-mode classifier blocked the command, so it has to be run by hand.
 - Account and region: 661550216013, us-east-1, profile `hirz-login` (root; user decision 2026-10-22). `hirz-operator` has no service permissions (FRICTION.md F-004).
 - Reasoning model ID (D21, Nova): `us.amazon.nova-2-lite-v1:0`. Nova 2 Pro is not listed in us-east-1, so the first fallback is used. Availability: AUTHORIZED/AVAILABLE. 1-token Converse: stopReason max_tokens, 377 ms.
 - Fallback reasoning model ID: `us.amazon.nova-pro-v1:0`. Availability: AUTHORIZED/AVAILABLE. 1-token Converse: 397 ms. Nova Premier is listed as a `us.` profile but returns "end of its life" on Converse.
 - Voice model ID (Nova Sonic): `amazon.nova-2-5-sonic` (Nova 2.5 Sonic, ON_DEMAND). Fallback: `amazon.nova-2-sonic-v1:0`. Both AUTHORIZED/AVAILABLE in us-east-1. No stream test yet (T-02 does that).
 - CDK bootstrap: the CDKToolkit stack does not exist yet ("Stack with id CDKToolkit does not exist"). Waiting for approval: `npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`
 - ARM64 build path (local buildx or CodeBuild): local, using native linux/arm64 (Apple Silicon, buildx v0.32.2). Building smoke/env/Dockerfile.arm64 with `docker buildx build --platform linux/arm64` took 5.4 s, and the container printed `aarch64`.
-- Notes: the USD 50 budget is not created because it needs an alert email. The command is ready in smoke/env/wizard.sh step 3 (budget `dayform-50`, alert at 80%).
+- Budget: `dayform-50` created 2026-10-22: USD 50 per month, alert by email at 80% of actual spend. Checked with describe-budget and describe-notifications-for-budget.
 
 ## T-01 · Claude on Bedrock
 - Status:
