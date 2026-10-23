@@ -41,15 +41,14 @@ describe("server", () => {
     expect(r.status).toBe(404);
   });
 
-  it("UNDERSTANDING=server swaps inputs to {text} and says T-28 is not there yet", async () => {
+  it("UNDERSTANDING=server swaps inputs to {text}", async () => {
     process.env.UNDERSTANDING = "server";
     const s = await listen(createApp(await loadTools()));
     try {
       const { client } = await connect(s.url);
       const { tools } = await client.listTools();
       expect(Object.keys(tools.find((t) => t.name === "ping")!.inputSchema.properties ?? {})).toEqual(["text"]);
-      const r = await client.callTool({ name: "ping", arguments: { text: "are you there" } });
-      expect(r).toMatchObject({ isError: true, content: [{ text: "UNDERSTANDING=server is not implemented yet (T-28)." }] });
+      // T-28 landed: the call now goes through parseRequest (a real model call), covered by test/understanding.test.ts.
       await client.close();
     } finally {
       delete process.env.UNDERSTANDING;

@@ -1,0 +1,573 @@
+{
+  "for_date": "2026-10-24",
+  "briefs": [
+    {
+      "for_date": "2026-10-24",
+      "brief": {
+        "date": "2026-10-24",
+        "today": {
+          "targets": {
+            "kcal": 2250,
+            "fat_g": 66,
+            "carbs_g": 249,
+            "fiber_g": 32,
+            "water_ml": 2900,
+            "protein_g": 165,
+            "sodium_mg": 2300
+          },
+          "workout": {
+            "lead": {
+              "reps": 5,
+              "exercise": "Barbell back squat",
+              "weight_kg": 102.5
+            },
+            "day_name": "Legs"
+          }
+        },
+        "weight": {
+          "change_kg_week": -0.28,
+          "planned_kg_week": -0.4
+        },
+        "insight": "You average 163 g of protein on training days but only 103 g on rest days.",
+        "greeting": "Hey Ali, ready to crush today's leg day?",
+        "yesterday": {
+          "eaten": {
+            "kcal": 486,
+            "fat_g": 18,
+            "carbs_g": 61,
+            "protein_g": 20
+          },
+          "targets": {
+            "kcal": 2360,
+            "fat_g": 66,
+            "carbs_g": 277,
+            "protein_g": 165
+          },
+          "workout": null
+        },
+        "targets_change": {
+          "reason": "You lost 0.3 kg this week instead of 0.4 kg, so I reduced 110 calories daily.",
+          "kcal_delta": -110,
+          "previous_kcal": 2360
+        }
+      },
+      "created_at": "2026-10-23T22:00:00.000Z"
+    }
+  ],
+  "next_targets": [
+    {
+      "for_date": "2026-10-24",
+      "exercise_id": "barbell-back-squat",
+      "weight_kg": 102.5,
+      "reps": 5,
+      "reason": "double progression from 100x7, 100x7, 100x7 (range 5-7): 102.5 kg x 5"
+    },
+    {
+      "for_date": "2026-10-24",
+      "exercise_id": "romanian-deadlift",
+      "weight_kg": 87.5,
+      "reps": 6,
+      "reason": "double progression from 85x8, 85x8, 85x8 (range 6-8): 87.5 kg x 6"
+    },
+    {
+      "for_date": "2026-10-24",
+      "exercise_id": "leg-press",
+      "weight_kg": 155,
+      "reps": 10,
+      "reason": "double progression from 150x12, 150x12, 150x12 (range 10-12): 155 kg x 10"
+    },
+    {
+      "for_date": "2026-10-24",
+      "exercise_id": "lying-leg-curl",
+      "weight_kg": 47.5,
+      "reps": 10,
+      "reason": "double progression from 45x12, 45x12, 45x12 (range 10-12): 47.5 kg x 10"
+    },
+    {
+      "for_date": "2026-10-24",
+      "exercise_id": "standing-calf-raise",
+      "weight_kg": 75,
+      "reps": 12,
+      "reason": "double progression from 70x15, 70x15, 70x15 (range 12-15): 75 kg x 12"
+    }
+  ],
+  "targets": [
+    {
+      "effective_date": "2026-10-24",
+      "kcal": 2250,
+      "protein_g": 165,
+      "carbs_g": 249,
+      "fat_g": 66,
+      "fiber_g": 32,
+      "sodium_mg": 2300,
+      "water_ml": 2900,
+      "reason_codes": [
+        "LOSS_SLOWER_THAN_PLANNED"
+      ],
+      "reason": "Weekly check-in: trend -0.28 kg this week against a plan of -0.4 kg; intake 2337 kcal/day over 13 days, expenditure 2689 kcal; calories 2360 -> 2250 (-110).",
+      "source": "weekly",
+      "created_at": "2026-10-23T22:00:00.000Z"
+    }
+  ],
+  "meal_plans": [
+    {
+      "status": "ready",
+      "start_date": "2026-10-24",
+      "end_date": "2026-10-27",
+      "plan": {
+        "days": [
+          {
+            "date": "2026-10-24",
+            "meals": [
+              {
+                "meal": "breakfast",
+                "recipe_id": "r4"
+              },
+              {
+                "meal": "lunch",
+                "recipe_id": "r1"
+              },
+              {
+                "meal": "dinner",
+                "recipe_id": "r2"
+              },
+              {
+                "meal": "snack",
+                "recipe_id": "r3"
+              }
+            ],
+            "totals": {
+              "kcal": 2256,
+              "fat_g": 66,
+              "carbs_g": 252,
+              "protein_g": 166
+            },
+            "within_tolerance": true
+          },
+          {
+            "date": "2026-10-25",
+            "meals": [
+              {
+                "meal": "breakfast",
+                "recipe_id": "r4"
+              },
+              {
+                "meal": "lunch",
+                "recipe_id": "r1"
+              },
+              {
+                "meal": "dinner",
+                "recipe_id": "r2"
+              },
+              {
+                "meal": "snack",
+                "recipe_id": "r3"
+              }
+            ],
+            "totals": {
+              "kcal": 2256,
+              "fat_g": 66,
+              "carbs_g": 252,
+              "protein_g": 166
+            },
+            "within_tolerance": true
+          },
+          {
+            "date": "2026-10-26",
+            "meals": [
+              {
+                "meal": "breakfast",
+                "recipe_id": "r4"
+              },
+              {
+                "meal": "lunch",
+                "recipe_id": "r1"
+              },
+              {
+                "meal": "dinner",
+                "recipe_id": "r2"
+              },
+              {
+                "meal": "snack",
+                "recipe_id": "r3"
+              }
+            ],
+            "totals": {
+              "kcal": 2256,
+              "fat_g": 66,
+              "carbs_g": 252,
+              "protein_g": 166
+            },
+            "within_tolerance": true
+          },
+          {
+            "date": "2026-10-27",
+            "meals": [
+              {
+                "meal": "breakfast",
+                "recipe_id": "r4"
+              },
+              {
+                "meal": "lunch",
+                "recipe_id": "r1"
+              },
+              {
+                "meal": "dinner",
+                "recipe_id": "r2"
+              },
+              {
+                "meal": "snack",
+                "recipe_id": "r3"
+              }
+            ],
+            "totals": {
+              "kcal": 2256,
+              "fat_g": 66,
+              "carbs_g": 252,
+              "protein_g": 166
+            },
+            "within_tolerance": true
+          }
+        ],
+        "grocery": [
+          {
+            "name": "Chicken breast (frozen)",
+            "grams_needed": 1140,
+            "catalog_item_id": "chicken-breast-frozen"
+          },
+          {
+            "name": "Basmati rice",
+            "grams_needed": 300,
+            "catalog_item_id": "basmati-rice"
+          },
+          {
+            "name": "Diced tomatoes, canned",
+            "grams_needed": 200,
+            "catalog_item_id": "canned-tomatoes"
+          },
+          {
+            "name": "Ghee",
+            "grams_needed": 132,
+            "catalog_item_id": "ghee"
+          },
+          {
+            "name": "Ground cumin",
+            "grams_needed": 8,
+            "catalog_item_id": "cumin"
+          },
+          {
+            "name": "Garam masala",
+            "grams_needed": 24,
+            "catalog_item_id": "garam-masala"
+          },
+          {
+            "name": "Red lentils (masoor)",
+            "grams_needed": 460,
+            "catalog_item_id": "red-lentils"
+          },
+          {
+            "name": "Whole-wheat atta",
+            "grams_needed": 100,
+            "catalog_item_id": "atta"
+          },
+          {
+            "name": "Chunk light tuna in water",
+            "grams_needed": 800,
+            "catalog_item_id": "canned-tuna"
+          },
+          {
+            "name": "Whole-wheat tortillas",
+            "grams_needed": 112,
+            "catalog_item_id": "wraps"
+          },
+          {
+            "name": "Rolled oats",
+            "grams_needed": 400,
+            "catalog_item_id": "oats"
+          },
+          {
+            "name": "Whole milk, shelf-stable",
+            "grams_needed": 1200,
+            "catalog_item_id": "milk"
+          }
+        ],
+        "plan_id": "plan-2026-10-24-mvkaz1lm",
+        "recipes": [
+          {
+            "id": "r1",
+            "name": "Chicken Tikka Masala with Rice",
+            "steps": [
+              "Cook rice according to package.",
+              "Mix ghee, cumin, and garam masala in a pan.",
+              "Add diced tomatoes and cook for 5 minutes.",
+              "Add chicken and simmer for 15 minutes."
+            ],
+            "servings": 4,
+            "ingredients": [
+              {
+                "name": "Chicken breast (frozen)",
+                "grams": 285,
+                "catalog_item_id": "chicken-breast-frozen"
+              },
+              {
+                "name": "Basmati rice",
+                "grams": 75,
+                "catalog_item_id": "basmati-rice"
+              },
+              {
+                "name": "Diced tomatoes, canned",
+                "grams": 50,
+                "catalog_item_id": "canned-tomatoes"
+              },
+              {
+                "name": "Ghee",
+                "grams": 4,
+                "catalog_item_id": "ghee"
+              },
+              {
+                "name": "Ground cumin",
+                "grams": 2,
+                "catalog_item_id": "cumin"
+              },
+              {
+                "name": "Garam masala",
+                "grams": 3,
+                "catalog_item_id": "garam-masala"
+              }
+            ],
+            "per_serving": {
+              "kcal": 675,
+              "fat_g": 13,
+              "carbs_g": 64,
+              "protein_g": 71
+            }
+          },
+          {
+            "id": "r2",
+            "name": "Lentil Curry with Roti",
+            "steps": [
+              "Cook lentils until soft.",
+              "Mix ghee and garam masala in a pan.",
+              "Add cooked lentils and simmer for 10 minutes.",
+              "Make roti from atta and cook."
+            ],
+            "servings": 4,
+            "ingredients": [
+              {
+                "name": "Red lentils (masoor)",
+                "grams": 115,
+                "catalog_item_id": "red-lentils"
+              },
+              {
+                "name": "Whole-wheat atta",
+                "grams": 25,
+                "catalog_item_id": "atta"
+              },
+              {
+                "name": "Ghee",
+                "grams": 20,
+                "catalog_item_id": "ghee"
+              },
+              {
+                "name": "Garam masala",
+                "grams": 3,
+                "catalog_item_id": "garam-masala"
+              }
+            ],
+            "per_serving": {
+              "kcal": 681,
+              "fat_g": 23,
+              "carbs_g": 92,
+              "protein_g": 31
+            }
+          },
+          {
+            "id": "r3",
+            "name": "Tuna Salad Wrap",
+            "steps": [
+              "Mix tuna with a little ghee.",
+              "Place mixture on wrap and roll."
+            ],
+            "servings": 4,
+            "ingredients": [
+              {
+                "name": "Chunk light tuna in water",
+                "grams": 200,
+                "catalog_item_id": "canned-tuna"
+              },
+              {
+                "name": "Whole-wheat tortillas",
+                "grams": 28,
+                "catalog_item_id": "wraps"
+              },
+              {
+                "name": "Ghee",
+                "grams": 9,
+                "catalog_item_id": "ghee"
+              }
+            ],
+            "per_serving": {
+              "kcal": 338,
+              "fat_g": 14,
+              "carbs_g": 13,
+              "protein_g": 42
+            }
+          },
+          {
+            "id": "r4",
+            "name": "Oatmeal with Milk",
+            "steps": [
+              "Cook oats with milk until soft."
+            ],
+            "servings": 4,
+            "ingredients": [
+              {
+                "name": "Rolled oats",
+                "grams": 100,
+                "catalog_item_id": "oats"
+              },
+              {
+                "name": "Whole milk, shelf-stable",
+                "grams": 300,
+                "catalog_item_id": "milk"
+              }
+            ],
+            "per_serving": {
+              "kcal": 562,
+              "fat_g": 16,
+              "carbs_g": 82,
+              "protein_g": 23
+            }
+          }
+        ],
+        "targets": {
+          "kcal": 2250,
+          "fat_g": 66,
+          "carbs_g": 249,
+          "protein_g": 165
+        },
+        "batch_cook": {
+          "steps": [
+            "Cook all rice and lentils.",
+            "Prepare chicken tikka masala and lentil curry.",
+            "Make wraps and oatmeal."
+          ],
+          "total_minutes": 85
+        },
+        "start_date": "2026-10-24"
+      },
+      "totals": {
+        "avg": {
+          "kcal": 2256,
+          "fat_g": 66,
+          "carbs_g": 252,
+          "protein_g": 166
+        },
+        "rounds": 2,
+        "grocery": [
+          {
+            "name": "Chicken breast (frozen)",
+            "packs": 2,
+            "grams_needed": 1140,
+            "line_total_usd": 20.08,
+            "unit_price_usd": 10.04,
+            "catalog_item_id": "chicken-breast-frozen"
+          },
+          {
+            "name": "Basmati rice",
+            "packs": 1,
+            "grams_needed": 300,
+            "line_total_usd": 8.88,
+            "unit_price_usd": 8.88,
+            "catalog_item_id": "basmati-rice"
+          },
+          {
+            "name": "Diced tomatoes, canned",
+            "packs": 1,
+            "grams_needed": 200,
+            "line_total_usd": 0.86,
+            "unit_price_usd": 0.86,
+            "catalog_item_id": "canned-tomatoes"
+          },
+          {
+            "name": "Ghee",
+            "packs": 1,
+            "grams_needed": 132,
+            "line_total_usd": 11.48,
+            "unit_price_usd": 11.48,
+            "catalog_item_id": "ghee"
+          },
+          {
+            "name": "Ground cumin",
+            "packs": 1,
+            "grams_needed": 8,
+            "line_total_usd": 2.83,
+            "unit_price_usd": 2.83,
+            "catalog_item_id": "cumin"
+          },
+          {
+            "name": "Garam masala",
+            "packs": 1,
+            "grams_needed": 24,
+            "line_total_usd": 5.35,
+            "unit_price_usd": 5.35,
+            "catalog_item_id": "garam-masala"
+          },
+          {
+            "name": "Red lentils (masoor)",
+            "packs": 2,
+            "grams_needed": 460,
+            "line_total_usd": 7.92,
+            "unit_price_usd": 3.96,
+            "catalog_item_id": "red-lentils"
+          },
+          {
+            "name": "Whole-wheat atta",
+            "packs": 1,
+            "grams_needed": 100,
+            "line_total_usd": 9.99,
+            "unit_price_usd": 9.99,
+            "catalog_item_id": "atta"
+          },
+          {
+            "name": "Chunk light tuna in water",
+            "packs": 1,
+            "grams_needed": 800,
+            "line_total_usd": 10.48,
+            "unit_price_usd": 10.48,
+            "catalog_item_id": "canned-tuna"
+          },
+          {
+            "name": "Whole-wheat tortillas",
+            "packs": 1,
+            "grams_needed": 112,
+            "line_total_usd": 3.27,
+            "unit_price_usd": 3.27,
+            "catalog_item_id": "wraps"
+          },
+          {
+            "name": "Rolled oats",
+            "packs": 1,
+            "grams_needed": 400,
+            "line_total_usd": 16.73,
+            "unit_price_usd": 16.73,
+            "catalog_item_id": "oats"
+          },
+          {
+            "name": "Whole milk, shelf-stable",
+            "packs": 1,
+            "grams_needed": 1200,
+            "line_total_usd": 14.57,
+            "unit_price_usd": 14.57,
+            "catalog_item_id": "milk"
+          }
+        ],
+        "seconds": 6,
+        "constraints": "",
+        "grocery_total_usd": 112.44
+      },
+      "within_tolerance": true,
+      "created_at": "2026-10-23T22:00:00.000Z"
+    }
+  ]
+}

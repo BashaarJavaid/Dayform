@@ -38,7 +38,9 @@
     "cards:build": "npm run cards:build -w @dayform/cards",
     "cards:preview": "npm run cards:preview -w @dayform/cards",
     "cards:screens": "npm run cards:screens -w @dayform/cards",
-    "mealprep:bench": "npm run mealprep:bench -w @dayform/server --"
+    "mealprep:bench": "npm run mealprep:bench -w @dayform/server --",
+    "overnight": "npm run overnight -w @dayform/jobs-overnight --",
+    "overnight:cache": "npm run overnight:cache -w @dayform/jobs-overnight"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

@@ -2,5 +2,10 @@
   "name": "@dayform/jobs-overnight",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"jobs-overnight: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "overnight": "tsx cli.ts",
+    "overnight:cache": "tsx cache.ts",
+    "build": "esbuild lambda.ts --bundle --platform=node --target=node22 --format=esm --outfile=dist/index.mjs --banner:js=\"import{createRequire}from'module';const require=createRequire(import.meta.url);\""
+  }
 }

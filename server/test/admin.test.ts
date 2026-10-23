@@ -29,12 +29,11 @@ describe("admin routes (DEMO_MODE=true)", () => {
     expect(ts).toEqual({ ok: true, rest_seconds: 10 });
     const adv = await (await fetch(`${base}/admin/advance-day`, { method: "POST", headers: H })).json();
     expect(adv.ok).toBe(true);
-    const next = new Date("2026-10-24T13:00:00.000Z");
-    next.setHours(7, 0, 0, 0);
-    expect(adv.clock).toBe(next.toISOString());
+    // 07:00 the next day in DEMO_TZ (Asia/Karachi, UTC+5) = 02:00Z
+    expect(adv.clock).toBe("2026-10-24T02:00:00.000Z");
     const st = await (await fetch(`${base}/admin/status`, { headers: H })).json();
     expect(st).toMatchObject({ demo_mode: true, rest_seconds: 10, db_driver: "pg" });
-    expect(Math.abs(Date.parse(st.clock) - next.getTime())).toBeLessThan(1000);
+    expect(Math.abs(Date.parse(st.clock) - Date.parse("2026-10-24T02:00:00.000Z"))).toBeLessThan(1000);
     await clock.setRestSeconds(null);
   });
 

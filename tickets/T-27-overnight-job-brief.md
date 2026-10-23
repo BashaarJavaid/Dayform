@@ -8,7 +8,7 @@
 | Depends on | T-21 (check-in), T-24 (target rules), T-25 (plan generator), T-20 |
 | Owns | `jobs/overnight/`, `server/src/tools/brief/` |
 | Approval needed | Only for the Lambda and schedule deployment (that's in T-40) |
-| Status | TODO |
+| Status | DONE |
 
 ## Goal
 Build the overnight job, which prepares the next day while the user sleeps, and the tool `get_morning_brief`.
@@ -69,4 +69,24 @@ S5 is the "it thought about me overnight" moment. It shows memory across session
 - **Opus slow or failing during a live run:** use the fallback model from T-01. For the demo, use cached mode.
 
 ## Result
-_The agent fills this in._
+**Status: REVIEW** (2026-10-22). Built:
+- `server/src/tools/brief/overnight.ts`: `runOvernight(date)` (6 logged steps), `prepareDay(date, mode)`, `applyCached`, `dumpRows`, number check (`unknownNumbers`), guardrails (`enforceGuardrails`), insight candidates. Three small Nova 2 Lite calls (targets-change sentence, next-session review, brief text). Code fills every card number from the database; the model's numbers are compared to it; a mismatch regenerates once, then the field is dropped (number from the DB, text from code: `insightFallback`, `checkInFallback`, "Good morning, <name>.").
+- `server/src/tools/brief/index.ts`: `get_morning_brief`, no LLM call, 6–33 ms.
+- `server/src/core/admin.ts` advance-day (orchestrator-authorized): `prepareDay(next day, OVERNIGHT_MODE)`, clock to 07:00 next day in DEMO_TZ, returns `{ok, clock, overnight:{mode, ms}, date, steps[]}`.
+- `jobs/overnight/`: `cli.ts` (`overnight`), `cache.ts` (`overnight:cache`), `lambda.ts` (+ `build` via esbuild; bundles to 2.4 MB and loads), `cache/overnight-cache.json`.
+- Tests: `server/test/brief.test.ts` (8), manual probe `server/test/brief-s5.probe.ts`.
+
+Verification (2026-10-22, local Postgres, Nova 2 Lite):
+- `npm run db:reset && npm run overnight -w @dayform/jobs-overnight -- --live` on the bare seed: steps 1/6–6/6 in order, ends `step 6/6 brief saved`, **6987 ms** (meal plan generated: 3.4 s of it). `overnight:cache` live run on the bare seed: **9546 ms**.
+- `npm test -w @dayform/server -- brief`: 8 passed (number check, guardrails, lying-model regenerate-then-drop, every card number vs DB, cached identical across two resets, advance-day < 1 s, tool < 500 ms, error when no brief).
+- Probe on `PORT=8013 OVERNIGHT_MODE=cached`: advance-day 200 in 54–111 ms; `get_morning_brief` 24/6 ms with greeting, yesterday, insight "You average 163 g of protein on training days but only 103 g on rest days.", "Legs day, lead lift Barbell back squat 102.5 kg x 5", targets change −110 kcal (2360 → 2250) "You lost 0.3 kg this week instead of 0.4 kg, so I reduced 110 calories daily."; `plan_meal_prep` after it: ready in 8–10 ms. `OVERNIGHT_MODE=live` advance-day on 8014: 3357 ms, same brief.
+
+Deviations:
+- `greeting` is not in the BriefCard contract: stored in `briefs.brief` next to the card and spoken in the tool text; the card already says "Good morning".
+- `get_morning_brief` re-reads `yesterday` (eaten, targets, workout, PRs) from the database at call time, so S5 shows what the take logged in S1–S3, not the bare seed the cache was made on.
+- On a failed number check the targets-change reason falls back to a code sentence (not dropped), since the card needs it.
+- `weight.change_kg_week` is T-21's EMA trend (−0.28), not the README's 7-day means (−0.23).
+
+Fallbacks used: none (Nova 2 Lite answered every call first try).
+
+**Orchestrator close-out (2026-10-22):** verified 8 brief tests, full server suite 89/89 (two stale test expectations fixed), cached advance-day 93 ms, get_morning_brief 36 ms with leg-day squat 102.5×5, protein insight and the −110 kcal reason; plan_meal_prep 10 ms after reset. Decision: reset loading the cached plan (S4 instant) is intended. S5 script line becomes "lost 0.3 kg, slower than the planned 0.4, so I trimmed 110 calories". DONE.
