@@ -11,6 +11,8 @@ type M = (typeof MACROS)[number];
 export const MAX_ROUNDS = 3;
 /** Code may scale each ingredient between these multiples of the model's grams (ticket fallback 2, used by default). */
 const SCALE = [0.5, 2] as const;
+/** Share of the day's calories per meal (prompt and soft fitting term). */
+const SHARE = { breakfast: 0.25, lunch: 0.3, dinner: 0.3, snack: 0.15 } as const;
 
 export interface PlanItem extends CatalogItem {
   per100: Macros;
@@ -123,7 +125,10 @@ export function checkDay(t: Macros, target: Macros, day: number): Miss[] {
  */
 export function fitGrams(recs: Map<string, Rec>, menus: string[][], target: Macros) {
   const w: Record<M, number> = { kcal: 3, protein_g: 2, carbs_g: 1, fat_g: 1 };
+  const W_SLOT = 0.3; // soft: each meal near its share of the day's calories
+  const slotKcal = MEALS.map((m) => SHARE[m] * target.kcal);
   const totals = menus.map((m) => dayTotals(m, recs));
+  const rk = new Map([...recs.values()].map((r) => [r.id, recipeMacros(r).kcal]));
   for (let pass = 0; pass < 60; pass++) {
     for (const r of recs.values()) {
       const uses = menus.map((m) => m.filter((id) => id === r.id).length);
@@ -132,18 +137,25 @@ export function fitGrams(recs: Map<string, Rec>, menus: string[][], target: Macr
         if (ing.item.category === "spices") continue;
         let num = 0;
         let den = 0;
-        menus.forEach((_, k) => {
+        menus.forEach((menu, k) => {
           for (const m of MACROS) {
             const a = (uses[k] * ing.item.per100[m]) / 100;
             num += (w[m] * a * (totals[k][m] - target[m])) / target[m] ** 2;
             den += (w[m] * a * a) / target[m] ** 2;
           }
+          menu.forEach((id, s) => {
+            if (id !== r.id) return;
+            const a = ing.item.per100.kcal / 100;
+            num += (W_SLOT * a * (rk.get(r.id)! - slotKcal[s])) / slotKcal[s] ** 2;
+            den += (W_SLOT * a * a) / slotKcal[s] ** 2;
+          });
         });
         if (!den) continue;
         const next = Math.min(ing.hi, Math.max(ing.lo, ing.grams - num / den));
         const d = next - ing.grams;
         if (!d) continue;
         ing.grams = next;
+        rk.set(r.id, rk.get(r.id)! + (ing.item.per100.kcal * d) / 100);
         menus.forEach((_, k) => add(totals[k], ing.item.per100, (uses[k] * d) / 100));
       }
     }
@@ -211,18 +223,21 @@ function prompt(input: GenerateInput, cat: PlanItem[], prev?: { draft: Draft; mi
   const p = input.preferences ?? {};
   const t = input.targets;
   const minutes = Math.min(150, p.max_prep_minutes ?? 150);
-  const table = cat.map((c) => `${c.id} | ${c.name} | ${f0(c.per100.kcal)} | ${c.per100.protein_g.toFixed(1)} | ${c.per100.carbs_g.toFixed(1)} | ${c.per100.fat_g.toFixed(1)}`).join("\n");
+  const table = cat
+    .map((c) => `${c.id} | ${c.name} | ${f0(c.per100.kcal)} | ${c.per100.protein_g.toFixed(1)} | ${c.per100.carbs_g.toFixed(1)} | ${c.per100.fat_g.toFixed(1)} | ${c.grams_per_pack} g $${c.price_usd}`)
+    .join("\n");
   const lines = [
     `Plan ${input.days} days of meal prep for one person. Every day has breakfast, lunch, dinner and a snack, one serving each.`,
     `Daily targets: ${f0(t.kcal)} kcal, protein ${f0(t.protein_g)} g, carbs ${f0(t.carbs_g)} g, fat ${f0(t.fat_g)} g.`,
     `Each day must land within 5% of the calories, at least the protein, and within 10% of carbs and fat.`,
-    `Rough split: breakfast 25%, lunch 30%, dinner 30%, snack 15% of calories. Protein needs about ${f0(t.protein_g / 4)} g per main meal: use chicken, tuna, lentils or whey generously; keep oil and ghee small.`,
+    `Calories per meal: ${MEALS.map((m) => `${m} about ${f0(SHARE[m] * t.kcal)}`).join(", ")}. Protein needs about ${f0(t.protein_g / 4)} g per main meal: use chicken, tuna, lentils or whey generously; keep oil and ghee small.`,
     `Preferences: ${[...(p.cuisines ?? []).map((c) => `${c} food (Pakistani/Indian flavours)`), p.high_protein ? "high protein" : ""].filter(Boolean).join(", ") || "none"}.` +
       (p.dislikes?.length ? ` Dislikes: ${p.dislikes.join(", ")}.` : "") +
       (p.allergies?.length ? ` Allergies: ${p.allergies.join(", ")}.` : ""),
     input.constraints ? `The user also said: "${input.constraints}". Follow it strictly.` : "",
     `Write 3 or 4 recipes that keep in the fridge for ${input.days} days, and 1 or 2 day menus (days alternate A, B). All cooking happens in ONE batch-cook session of at most ${minutes} minutes.`,
-    `Use ONLY these catalog items (id | name | per 100 g: kcal | protein g | carbs g | fat g). Grams are raw, as bought (dry rice, dry lentils), per ONE serving:`,
+    `Groceries are bought as whole packs, so keep the cart small: at most 11 different items in the whole plan (at most 3 spices), reuse items across recipes, and avoid pricey packs you barely use.`,
+    `Use ONLY these catalog items (id | name | per 100 g: kcal | protein g | carbs g | fat g | pack). Grams are raw, as bought (dry rice, dry lentils), per ONE serving:`,
     table,
   ];
   if (prev) {
