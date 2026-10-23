@@ -128,3 +128,25 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: pinned vitest ^3.2.4 (installed 3.2.7). `npm audit` then reports advisories for vitest 3.x's `@vitest/mocker` and `tinypool` (dev-only test runner; fixed in vitest ≥ 4.1.12, which this npm cannot install without `--legacy-peer-deps`).
 - Suggestion to the tool's team: npm: fail with a message naming the peer set instead of a null dereference. Vitest: note the minimum npm version for its optional-peer set.
+
+### F-011 · FNDDS 2024-10-31 CSV: `food_nutrient.nutrient_id` holds the legacy nutrient number, not `nutrient.id`
+- Tool / service: USDA FoodData Central bulk CSV download, FNDDS (Survey) 2024-10-31 (https://fdc.nal.usda.gov/download-datasets), compared with SR Legacy 2018-04
+- Ticket: T-12
+- Task attempted: read per-100 g nutrients for SR Legacy and FNDDS foods with one nutrient-id map.
+- Steps taken: joined `food_nutrient.csv` to `nutrient.csv` on `nutrient_id` = `nutrient.id` (Energy = 1008, Protein = 1003), which works for SR Legacy.
+- Expected: the same join works for the FNDDS download, whose `nutrient.csv` lists `"1003","Protein","G","203"`.
+- Actual: every FNDDS food came out with 0 kcal; `food_nutrient.csv` rows for roti (fdc 2707713) carry `nutrient_id` values like `203`, `291`, `305` (the `nutrient_nbr` column), e.g. `"34287544","2707713","203","7.85",...`.
+- Severity: minor
+- Workaround: a second map keyed by nutrient_nbr (208 kcal, 203 protein, 205 carbs, 204 fat, ...) for the FNDDS file (`data/foods/build.ts`).
+- Suggestion to the tool's team: use `nutrient.id` consistently across datasets, or document in the download's README that FNDDS rows reference `nutrient_nbr`.
+
+### F-013 · Amazon Add-to-Cart link opens an empty cart when signed in
+- Tool / service: amazon.com `/gp/aws/cart/add.html` (the legacy Add-to-Cart form from the PA-API docs)
+- Ticket: T-05
+- Task attempted: Put 3 real products into the user's cart with one link: `https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B089BWP51D&Quantity.1=1&ASIN.2=B08P6MF2D9&Quantity.2=2&ASIN.3=B00DX53P4M&Quantity.3=1`.
+- Steps taken: User opened the link signed in (Chrome, 2026-10-22). Also opened it signed out. A signed-out `curl` shows a 302 to `/ap/signin` with `openid.return_to=https://www.amazon.com/associates/addtocart?ASIN.1=...`.
+- Expected: The cart shows the 3 items with quantities 1, 2 and 1.
+- Actual: Signed in, the link lands on the cart page and the cart is empty. Signed out, it asks for sign-in first. No error message is shown.
+- Severity: major
+- Workaround: Testing the redirect target `/associates/addtocart` directly, with and without AssociateTag, and single-item links (smoke/amazon-cart/variants.txt). If none fills the cart, fall back to per-item search links or product pages (T-05 fallbacks 1 and 3).
+- Suggestion to the tool's team: Document the current status of the Add-to-Cart form and return a visible error when items are dropped, instead of an empty cart.

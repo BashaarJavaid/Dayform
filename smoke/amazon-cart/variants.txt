@@ -1,0 +1,17 @@
+V1 single item, qty 1, no tag:
+https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=B089BWP51D&Quantity.1=1
+
+V2 three items with an AssociateTag parameter:
+https://www.amazon.com/gp/aws/cart/add.html?AssociateTag=dayform-20&ASIN.1=B089BWP51D&Quantity.1=1&ASIN.2=B08P6MF2D9&Quantity.2=2&ASIN.3=B00DX53P4M&Quantity.3=1
+
+V3 product page with the add-to-cart form prefilled (opens the product; one click "Add to Cart"):
+https://www.amazon.com/dp/B089BWP51D?th=1
+
+V4 cart "add" via the newer path:
+https://www.amazon.com/cart/add-to-cart/ref=dp_start-bbf_1_glance?ASIN=B089BWP51D&quantity=1
+
+V5 the endpoint Amazon redirects to, direct, 3 items:
+https://www.amazon.com/associates/addtocart?ASIN.1=B089BWP51D&Quantity.1=1&ASIN.2=B08P6MF2D9&Quantity.2=2&ASIN.3=B00DX53P4M&Quantity.3=1
+
+V6 same endpoint with an AssociateTag:
+https://www.amazon.com/associates/addtocart?AssociateTag=dayform-20&ASIN.1=B089BWP51D&Quantity.1=1&ASIN.2=B08P6MF2D9&Quantity.2=2&ASIN.3=B00DX53P4M&Quantity.3=1
