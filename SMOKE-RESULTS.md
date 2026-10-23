@@ -17,7 +17,7 @@
 - Voice model ID (Nova Sonic): provisional `amazon.nova-2-sonic-v1:0` (not tested); Nova 2.5 Sonic ID unknown.
 - CDK bootstrap: not run (awaiting approval, and hirz-operator cannot call CloudFormation). Command: `npx -y aws-cdk@latest bootstrap aws://661550216013/us-east-1`
 - ARM64 build path (local buildx or CodeBuild): local, native linux/arm64 (Apple Silicon, buildx v0.32.2). `docker buildx build --platform linux/arm64` of smoke/env/Dockerfile.arm64 built in 5.4 s; container printed `aarch64`.
-- Notes: see FRICTION.md F-001. Budget not created (no budgets permission, no contact email readable).
+- Notes: see FRICTION.md F-004. Budget not created (no budgets permission, no contact email readable).
 
 ## T-01 · Claude on Bedrock
 - Status:
@@ -58,12 +58,12 @@
 - Notes:
 
 ## T-05 · Amazon cart link
-- Status:
-- 3-item link fills the cart (yes or no):
-- 10-item link fills the cart (yes or no):
-- User clicks needed:
+- Status: BLOCKED (waiting for the user's cart check, steps in `smoke/amazon-cart/README.md`)
+- 3-item link fills the cart (yes or no): not yet run (`smoke/amazon-cart/link-3.txt`)
+- 10-item link fills the cart (yes or no): not yet run (`smoke/amazon-cart/link-10.txt`)
+- User clicks needed: not yet run
 - Flow screenshots: `smoke/amazon-cart/screens/`
-- Notes:
+- Notes: 13 ASINs read 2026-10-22 from amazon.com product pages, all In Stock, shipped and sold by Amazon (table in `smoke/amazon-cart/README.md`). Link builder: `npx tsx smoke/amazon-cart/build-link.ts ASIN:QTY ...`. A signed-out curl of the add.html link returned HTTP 503 "Sorry! Something went wrong!" (bot response, not conclusive; browser test needed). No fallback used yet.
 
 ## T-06 · MCP Apps card
 - Status: PASS

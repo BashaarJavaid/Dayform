@@ -8,7 +8,7 @@
 | Depends on | — |
 | Owns | `smoke/amazon-cart/` |
 | Approval needed | Human step: the user signs in to amazon.com. Agents only read product pages. |
-| Status | TODO |
+| Status | BLOCKED (waiting for the user's signed-in cart check; steps in `smoke/amazon-cart/README.md`) |
 
 ## Goal
 Prove that one Amazon Add-to-Cart link puts several real products, with the right quantities, into the user's real Amazon cart. Record the exact flow.
@@ -54,4 +54,7 @@ Use them in this order:
 3. **Product pages:** a cart card with a QR code and an "Open on Amazon" button that opens each product page.
 
 ## Result
-_The agent fills this in._
+- Done by the agent (2026-10-22): 3 + 10 ASINs picked from product pages (all In Stock, shipped and sold by Amazon), `link-3.txt` (qty 1, 2, 1), `link-10.txt` (qty 1 each), `build-link.ts` (reusable `buildCartLink()` + CLI), user steps in `smoke/amazon-cart/README.md`.
+- Not done: tasks 3, 4, 6, 7 and the screenshots need the user's browser and sign-in. Acceptance 0/3 until the user reports back.
+- Deviations: none. Fallbacks used: none yet.
+- Note: signed-out curl of the add.html link gets HTTP 503 (bot block), so only a real browser can prove the link.

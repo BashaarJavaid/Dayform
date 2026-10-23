@@ -75,7 +75,7 @@ No scene works without AWS access. First-time AWS setup is slow, so it goes firs
 - **ARM64 local build fails or is slow:** CodeBuild.
 
 ## Result
-2026-10-22. Details and IDs: [SMOKE-RESULTS.md §T-00](../SMOKE-RESULTS.md); friction: FRICTION.md F-001.
+2026-10-22. Details and IDs: [SMOKE-RESULTS.md §T-00](../SMOKE-RESULTS.md); friction: FRICTION.md F-004.
 - Done: `.gitignore` (`.env.local` ignored, `.env.example` not), `.env.example` (all §9 names plus `AWS_PROFILE`, `REASONING_MODEL_FALLBACK_ID`, `VOICE_MODEL_FALLBACK_ID`), `.env.local` (profile, region, provisional IDs), `smoke/env/wizard.sh`, `smoke/env/check.sh`, `smoke/env/Dockerfile.arm64`.
 - Identity: `aws sts get-caller-identity` returns account 661550216013 as user/hirz-operator.
 - ARM64: native linux/arm64 buildx on Apple Silicon, tested (built, container printed `aarch64`). No machine change.

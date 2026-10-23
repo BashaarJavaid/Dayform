@@ -41,7 +41,7 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Workaround: None needed for the smoke; it rendered within the 3 s wait on localhost. Size not measured for Echo Show load time.
 - Suggestion to the tool's team: Offer a lightweight View entry point without schema validation for simple cards.
 
-### F-001 · Operator IAM user can sign in but has no service permissions; Nova 2 Pro ID rejected
+### F-004 · Operator IAM user can sign in but has no service permissions; Nova 2 Pro ID rejected
 - Tool / service: AWS IAM + Amazon Bedrock (us-east-1), AWS CLI v2.37.0
 - Ticket: T-00
 - Task attempted: discover and test Nova models with profile `hirz-operator` (IAM user, `aws login`).
@@ -51,3 +51,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: blocker
 - Workaround: none yet; needs an IAM policy on hirz-operator (or use of the HirzDeploy role via profile `hirz`), decided by the user.
 - Suggestion to the tool's team: the "invalid identifier" error could say whether the model exists in another region or needs an inference profile.
+
+### F-003 · amazon.com search pages intermittently return a JS stub to scripted reads
+- Tool / service: amazon.com (website, product research for the cart catalog)
+- Ticket: T-05
+- Task attempted: Find ASINs for shelf-stable grocery items by reading amazon.com search and product pages with curl (browser user agent), since PA-API 5 is retired and no public cart/catalog API is left.
+- Steps taken: `curl -s --compressed -A "<Chrome UA>" "https://www.amazon.com/s?k=red+lentils&i=grocery&rh=p_6%3AATVPDKIKX0DER"`, several terms 1.5–6 s apart, without a cookie jar.
+- Expected: The search results HTML (about 1.2 MB).
+- Actual (exact error text if any): HTTP 200 with a 2,671-byte page holding only `ue_csm` bootstrap JavaScript and no results, on every retry. Separately, `curl` of `https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=...` returned HTTP 503 with `<title>Sorry! Something went wrong!`.
+- Severity: minor
+- Workaround: Keep a cookie jar (`curl -c jar -b jar`); with it every search and product page returned full HTML. The Add-to-Cart link can only be verified in a real browser by the user.
+- Suggestion to the tool's team: With PA-API 5 retired, offer a documented read-only way to look up a grocery ASIN's title, price and availability, and document whether the Add-to-Cart form link is still supported.
