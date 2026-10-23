@@ -1,7 +1,7 @@
 # Demo Script
 
 - **Owner:** Demo Monitor.
-- **Status:** DRAFT v1, 2026-10-23. Waiting for the user's approval (T-41).
+- **Status:** v1 APPROVED by the user (2026-10-23), 2026-10-23. Waiting for the user's approval (T-41).
 - **Length:** at most 2:59. Judges may stop watching at 3:00.
 - **Numbers:** every number below is real output from the seed state, taken from three clean simulator runs on 2026-10-23 (`npm run demo:warm`, then `npm run demo:scene -- all --driver simulator --runs 3`, local server on Aurora, `OVERNIGHT_MODE=cached`). Re-check them after any change to the seed or the catalog.
 - **[USER]** marks steps only the user can do.
@@ -121,3 +121,6 @@ Each drill was tested once on 2026-10-23.
 7. **[USER]** Open the OBS scene at 1920×1080. Check the system audio and mic tracks.
 8. **[USER]** Keep §1's typed safe lines open in a hidden window.
 9. Run `npm run demo:warm` before every take.
+
+### Live voice run (user, 2026-10-23, Sonic, simulator → AgentCore)
+S1–S6 by voice: nothing misheard, no safe line needed, "New PR" spoken on S3, no slow turns, animations smooth, S4 cart of 12 items (chicken ×2, lentils ×2) landed in full on amazon.com. Voice mode: READY for S1–S6.

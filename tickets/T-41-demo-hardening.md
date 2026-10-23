@@ -9,7 +9,7 @@
 | Depends on | Every HERO ticket, T-40 |
 | Owns | `demo/`, [DEMO-SCRIPT.md](../DEMO-SCRIPT.md) |
 | Approval needed | The user approves script v1 |
-| Status | DONE except the user's voice practice takes (T-51) |
+| Status | DONE (user's live voice run clean on 2026-10-23; practice takes = the recording) |
 
 ## Goal
 Make the full demo run clean three times in a row, inside the time budget, on the final stack. Produce script v1.
