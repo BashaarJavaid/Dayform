@@ -181,12 +181,14 @@ export interface Insights { training_days: number; rest_days: number; protein_tr
 /** 14-day patterns for the insight (code). */
 export async function insights(date: string): Promise<Insights> {
   const start = addDays(date, -14), end = addDays(date, -1);
-  const days = await query<{ date: string; kcal: number; protein_g: number; trained: boolean; water: number }>(sql`
+  const all = await query<{ date: string; kcal: number; protein_g: number; trained: boolean; water: number }>(sql`
     SELECT e.date::text AS date, sum(i.kcal) AS kcal, sum(i.protein_g) AS protein_g,
       EXISTS (SELECT 1 FROM workout_sessions w WHERE w.date = e.date AND w.status = 'done') AS trained,
       (SELECT coalesce(sum(ml), 0) FROM water_logs l WHERE l.date = e.date) AS water
     FROM meal_items i JOIN meal_entries e ON e.id = i.entry_id WHERE e.date BETWEEN ${start}::date AND ${end}::date GROUP BY e.date ORDER BY e.date`);
   const t = (await targetsOn(end))!.numbers;
+  // Partly logged days (under half the kcal target, e.g. today so far) would skew the means; leave them out like the check-in.
+  const days = all.filter((d) => Number(d.kcal) >= t.kcal / 2);
   const avg = (xs: number[]) => (xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length) : 0);
   const tr = days.filter((d) => d.trained), rest = days.filter((d) => !d.trained);
   return {
@@ -196,6 +198,17 @@ export async function insights(date: string): Promise<Insights> {
     protein_hit_days: days.filter((d) => Number(d.protein_g) >= t.protein_g * 0.9).length, logged_days: days.length,
     water_avg_ml: avg(days.map((d) => Number(d.water))), water_target_ml: t.water_ml,
   };
+}
+
+/** Insight candidates, biggest gap against target first (code ranks; the model words the first one). */
+export function insightCandidates(i: Insights) {
+  const gap = (v: number, t: number) => (t ? Math.abs(v - t) / t : 0);
+  return [
+    { topic: "protein on rest days vs training days", rest_days_g: i.protein_rest_g, training_days_g: i.protein_training_g, target_g: i.protein_target_g, gap: gap(i.protein_rest_g, i.protein_target_g) },
+    { topic: "water", avg_ml: i.water_avg_ml, target_ml: i.water_target_ml, gap: gap(i.water_avg_ml, i.water_target_ml) },
+    { topic: "calories", avg_kcal: i.kcal_avg, target_kcal: i.kcal_target, gap: gap(i.kcal_avg, i.kcal_target) },
+    { topic: "days protein target hit", days: i.protein_hit_days, of_days: i.logged_days, gap: 1 - (i.logged_days ? i.protein_hit_days / i.logged_days : 1) },
+  ].sort((a, b) => b.gap - a.gap).map(({ gap: _, ...c }) => c);
 }
 
 export const insightFallback = (i: Insights) =>
@@ -265,8 +278,8 @@ export function assembleBrief(f: BriefFacts, d: BriefDraft | null, dropped: stri
 }
 
 async function writeBrief(f: BriefFacts, log: (m: string) => void) {
-  let prompt = `You write a short spoken morning brief for a fitness add-on. Facts (all numbers come from the database):\n${JSON.stringify(f)}\n` +
-    `Write: greeting (one friendly line using the name, no numbers); insight (the most useful pattern from the 14-day "insights", a full spoken sentence under 25 words that names the two numbers it compares, like "You average 150 g of protein on training days but only 95 g on rest days." (other numbers); numbers only from the facts); ` +
+  let prompt = `You write a short spoken morning brief for a fitness add-on. Facts (all numbers come from the database):\n${JSON.stringify({ ...f, insight_candidates: insightCandidates(f.insights) })}\n` +
+    `Write: greeting (one friendly line using the name, no numbers); insight (about the FIRST entry of "insight_candidates", 14-day averages: a full spoken sentence under 25 words that names the two numbers it compares, like "You average 150 g of protein on training days but only 95 g on rest days." (other numbers); numbers only from the facts); ` +
     `and copy yesterday kcal and protein_g, yesterday workout, weight, and today's workout (day_name, exercise, weight_kg, reps) exactly from the facts.`;
   let draft: BriefDraft | null = null;
   let bad: string[] = [];

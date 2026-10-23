@@ -102,9 +102,14 @@ export const recipeMacros = (r: { ings: { item: PlanItem; grams: number }[] }) =
 /** Distinct day menus as recipe-id lists (one serving per meal). */
 const dayTotals = (menu: string[], recs: Map<string, Rec>) => menu.reduce((t, id) => add(t, recipeMacros(recs.get(id)!)), zero());
 
+export const MAX_ITEMS = 12;
+/** Expensive packs the plan barely uses; the prompt steers away from them. */
+const PRICEY = ["whey-protein", "honey", "olive-oil", "almonds", "peanut-butter"];
+
 export interface Miss {
+  /** 0 = the whole plan (item cap). */
   day: number;
-  nutrient: M;
+  nutrient: M | "items";
   value: number;
   target: number;
   rule: string;
@@ -238,7 +243,8 @@ function prompt(input: GenerateInput, cat: PlanItem[], prev?: { draft: Draft; mi
       (p.allergies?.length ? ` Allergies: ${p.allergies.join(", ")}.` : ""),
     input.constraints ? `The user also said: "${input.constraints}". Follow it strictly.` : "",
     `Write 3 or 4 recipes that keep in the fridge for ${input.days} days, and 1 or 2 day menus (days alternate A, B). All cooking happens in ONE batch-cook session of at most ${minutes} minutes.`,
-    `Groceries are bought as whole packs, so keep the cart small: at most 11 different items in the whole plan (at most 3 spices), reuse items across recipes, and avoid pricey packs you barely use.`,
+    `Groceries are bought as whole packs, so keep the cart small and cheap: at most ${MAX_ITEMS} different items in the whole plan (at most 3 spices), reuse items across recipes.`,
+    `${PRICEY.join(", ")} are expensive packs you would barely use: avoid them unless a day cannot reach protein otherwise. Prefer chicken, lentils, moong dal, chickpeas, tuna, rice, atta, oats and milk; cook with ghee.`,
     `Use ONLY these catalog items (id | name | per 100 g: kcal | protein g | carbs g | fat g | pack). Grams are raw, as bought (dry rice, dry lentils), per ONE serving:`,
     table,
   ];
@@ -247,8 +253,8 @@ function prompt(input: GenerateInput, cat: PlanItem[], prev?: { draft: Draft; mi
       prev.error
         ? `Your last plan was rejected: ${prev.error}`
         : `Your last plan, after scaling each ingredient between ${SCALE[0]}x and ${SCALE[1]}x, still misses:\n` +
-            prev.misses.map((m) => `- day ${m.day}: ${m.nutrient} ${m.value}, target ${m.target} (${m.rule})`).join("\n") +
-            `\nIts recipes per serving were:\n${prev.recipeLines}\nChange the ingredients or recipes to fix every miss (more protein: chicken, tuna, whey, lentils; fat: ghee, oil, almonds, peanut butter up or down; more carbs: rice, atta, oats).`,
+            prev.misses.map((m) => (m.day ? `- day ${m.day}: ${m.nutrient} ${m.value}, target ${m.target} (${m.rule})` : `- ${m.rule}`)).join("\n") +
+            `\nIts recipes per serving were:\n${prev.recipeLines}\nChange the ingredients or recipes to fix every miss (more protein: chicken, tuna, lentils, chickpeas; fat: ghee up or down; more carbs: rice, atta, oats).`,
       `Last plan for reference: ${JSON.stringify(prev.draft)}`,
     );
   }
@@ -304,6 +310,11 @@ function build(draft: Draft, input: GenerateInput, cat: PlanItem[]) {
     batch_cook: { total_minutes: draft.batch_cook.total_minutes, steps: draft.batch_cook.steps },
     grocery: grocery.lines.map(({ catalog_item_id, name, grams_needed }) => ({ catalog_item_id, name, grams_needed })),
   };
+  if (grocery.lines.length > MAX_ITEMS) {
+    const used = (l: GroceryLine) => l.grams_needed / (l.packs * byId.get(l.catalog_item_id)!.grams_per_pack); // share of the bought packs eaten
+    const least = [...grocery.lines].sort((x, y) => used(x) - used(y)).slice(0, grocery.lines.length - MAX_ITEMS);
+    misses.push({ day: 0, nutrient: "items", value: grocery.lines.length, target: MAX_ITEMS, rule: `plan uses ${grocery.lines.length} items, max ${MAX_ITEMS}; drop the least-used ones (${least.map((l) => l.catalog_item_id).join(", ")})` });
+  }
   const recipeLines = recipes.map((r) => `- ${r.id} ${r.name}: ${r.per_serving.kcal} kcal, P ${r.per_serving.protein_g}, C ${r.per_serving.carbs_g}, F ${r.per_serving.fat_g}`).join("\n");
   return { plan, misses, grocery, recipeLines };
 }
@@ -356,5 +367,5 @@ export async function generatePlan(input: GenerateInput): Promise<Generated> {
   }
   if (!best) throw lastErr instanceof Error ? lastErr : new Error("meal plan generation failed");
   const rounds = best.misses.length ? MAX_ROUNDS : best.rounds;
-  return { plan: best.plan, within_tolerance: !best.misses.length, rounds, misses: best.misses, grocery: best.grocery, seconds: Math.round((performance.now() - t0) / 100) / 10 };
+  return { plan: best.plan, within_tolerance: !best.misses.some((m) => m.day > 0), rounds, misses: best.misses, grocery: best.grocery, seconds: Math.round((performance.now() - t0) / 100) / 10 };
 }
