@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova Sonic Smoke</title>
+<style>
+  :root { --bg:#fff; --fg:#111; --muted:#666; --line:#ddd; --accent:#0a66c2; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --fg:#eee; --muted:#999; --line:#333; --accent:#5aa9ff; } }
+  body { background:var(--bg); color:var(--fg); font:14px/1.4 system-ui, sans-serif; margin:16px; max-width:900px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:8px 0; }
+  button, select, input { font:inherit; padding:6px 10px; }
+  input[type=text] { flex:1; min-width:200px; }
+  #lat { font-size:20px; font-weight:600; color:var(--accent); }
+  #log { border:1px solid var(--line); height:420px; overflow:auto; padding:8px; font:12px/1.4 ui-monospace, monospace; white-space:pre-wrap; }
+  .tool { color:#c06000; font-weight:600; } .user { color:var(--accent); } .err { color:#d00; } .muted { color:var(--muted); }
+</style>
+</head>
+<body>
+<h2>Nova Sonic voice loop (T-02 smoke)</h2>
+<div class="row">
+  Voice <select id="voice"><option>tiffany</option><option>amy</option><option>matthew</option></select>
+  <button id="start">Start session</button>
+  <button id="mic" disabled>Mic on</button>
+  <button id="reconnect" disabled>Force reconnect</button>
+  <span id="status" class="muted">idle</span>
+</div>
+<div class="row">
+  <input id="text" type="text" placeholder="Type, e.g. I had two eggs" disabled>
+  <button id="send" disabled>Send</button>
+</div>
+<div class="row">Last latency (end of speech / send → first audio byte): <span id="lat">–</span> <span id="p50" class="muted"></span></div>
+<div id="log"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+const logEl = $("log");
+function log(msg, cls = "") {
+  const d = document.createElement("div"); d.className = cls;
+  d.textContent = `${new Date().toLocaleTimeString()}  ${msg}`;
+  logEl.appendChild(d); logEl.scrollTop = logEl.scrollHeight;
+  console.log(msg);
+}
+
+let ws, playCtx, nextPlay = 0, sources = [];
+let micCtx, micStream, micNode;
+let lastVoiceAt = 0, awaiting = 0, playingUntil = 0; // awaiting = time mark of end of speech / send
+const lats = [];
+
+function showLatency(ms, kind) {
+  lats.push(ms);
+  const s = [...lats].sort((a, b) => a - b);
+  $("lat").textContent = `${ms} ms (${kind})`;
+  $("p50").textContent = `p50 ${s[Math.floor((s.length - 1) / 2)]} ms over ${s.length} turns: [${lats.join(", ")}]`;
+  log(`LATENCY ${kind}: ${ms} ms`, "muted");
+}
+
+function play(b64) {
+  const bin = atob(b64), n = bin.length / 2, buf = playCtx.createBuffer(1, n, 24000), ch = buf.getChannelData(0);
+  for (let i = 0; i < n; i++) { let v = bin.charCodeAt(2 * i) | (bin.charCodeAt(2 * i + 1) << 8); if (v >= 32768) v -= 65536; ch[i] = v / 32768; }
+  const src = playCtx.createBufferSource(); src.buffer = buf; src.connect(playCtx.destination);
+  nextPlay = Math.max(nextPlay, playCtx.currentTime + 0.05); src.start(nextPlay); nextPlay += buf.duration;
+  playingUntil = performance.now() + (nextPlay - playCtx.currentTime) * 1000;
+  sources.push(src); src.onended = () => (sources = sources.filter((x) => x !== src));
+}
+function stopPlayback() { sources.forEach((s) => { try { s.stop(); } catch {} }); sources = []; nextPlay = 0; playingUntil = 0; }
+
+$("start").onclick = () => {
+  ws?.close();
+  playCtx ??= new AudioContext({ sampleRate: 24000 });
+  ws = new WebSocket(`ws://${location.host}`);
+  ws.onopen = () => ws.send(JSON.stringify({ type: "start", voice: $("voice").value }));
+  ws.onclose = () => { $("status").textContent = "disconnected"; };
+  ws.onmessage = (ev) => {
+    const m = JSON.parse(ev.data);
+    if (m.type === "audio") {
+      if (awaiting) { const kind = awaiting === "text" ? "text" : "voice"; showLatency(Math.round(performance.now() - (kind === "text" ? textSentAt : lastVoiceAt)), kind); awaiting = 0; }
+      play(m.data);
+    } else if (m.type === "ready") {
+      $("status").textContent = `ready · ${m.model} · ${m.voice} · auto-reconnect ${m.reconnectAfterS}s`;
+      ["mic", "reconnect", "text", "send"].forEach((id) => ($(id).disabled = false));
+      log(`READY model=${m.model} voice=${m.voice}`);
+    } else if (m.type === "text") {
+      if (m.stage !== "SPECULATIVE") log(`${m.role}: ${m.text}`, m.role === "USER" ? "user" : "");
+    } else if (m.type === "tool") log(`TOOL ${m.name} ${JSON.stringify(m.input)} -> ${JSON.stringify(m.result)}`, "tool");
+    else if (m.type === "interrupt") { stopPlayback(); log("barge-in: playback stopped", "muted"); }
+    else if (m.type === "reconnected") log(`RECONNECTED (${m.why}) with summary:\n${m.summary}`, "muted");
+    else if (m.type === "error") log(`ERROR ${m.source}: ${JSON.stringify(m.detail)}`, "err");
+  };
+};
+
+let textSentAt = 0;
+function sendText() {
+  const t = $("text").value.trim(); if (!t) return;
+  ws.send(JSON.stringify({ type: "text", text: t }));
+  textSentAt = performance.now(); awaiting = "text";
+  log(`TYPED: ${t}`, "user"); $("text").value = "";
+}
+$("send").onclick = sendText;
+$("text").onkeydown = (e) => e.key === "Enter" && sendText();
+$("reconnect").onclick = () => ws.send(JSON.stringify({ type: "reconnect" }));
+
+$("mic").onclick = async () => {
+  if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micNode.disconnect(); micStream = null; $("mic").textContent = "Mic on"; return; }
+  micStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+  micCtx ??= new AudioContext({ sampleRate: 16000 }); // Chrome resamples the mic to 16 kHz
+  const src = micCtx.createMediaStreamSource(micStream);
+  micNode = micCtx.createScriptProcessor(512, 1, 1); // 32 ms frames
+  micNode.onaudioprocess = (e) => {
+    const f = e.inputBuffer.getChannelData(0), pcm = new Int16Array(f.length);
+    let sum = 0;
+    for (let i = 0; i < f.length; i++) { const v = Math.max(-1, Math.min(1, f[i])); pcm[i] = v * 0x7fff; sum += v * v; }
+    // Simple energy VAD for the latency readout; ignore while Sonic is speaking (echo).
+    if (Math.sqrt(sum / f.length) > 0.02 && performance.now() > playingUntil) { lastVoiceAt = performance.now(); awaiting = "voice"; }
+    if (ws?.readyState === 1) ws.send(pcm.buffer);
+  };
+  src.connect(micNode); micNode.connect(micCtx.destination);
+  $("mic").textContent = "Mic off";
+  log("mic on (16 kHz PCM, 32 ms frames)", "muted");
+};
+</script>
+</body>
+</html>

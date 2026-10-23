@@ -8,7 +8,7 @@
 | Depends on | T-00 |
 | Owns | `smoke/nova-sonic/` |
 | Approval needed | No |
-| Status | TODO |
+| Status | BLOCKED (typed path PASS; waiting for the user's voice session: mic round trip, voice choice, food words) |
 
 ## Goal
 Prove a full browser voice round trip through Nova Sonic that includes one tool call. Measure the latency. Find out how well Sonic hears desi food words.
@@ -85,4 +85,10 @@ Use them in this order:
 - If it's still bad, type those lines in the demo (they're the safe lines), or use fallback 3 with a custom vocabulary.
 
 ## Result
-_The agent fills this in._
+- **Built (`smoke/nova-sonic/`):** `server.ts` (WebSocket relay on 8102 that serves `index.html`, one Bedrock bidirectional stream per session, `log_meal_stub` with a fixed result, typed input, silence keep-alive, auto-reconnect after `RECONNECT_AFTER_S`=60 with a code-built summary in the new system prompt), `index.html` (mic 16 kHz PCM via ScriptProcessor, 24 kHz playback, barge-in stop, text box, latency readout with p50, log pane), `test-text.ts` (typed-turn checker), `README.md` (user steps), `food-words.md` (template). `npm run smoke:sonic` starts it.
+- **Model:** `amazon.nova-2-5-sonic` (T-00 recorded it; fallback `amazon.nova-2-sonic-v1:0` also passes).
+- **Verified (no human):** typed "I had two eggs" → `TOOL log_meal_stub {"items":[{"food":"eggs","quantity":2}]}`, spoken reply "I have logged two eggs for you…", 944,640 audio bytes. Typed-turn → first audio p50 646 ms over 5 turns (Nova 2: 1232 ms). Reconnect (forced and automatic at 60 s) → "The first thing you told me you ate was two eggs."
+- **Not verified (user):** voice round trip in Chrome, voice p50, voice choice, food-word table. Acceptance 3/6 met (text input, reconnect, model ID); voice round trip, voice p50 and food words wait for the user.
+- **Deviations:** event shapes from the AWS docs and the websocket-nodejs sample; no rxjs/express/socket.io. Summary passed in the system prompt rather than as USER/ASSISTANT history (simpler; the docs allow history once, before audio).
+- **Fallbacks used:** none.
+- **Friction:** F-008 (typed input inside the reply's play time counts as barge-in).

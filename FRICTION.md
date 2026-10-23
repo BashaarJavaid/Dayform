@@ -95,3 +95,14 @@ Add an entry each time a tool, SDK or AWS service blocks you or surprises you. W
 - Severity: minor
 - Workaround: Treat forced-tool structured output as non-streaming: run it in the background or the overnight job with `{status: "preparing"}`. Use text streaming only where early tokens matter.
 - Suggestion to the tool's team: Document whether Nova streams tool input incrementally, or stream partial JSON as other Bedrock models do.
+
+### F-008 · Nova Sonic treats typed input during "playback time" as barge-in, though the audio was already fully sent
+- Tool / service: Amazon Bedrock `InvokeModelWithBidirectionalStream`, `amazon.nova-2-5-sonic` (us-east-1)
+- Ticket: T-02
+- Task attempted: send consecutive typed turns (cross-modal `contentStart` type `TEXT`, role `USER`, `interactive: true`) in one session from a Node relay.
+- Steps taken: sent the next `textInput` 1.5 s after the assistant's `contentEnd` with `stopReason: "END_TURN"`, per https://docs.aws.amazon.com/nova/latest/nova2-userguide/sonic-input-events.html.
+- Expected: `END_TURN` means the reply is finished, so the next turn starts cleanly.
+- Actual: every next turn first produced `textOutput` with content `{ "interrupted" : true }`, and the reply's `FINAL` text arrived only after the next input. Sonic sends audio faster than real time but keeps the turn "open" for the audio's play length (232,320 bytes at 24 kHz = 4.8 s); a second `contentEnd` with `END_TURN` (after the `FINAL` text) arrives at that point.
+- Severity: minor
+- Workaround: the test client waits out the reply's play time (bytes / 48 per ms) before the next turn; the browser stops playback on `interrupted`.
+- Suggestion to the tool's team: document that the speaking window follows play time, which `END_TURN` event marks the true end, and that typed input inside that window counts as barge-in.

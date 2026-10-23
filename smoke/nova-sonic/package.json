@@ -1,0 +1,16 @@
+{
+  "name": "smoke-nova-sonic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "smoke:sonic": "tsx server.ts",
+    "test:text": "tsx test-text.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1156.0",
+    "@smithy/node-http-handler": "^4.12.1",
+    "@types/ws": "^8.18.2",
+    "tsx": "^4.23.15",
+    "ws": "^8.22.0"
+  }
+}

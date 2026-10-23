@@ -34,15 +34,18 @@
 - Orchestrator re-run (2026-10-22): A, B, C PASS twice; D PASS once and FAIL once on BOTH Nova 2 Lite and Nova Pro (plan returned fewer than 4 days). Treat the forced-tool JSON for long plans as unreliable in shape: T-25 must validate and retry (its 3-round loop), and the overnight job must not assume one-shot success.
 
 ## T-02 · Nova Sonic voice
-- Status:
-- Model ID used:
-- Voice chosen:
-- End of speech → first audio, p50:
-- Text input works (yes or no):
-- Reconnect keeps context (yes or no):
-- Food-word results: see `smoke/nova-sonic/food-words.md`
-- Language used for the relay (Node or Python):
+- Status: BLOCKED (typed path PASS end to end; the voice round trip, voice choice and food-word test need the user's mic session, see `smoke/nova-sonic/README.md`)
+- Model ID used: `amazon.nova-2-5-sonic` (ACTIVE and AUTHORIZED in us-east-1 via `get-foundation-model-availability`, profile `hirz-login`; ID from the AWS sample repo's Nova 2.5 migration guide). Fallback `amazon.nova-2-sonic-v1:0` also works (same test PASS).
+- Voice chosen: not yet (user step; tiffany is the default; tiffany and matthew both work on the typed path)
+- End of speech → first audio, p50: voice not measured (user step). Proxy, typed turn → first audio byte incl. one `log_meal_stub` round trip, 5 turns: Nova 2.5 p50 646 ms [1016, 575, 646, 732, 634] (second run 636 ms); Nova 2 p50 1232 ms [2144, 1552, 1165, 1232, 1215]. First turn per session is the slowest (cold).
+- Text input works (yes or no): yes (cross-modal `contentStart` TEXT/USER `interactive: true` in the same session as the open audio stream)
+- Reconnect keeps context (yes or no): yes on the typed path, both forced and the automatic 60 s restart: after a new session with a code-built summary in the system prompt, "What was the first thing I told you I ate?" → "The first thing you told me you ate was two eggs."
+- Food-word results: see `smoke/nova-sonic/food-words.md` (template; user step). Typed food words came back as tool items `rotis`, `chicken karahi`, `mango lassi`.
+- Language used for the relay (Node or Python): Node/TypeScript (`@aws-sdk/client-bedrock-runtime` + `NodeHttp2Handler`, `ws`), ported from the AWS websocket-nodejs sample.
 - Notes:
+  - `npx tsx test-text.ts` output: `tool log_meal_stub with eggs: yes {"items":[{"food":"eggs","quantity":2}]}`, `audio bytes total: 944640`.
+  - The relay sends 32 ms silence frames when the mic is idle, so typed-only sessions keep the audio stream alive.
+  - Next input inside the reply's play time counts as barge-in (FRICTION F-008).
 
 ## T-03 · MCP on AgentCore
 - Status: BLOCKED (local target PASS; AgentCore deploy waits for IAM permissions on the AWS profile and deploy approval)
