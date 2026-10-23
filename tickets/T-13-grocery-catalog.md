@@ -8,7 +8,7 @@
 | Depends on | T-10, T-12 (food IDs), T-05 (link format) |
 | Owns | `data/catalog/` |
 | Approval needed | Human step: the user opens the all-items link once, signed in. Agents only read product pages. |
-| Status | TODO |
+| Status | REVIEW (waiting for the user to open the all-items link signed in) |
 
 ## Goal
 Build a catalog of about 40 grocery items, each with a verified Amazon ASIN, pack size and nutrition link. The meal planner may use only these items.
@@ -61,4 +61,11 @@ In S4, every grocery item must land in the real Amazon cart. A broken ASIN on ca
 - **Fresh produce not available:** replace it with a frozen or canned version, and update the food link.
 
 ## Result
-_The agent fills this in._
+- **Files:** `data/catalog/catalog.json` (38 items), `schema.ts` (zod, built from contracts `CartItem.asin`, `DateStr`, `DateTimeStr`), `catalog.test.ts`, `load.ts` (`npm run data:load-catalog -w data`), `link.ts` (`npm run catalog:link -w data`), `all-items-link.txt`.
+- **Sourcing:** all 38 product pages read 2026-10-22 (curl + cookie jar, F-003 workaround): every item In Stock, sold by Amazon.com or Amazon, with an Add to Cart button. 13 ASINs reused from T-05 (re-read; garam masala price is now $5.35, was $8.91). No item needed `asin: null`.
+- **Substitutions:** chicken breast is Tyson frozen 2.5 lb (the fresh Amazon Grocery pack is "weight varies" with no seller block); milk is Horizon shelf-stable 12 × 8 fl oz; red chili is Laxmi Kashmiri (the Amazon Grocery "chili powder" is a US blend). Fresh produce (onions, potatoes, peppers, cucumber, lemons, bananas) and refrigerated items (eggs, yogurts, paneer, turkey) are sold by Amazon.com on the regular page; whether they fill the cart outside a Fresh area is what the user check shows.
+- **Fields beyond §6:** `category`, `storage`, `pack_label` (display string = `CartItem.pack_size`), `pack_size`+`pack_unit` (g|ml|count), `grams_per_pack` (count/ml items converted: egg 50 g, tortilla 45 g from the page, banana 118 g, milk 1.03 g/ml, olive oil 0.92 g/ml), `availability`, `sold_by`. The loader maps to the existing `catalog_items` columns only.
+- **food_id:** 18 match `data/foods/foods.json` today; 20 are not in it yet: SR Legacy `usda-170894, usda-172850, usda-173709, usda-173180, usda-175206, usda-173904, usda-169287, usda-170051, usda-170027, usda-170108, usda-169968, usda-170471, usda-170923, usda-172231, usda-170932, usda-170922, usda-174266` and provisional slugs `paneer`, `ginger-garlic-paste`, `garam-masala`. The test lists them as a warning.
+- **Verification:** `npm test -w data` → `Tests 4 passed (4)`. `npm run data:load-catalog -w data` → `catalog_items: 38 rows loaded`; local Postgres `select count(*) … → 38`. `npm run catalog:link -w data` → 38-item `/associates/addtocart?AssociateTag=dayform-20…` link (1,304 chars) in `all-items-link.txt`.
+- **4-day cart estimate:** 14 lines, 19 packs, **$104.77** (chicken ×2, basmati, red lentils, eggs, Greek yogurt ×2, oats, atta, onions, tomatoes ×2, spinach ×2, broccoli ×2, ginger-garlic paste, garam masala, bananas). Whole packs of oats ($16.73) and ginger-garlic paste ($13.99) drive it; the demo's "$63" is not supported by these prices.
+- **Pending (human):** open `data/catalog/all-items-link.txt` signed in; confirm 38/38 in the cart and note any missing or "not available" items.

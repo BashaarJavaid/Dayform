@@ -2,5 +2,10 @@
   "name": "@dayform/data",
   "private": true,
   "version": "0.0.0",
-  "scripts": { "test": "echo \"data: no tests yet\"" }
+  "type": "module",
+  "scripts": {
+    "test": "node -e \"const ex=require('./exercises/exercises.json'),p=require('./program/program.json'),ids=new Set(ex.map(e=>e.id));for(const d of p.days)for(const x of d.exercises)if(!ids.has(x.exercise))throw new Error(x.exercise);for(const e of ex)for(const a of e.alternatives)if(!ids.has(a))throw new Error(a);console.log('data: '+ex.length+' exercises, '+p.days.length+' program days OK')\" && vitest run",
+    "data:load-catalog": "tsx catalog/load.ts",
+    "catalog:link": "tsx catalog/link.ts"
+  }
 }
