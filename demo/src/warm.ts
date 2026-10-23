@@ -1,13 +1,16 @@
-// Warm-up before a take (T-41 task 1): Aurora ACU check, seed reset, get_daily_summary,
-// Sonic warm-up (stub until T-30), card preloads. Prints READY with timings, or NOT READY.
+// Warm-up before a take (T-41 task 1). Prints READY with timings, or NOT READY.
+// Steps that could write state (the food-search log_meal, the voice turn) run before the reset,
+// so the take still starts from the seed state. Open the simulator page first: the voice engine
+// runs only while a client is connected, so the warm session stays open only if the page holds it.
 import { execFileSync } from "node:child_process";
-import { ADMIN_TOKEN, ADMIN_URL, MCP_URL, admin } from "./env.ts";
-import { mcpDriver } from "./drivers.ts";
+import { ADMIN_TOKEN, ADMIN_URL, MCP_URL, SIM_URL, admin } from "./env.ts";
+import { mcpDriver, simulatorDriver } from "./drivers.ts";
 
 type Step = { name: string; run: () => Promise<string> };
 const SKIP = "SKIP";
 const t0 = performance.now();
 let failed = 0;
+const mcp = await mcpDriver();
 
 const steps: Step[] = [
   {
@@ -23,9 +26,37 @@ const steps: Step[] = [
     },
   },
   {
+    name: "Food search (S1-shaped log_meal; the reset below removes it)",
+    run: async () => {
+      const args = { meal: "lunch", items: [{ food: "roti", quantity: 2 }, { food: "chicken karahi" }, { food: "mango lassi", quantity: 1 }] };
+      const ms: number[] = [];
+      for (let i = 0; i < 2; i++) {
+        const { calls: [c] } = await mcp.turn("", [{ tool: "log_meal", args }]);
+        if (c.error || c.result?.entry?.items?.length !== 3) throw new Error(c.error ?? "log_meal did not match 3 items");
+        ms.push(c.ms);
+      }
+      return `log_meal cold ${ms[0]} ms, warm ${ms[1]} ms`;
+    },
+  },
+  {
+    name: "Voice engine warm-up turn (simulator backend)",
+    run: async () => {
+      const health = await fetch(SIM_URL.replace(/^ws/, "http") + "/health").then((r) => r.json(), () => null);
+      if (!health) return `${SKIP} (no simulator backend on ${SIM_URL})`;
+      const sim = await simulatorDriver();
+      const t = await sim.turn("Hello.", []);
+      await sim.close();
+      // The text engine sometimes answers "Hello" with get_morning_brief; read-only calls are fine before the reset.
+      const writes = t.calls.filter((c) => !c.tool.startsWith("get_"));
+      if (writes.length) throw new Error(`warm-up line called tools: ${writes.map((c) => c.tool).join(",")}`);
+      if (t.firstAudioMs === undefined) throw new Error(`no audio; reply "${t.reply}"`);
+      return `engine ${health.engine}, first audio ${t.firstAudioMs} ms, "${t.reply}"`;
+    },
+  },
+  {
     name: "Reset to seed state + 10 s rest timers",
     run: async () => {
-      if (!ADMIN_TOKEN) return `${SKIP} (no ADMIN_TOKEN; admin routes arrive with T-20 on ${ADMIN_URL})`;
+      if (!ADMIN_TOKEN) return `${SKIP} (no ADMIN_TOKEN; admin routes on ${ADMIN_URL})`;
       const r = await admin("/admin/reset");
       // Reset clears the rest-timer override (seen 2026-10-23), so set the demo's 10 s again.
       const t = await admin("/admin/timer-speed", "POST", { rest_seconds: 10 });
@@ -35,20 +66,13 @@ const steps: Step[] = [
   {
     name: "get_daily_summary + card preloads",
     run: async () => {
-      const d = await mcpDriver();
-      const [c] = await d.turn("", [{ tool: "get_daily_summary", args: {} }]);
+      const { calls: [c] } = await mcp.turn("", [{ tool: "get_daily_summary", args: {} }]);
       if (c.error || !c.result?.targets) throw new Error(c.error ?? "no targets in the result");
       // Read every card resource once so the first take pays no cold start.
-      const cards = (await d.client.listResources()).resources.filter((r) => r.uri.startsWith("ui://"));
-      for (const r of cards) await d.client.readResource({ uri: r.uri });
-      await d.close();
-      return `summary ${c.ms} ms; ${cards.length} cards read (${MCP_URL})`;
+      const cards = (await mcp.client.listResources()).resources.filter((r) => r.uri.startsWith("ui://"));
+      for (const r of cards) await mcp.client.readResource({ uri: r.uri });
+      return `summary ${c.ms} ms, eaten ${c.result.eaten.kcal} kcal; ${cards.length} cards read (${MCP_URL})`;
     },
-  },
-  {
-    name: "Sonic warm-up turn",
-    // TODO(T-30): open a Sonic session through the simulator backend and send one silent turn.
-    run: async () => `${SKIP} (simulator backend arrives with T-30)`,
   },
 ];
 
@@ -62,5 +86,6 @@ for (const s of steps) {
     console.log(`FAIL  ${String(Math.round(performance.now() - t)).padStart(5)} ms  ${s.name}: ${(e as Error).message}`);
   }
 }
+await mcp.close();
 console.log(`\n${failed ? "NOT READY" : "READY"} in ${(Math.round(performance.now() - t0) / 1000).toFixed(1)} s`);
 process.exit(failed ? 1 : 0);
