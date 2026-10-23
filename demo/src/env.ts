@@ -6,6 +6,8 @@ try {
 } catch {}
 
 export const MCP_URL = process.env.MCP_URL ?? "http://localhost:8100/mcp";
+// MCP_AUTH=sigv4 (AgentCore target): the infra signer patches global fetch for the AgentCore host.
+if (process.env.MCP_AUTH === "sigv4") await import("../../infra/src/sigv4-fetch.ts");
 export const ADMIN_URL = process.env.ADMIN_URL ?? "http://localhost:8001";
 export const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
 export const SIM_URL = process.env.SIM_URL ?? `ws://localhost:${process.env.SIM_PORT ?? 8300}`;
