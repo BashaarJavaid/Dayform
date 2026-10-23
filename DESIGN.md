@@ -134,7 +134,7 @@ These are tables for one user. The exact schema is in `db/` (T-11).
 
 - `profile`: sex, birth year, height, activity, goal, rate, protein per kg, preferences (cuisines, dislikes, allergies, equipment, maximum prep time), check-in weekday.
 - `targets`: effective date, kcal, protein, carbs, fat, fiber, sodium, water, reason codes, reason text, source (`initial`, `weekly`, `manual`).
-- `foods`: name, aliases, nutrients per 100 g, portions (name → grams), default portion, source, priority. Trigram index on name and aliases.
+- `foods`: name, aliases, nutrients per 100 g, portions (name → grams), default portion, source, priority. Trigram index on name and aliases. **Food IDs are stable slugs** (orchestrator, 2026-10-22): desi dishes use the lowercase hyphenated name (`roti`, `chicken-karahi`, `mango-lassi`, `chicken-biryani`, `daal-chawal`, `aloo-paratha`, `raita`, `nihari`, `naan`, `chana-chaat`, …); USDA foods use `usda-<fdc_id>`. T-11 seeds and T-13 catalog reference foods by these slugs.
 - `meal_entries` and `meal_items`: time, meal type, food, words the user said, quantity, unit, grams, nutrients, estimated flag, assumptions.
 - `water_logs`, `bodyweight_logs`.
 - `exercises`: name, aliases, type, muscle, equipment, alternatives.
